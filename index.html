@@ -100,20 +100,20 @@
                 </div>
 
                 <!-- Cheats Section -->
-                <div class="space-y-2 bg-gray-950/50 p-3 rounded-xl border border-purple-900/40">
+                <div id="cheats-section" class="hidden space-y-2 bg-gray-950/50 p-3 rounded-xl border border-purple-900/40">
                     <label class="text-[11px] font-semibold text-purple-400 flex items-center justify-between">
                         <span><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Cheats</span>
                     </label>
                     <div class="grid grid-cols-1 gap-1.5">
-                        <button onclick="cheatRevealAllTech();" class="w-full p-2 bg-purple-950/60 hover:bg-purple-900/60 active:bg-purple-800/60 border border-purple-800/50 text-purple-200 rounded-lg text-xs font-medium transition flex items-center justify-between">
+                        <button type="button" id="btn-cheat-tech" class="w-full p-2 bg-purple-950/60 hover:bg-purple-900/60 active:bg-purple-800/60 border border-purple-800/50 text-purple-200 rounded-lg text-xs font-medium transition flex items-center justify-between cursor-pointer">
                             <span>Reveal All Upgrades</span>
                             <i class="fa-solid fa-eye text-purple-400"></i>
                         </button>
-                        <button onclick="cheatAddResource('kibble', 1000);" class="w-full p-2 bg-amber-950/60 hover:bg-amber-900/60 active:bg-amber-800/60 border border-amber-800/50 text-amber-200 rounded-lg text-xs font-medium transition flex items-center justify-between">
+                        <button type="button" id="btn-cheat-kibble" class="w-full p-2 bg-amber-950/60 hover:bg-amber-900/60 active:bg-amber-800/60 border border-amber-800/50 text-amber-200 rounded-lg text-xs font-medium transition flex items-center justify-between cursor-pointer">
                             <span>+1,000 Kibble</span>
                             <i class="fa-solid fa-bowl-rice text-amber-400"></i>
                         </button>
-                        <button onclick="cheatAddResource('sticks', 1000);" class="w-full p-2 bg-stone-900 hover:bg-stone-800 active:bg-stone-700 border border-stone-700/50 text-stone-200 rounded-lg text-xs font-medium transition flex items-center justify-between">
+                        <button type="button" id="btn-cheat-sticks" class="w-full p-2 bg-stone-900 hover:bg-stone-800 active:bg-stone-700 border border-stone-700/50 text-stone-200 rounded-lg text-xs font-medium transition flex items-center justify-between cursor-pointer">
                             <span>+1,000 Sticks (Wood)</span>
                             <i class="fa-solid fa-cubes text-stone-400"></i>
                         </button>
@@ -332,14 +332,41 @@
         // --- CORE INITIALIZATION ---
         window.onload = function() {
             loadGame();
+
+            const isLocal = checkLocalEnvironment();
+            if (isLocal) {
+                // Bind Cheat Button Listeners safely here
+                document.getElementById('btn-cheat-tech').addEventListener('click', cheatRevealAllTech);
+                document.getElementById('btn-cheat-kibble').addEventListener('click', () => cheatAddResource('kibble', 1000));
+                document.getElementById('btn-cheat-sticks').addEventListener('click', () => cheatAddResource('sticks', 1000));
+            }
+
             renderAll();
-            logMessage("Welcome to the Backyard! Scavenge Kibble and gather Sticks to expand your pack.");
+            logMessage("Scavenge Kibble and gather Sticks to expand your pack.");
             
             // Main Game Loop (1 Tick = 1 second)
             setInterval(gameLoop, 1000);
             // Auto-Save interval (10s)
             setInterval(() => saveGame(false), 10000);
         };
+
+        // Do special things locally, like enable cheats menu
+        function checkLocalEnvironment() { // Returns true if local environment, false otherwise
+            const isLocal = window.location.hostname === '127.0.0.1' || 
+                            window.location.hostname === 'localhost' || 
+                            window.location.protocol === 'file:';
+
+            if (isLocal) {
+                const cheatsEl = document.getElementById('cheats-section');
+                if (cheatsEl) {
+                    cheatsEl.classList.remove('hidden');
+                }
+                console.log("🛠️ Local environment detected: Cheats menu unlocked.");
+
+                return true;
+            }
+            return false;
+        }
 
         // --- GAME LOOP ---
         function gameLoop() {
@@ -794,6 +821,7 @@
 
         // --- CHEATS SYSTEM ---
         function cheatRevealAllTech() {
+            console.log("Cheat triggered: Reveal All Tech");
             for (let key in game.tech) {
                 game.tech[key].unlocked = true;
             }
@@ -802,15 +830,28 @@
         }
 
         function cheatAddResource(resourceKey, amount) {
-            if (game.resources[resourceKey]) {
-                game.resources[resourceKey].unlocked = true;
-                // Temporarily allow overflow or boost capacity if needed
-                if (game.resources[resourceKey].amount + amount > game.resources[resourceKey].max) {
-                    game.resources[resourceKey].max = game.resources[resourceKey].amount + amount;
+            console.log(`Cheat triggered: Add ${amount} ${resourceKey}`);
+            if (game.resources && game.resources[resourceKey]) {
+                let res = game.resources[resourceKey];
+                res.unlocked = true;
+                
+                // Ensure max can hold the new amount if it exceeds current max
+                if (res.amount + amount > res.max) {
+                    res.max = res.amount + amount;
                 }
-                game.resources[resourceKey].amount += amount;
-                renderAll();
-                logMessage(`✨ Cheated: Added ${amount} ${game.resources[resourceKey].label}!`);
+                
+                res.amount += amount;
+                
+                // Force immediate render update if available
+                if (typeof renderAll === 'function') {
+                    renderAll();
+                }
+                
+                if (typeof logMessage === 'function') {
+                    logMessage(`✨ Cheated: Added ${amount} ${res.label}!`);
+                }
+            } else {
+                console.error(`Resource key "${resourceKey}" not found in game state.`);
             }
         }
 
