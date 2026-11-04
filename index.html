@@ -259,25 +259,25 @@
     </main>
 
     <!-- Bottom Navigation Bar for Mobile -->
-    <nav class="bg-nav-mobile border-t border-gray-800 grid grid-cols-5 text-center shrink-0 z-10">
-        <button onclick="switchTab('yard')" id="nav-yard" class="py-2.5 flex flex-col items-center justify-center text-amber-500 font-semibold transition hover:bg-gray-800/50">
+    <nav class="bg-nav-mobile border-t border-gray-800 flex items-center justify-around shrink-0 z-10 py-1.5">
+        <button onclick="switchTab('yard')" id="nav-yard" class="flex-1 py-1 flex flex-col items-center justify-center text-amber-500 font-semibold transition hover:bg-gray-800/50 border-r border-gray-800/40">
             <i class="fa-solid fa-bone text-base mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Yard</span>
         </button>
-        <button onclick="switchTab('buildings')" id="nav-buildings" class="py-2.5 flex flex-col items-center justify-center text-card-desc hover:text-amber-400 font-semibold transition hover:bg-gray-800/50">
+        <button onclick="switchTab('buildings')" id="nav-buildings" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-amber-400 font-semibold transition hover:bg-gray-800/50 border-r border-gray-800/40">
             <i class="fa-solid fa-house text-base mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Buildings</span>
         </button>
-        <button onclick="switchTab('pack')" id="nav-pack" class="py-2.5 flex flex-col items-center justify-center text-card-desc hover:text-amber-400 font-semibold transition hover:bg-gray-800/50 relative">
+        <button onclick="switchTab('pack')" id="nav-pack" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-amber-400 font-semibold transition hover:bg-gray-800/50 relative border-r border-gray-800/40">
             <i class="fa-solid fa-paw text-base mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Pack</span>
-            <span id="nav-pup-indicator" class="hidden absolute top-1.5 right-4 w-2 h-2 bg-amber-500 rounded-full animate-pulse"></span>
+            <span id="nav-pup-indicator" class="hidden absolute top-1 right-1/3 w-2 h-2 bg-amber-500 rounded-full animate-pulse"></span>
         </button>
-        <button onclick="switchTab('science')" id="nav-science" class="py-2.5 flex flex-col items-center justify-center text-card-desc hover:text-amber-400 font-semibold transition hover:bg-gray-800/50">
+        <button onclick="switchTab('science')" id="nav-science" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-amber-400 font-semibold transition hover:bg-gray-800/50 border-r border-gray-800/40">
             <i class="fa-solid fa-graduation-cap text-base mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Science</span>
         </button>
-        <button onclick="switchTab('log')" id="nav-log" class="py-2.5 flex flex-col items-center justify-center text-card-desc hover:text-amber-400 font-semibold transition hover:bg-gray-800/50">
+        <button onclick="switchTab('log')" id="nav-log" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-amber-400 font-semibold transition hover:bg-gray-800/50">
             <i class="fa-solid fa-scroll text-base mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Log</span>
         </button>
@@ -704,13 +704,16 @@
             document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.add('hidden'));
             document.getElementById(`tab-${tabId}`).classList.remove('hidden');
 
-            // Reset navigation button highlights
+            // Reset navigation button highlights while keeping layout classes
             ['yard', 'buildings', 'pack', 'science', 'log'].forEach(id => {
                 let btn = document.getElementById(`nav-${id}`);
+                let hasBorder = id !== 'log';
+                let borderClass = hasBorder ? 'border-r border-gray-800/40' : '';
+                
                 if (id === tabId) {
-                    btn.className = "py-2.5 flex flex-col items-center justify-center text-amber-500 font-semibold transition hover:bg-gray-800/50";
+                    btn.className = `flex-1 py-1 flex flex-col items-center justify-center text-amber-500 font-semibold transition hover:bg-gray-800/50 ${borderClass}`;
                 } else {
-                    btn.className = "py-2.5 flex flex-col items-center justify-center text-card-desc hover:text-amber-400 font-semibold transition hover:bg-gray-800/50";
+                    btn.className = `flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-amber-400 font-semibold transition hover:bg-gray-800/50 ${borderClass}`;
                 }
             });
 
