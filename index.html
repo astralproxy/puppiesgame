@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Puppies Game - Backyard Incremental</title>
+    <title>Puppies Game</title>
     <!-- Tailwind CSS CDN -->
     <link rel="stylesheet" href="output.css">
     <!-- FontAwesome Icons -->
@@ -54,10 +54,10 @@
     <!-- Top Header Bar -->
     <header class="bg-header border-b border-gray-800 px-4 py-2.5 flex items-center justify-between shrink-0 shadow-md">
         <div class="flex items-center space-x-2">
-            <i class="fa-solid font-bold text-amber-500 text-xl fa-dog"></i>
+            <i class="fa-solid font-bold text-dog-icon text-xl fa-dog"></i>
             <div>
                 <h1 class="text-base font-bold text-gray-100 leading-tight">Puppies Game</h1>
-                <p class="text-xs text-amber-500/80 font-medium leading-none" id="subtitle-text">You are a puppy playing in the backyard.</p>
+                <p class="text-xs text-subtitle font-medium leading-none" id="subtitle-text">You are a puppy playing in the backyard.</p>
             </div>
         </div>
         <div class="flex items-center space-x-2">
@@ -68,22 +68,33 @@
         </div>
     </header>
 
-    <!-- Options / Menu Modal Dialog -->
+    <!-- SETTINGS / Menu Modal Dialog -->
     <div id="menu-modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-menu border bg-menu-border rounded-2xl w-full max-w-xs p-5 shadow-2xl relative space-y-4 max-h-[90vh] flex flex-col">
             <div class="flex items-center justify-between border-b bg-menu-border pb-3 shrink-0">
                 <h3 class="text-sm font-bold text-menu flex items-center">
                     <i class="fa-solid fa-sliders text-menu mr-2"></i>SETTINGS
                 </h3>
-                <button onclick="toggleMenu()" class="text-card-desc hover:text-menu text-sm">
+                <button onclick="toggleMenu()" class="text-setting-desc hover:text-menu text-sm">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
+            </div>
+
+            <!-- Theme Selector Section -->
+            <div class="space-y-2 bg-setting p-3 rounded-xl border border-gray-800/80">
+                <label class="text-[11px] font-semibold text-setting-desc block">Color Theme</label>
+                <select id="theme-selector" onchange="changeTheme(this.value)" class="w-full px-3 py-1.5 bg-gray-800 border border-gray-700 rounded-lg text-xs text-gray-100 focus:outline-none focus:border-amber-500">
+                    <option value="frenchie">Frenchie</option>
+                    <option value="husky">Husky</option>
+                    <option value="retriever" selected>Retriever (default)</option>
+                    <option value="shepherd">Shepherd</option>
+                </select>
             </div>
             
             <div class="space-y-4 overflow-y-auto custom-scroll pr-1">
                 <!-- Manual Save Section -->
-                <div class="space-y-2 bg-gray-950/50 p-3 rounded-xl border border-gray-800/80">
-                    <label class="text-[11px] font-semibold text-card-desc block">Save Name</label>
+                <div class="space-y-2 bg-setting p-3 rounded-xl border border-gray-800/80">
+                    <label class="text-[11px] font-semibold text-setting-desc block">Save Name</label>
                     <input type="text" id="save-name-input" value="My Save" class="w-full px-3 py-1.5 bg-gray-800 border border-gray-700 rounded-lg text-xs text-gray-100 focus:outline-none focus:border-amber-500">
                     <button onclick="manualSave();" class="w-full p-2.5 bg-amber-600 hover:bg-amber-500 active:bg-amber-700 text-white rounded-lg font-semibold text-xs transition flex items-center justify-center space-x-2">
                         <i class="fa-solid fa-floppy-disk"></i>
@@ -92,16 +103,16 @@
                 </div>
 
                 <!-- Load Save Section -->
-                <div class="space-y-2 bg-gray-950/50 p-3 rounded-xl border border-gray-800/80">
-                    <label class="text-[11px] font-semibold text-card-desc block">Load Saved Game</label>
+                <div class="space-y-2 bg-setting p-3 rounded-xl border border-gray-800/80">
+                    <label class="text-[11px] font-semibold text-setting-desc block">Load Saved Game</label>
                     <div id="save-slots-list" class="space-y-1.5 max-h-36 overflow-y-auto custom-scroll pr-1">
                         <!-- Dynamically populated save slots -->
                     </div>
                 </div>
 
                 <!-- Cheats Section -->
-                <div id="cheats-section" class="hidden space-y-2 bg-gray-950/50 p-3 rounded-xl border border-purple-900/40">
-                    <label class="text-[11px] font-semibold text-purple-400 flex items-center justify-between">
+                <div id="cheats-section" class="hidden space-y-2 bg-setting p-3 rounded-xl border border-purple-900/40">
+                    <label class="text-[11px] font-semibold text-setting-desc flex items-center justify-between">
                         <span><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Cheats</span>
                     </label>
                     <div class="grid grid-cols-1 gap-1.5">
@@ -168,7 +179,7 @@
                         <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-1 flex items-center">
                             <i class="fa-solid fa-tree text-emerald-500 mr-2"></i>Backyard Actions
                         </h2>
-                        <p class="text-xs text-card-desc mb-4">Manual tasks for energetic puppies to jumpstart the pack economy.</p>
+                        <p class="text-xs text-card-desc mb-4">Manual tasks for energetic puppies.</p>
                         
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <button onclick="manualGather('kibble')" class="group p-3 bg-button active:scale-[0.98] border bg-button-border rounded-xl text-left transition flex items-center justify-between">
@@ -178,7 +189,7 @@
                                     </div>
                                     <div class="text-[11px] text-button mt-0.5">Search for dropped food chunks</div>
                                 </div>
-                                <span class="text-button-header bg-panel px-2 py-1 rounded-md border border-amber-800/50">+1.0</span>
+                                <span class="text-action-value bg-panel px-2 py-1 rounded-md border border-amber-800/50">+1.0</span>
                             </button>
 
                             <button onclick="manualGather('sticks')" class="group p-3 bg-button active:scale-[0.98] border bg-button-border rounded-xl text-left transition flex items-center justify-between">
@@ -188,7 +199,7 @@
                                     </div>
                                     <div class="text-[11px] text-button mt-0.5">Collect branches in the yard</div>
                                 </div>
-                                <span class="text-button-header bg-panel px-2 py-1 rounded-md border border-stone-800/50">+1.0</span>
+                                <span class="text-action-value bg-panel px-2 py-1 rounded-md border border-stone-800/50">+1.0</span>
                             </button>
                         </div>
                     </div>
@@ -283,55 +294,19 @@
         </button>
     </nav>
 
+    <!-- ITEMS, ABILITIES, ETC. -->
+    <script src="state.js"></script>
+
     <!-- Vanilla Game Engine Logic -->
     <script>
-        // --- GAME STATE ---
-        let game = {
-            lastSaveName: 'My Save',
-            resources: {
-                kibble: { amount: 20, max: 100, unlocked: true, label: 'Kibble', icon: 'fa-bowl-rice', color: 'text-amber-400' },
-                sticks: { amount: 0, max: 100, unlocked: true, label: 'Sticks', icon: 'fa-cubes', color: 'text-stone-400' },
-                dirt: { amount: 0, max: 100, unlocked: false, label: 'Dirt Clods', icon: 'fa-mound', color: 'text-yellow-700' },
-                bones: { amount: 0, max: 50, unlocked: false, label: 'Bones', icon: 'fa-bone', color: 'text-card-header' },
-                treats: { amount: 0, max: 20, unlocked: false, label: 'Treats', icon: 'fa-cookie', color: 'text-amber-300' },
-                science: { amount: 0, max: 200, unlocked: false, label: 'Science', icon: 'fa-book-open', color: 'text-blue-400' }
-            },
-            pups: {
-                total: 0,
-                max: 0,
-                morale: 1.0,
-                consumptionRate: 0.2 // kibble consumed per pup/sec
-            },
-            jobs: {
-                forager: { count: 0, unlocked: true, label: 'Forager', desc: '+0.8 Kibble/s', icon: 'fa-wheat-awn' },
-                fetcher: { count: 0, unlocked: false, label: 'Fetcher', desc: '+0.5 Sticks/s', icon: 'fa-tree' },
-                digger: { count: 0, unlocked: false, label: 'Digger', desc: '+0.3 Dirt, +0.05 Bones/s', icon: 'fa-shovels' },
-                scholar: { count: 0, unlocked: false, label: 'Wise Pup', desc: '+0.25 Science/s', icon: 'fa-graduation-cap' }
-            },
-            buildings: {
-                doghouse: { count: 0, unlocked: true, label: 'Doghouse', desc: '+1 Pup Capacity', cost: { sticks: 10 }, icon: 'fa-house-user' },
-                woodpile: { count: 0, unlocked: true, label: 'Stick Shed', desc: '+100 Stick Storage', cost: { sticks: 25 }, icon: 'fa-boxes-stacked' },
-                feeder: { count: 0, unlocked: true, label: 'Kibble Bowl', desc: '+100 Kibble Storage', cost: { sticks: 15 }, icon: 'fa-utensils' },
-                quarry: { count: 0, unlocked: false, label: 'Dirt Hole', desc: 'Unlocks deeper digging & storage', cost: { sticks: 40, dirt: 10 }, icon: 'fa-mountain' },
-                kennel: { count: 0, unlocked: false, label: 'Kennel', desc: '+2 Pup Capacity', cost: { sticks: 75, dirt: 30 }, icon: 'fa-warehouse' }
-            },
-            tech: {
-                fetchTechniques: { researched: false, unlocked: true, label: 'Fetch Training', desc: 'Teaches puppies to bring back sticks.', cost: { science: 10 }, unlocks: ['jobs.fetcher'] },
-                excavation: { researched: false, unlocked: false, label: 'Backyard Excavation', desc: 'Allows digging up mud, dirt, and hidden bones.', cost: { science: 25 }, unlocks: ['resources.dirt', 'resources.bones', 'jobs.digger', 'buildings.quarry'] },
-                doggyWisdom: { researched: false, unlocked: false, label: 'Canine Philosophy', desc: 'Unlocks Wise Pup job for rapid research.', cost: { science: 15 }, unlocks: ['jobs.scholar'] },
-                packTactics: { researched: false, unlocked: false, label: 'Pack Tactics', desc: 'Increases all worker pup efficiency by 20%.', cost: { science: 50 }, effectMultiplier: 1.2 }
-            },
-            crafts: {
-                treat: { unlocked: false, label: 'Bake Treat', cost: { kibble: 25 }, yields: { treats: 1 }, icon: 'fa-cookie' }
-            }
-        };
-
         // Rates calculation cache
         let rates = {};
 
         // --- CORE INITIALIZATION ---
         window.onload = function() {
             loadGame();
+
+            loadTheme();
 
             const isLocal = checkLocalEnvironment();
             if (isLocal) {
@@ -591,7 +566,7 @@
                             <span class="font-medium text-gray-300">${r.label}</span>
                         </div>
                         <div class="text-right">
-                            <div class="font-bold text-gray-100">${Math.floor(r.amount)} <span class="text-[10px] text-gray-500 font-normal">/ ${r.max}</span></div>
+                            <div class="font-bold text-resource-value">${Math.floor(r.amount)} <span class="text-[10px] text-resource-max font-normal">/ ${r.max}</span></div>
                             ${rateDisplay ? `<div class="text-[10px] ${rateColor}">${rateDisplay}</div>` : ''}
                         </div>
                     </div>
@@ -941,6 +916,29 @@
             }
             Object.assign(target || {}, source);
             return target;
+        }
+
+        function changeTheme(themeName) {
+            console.log("Changing theme to:", themeName);
+
+            const root = document.documentElement;
+            // Remove all theme classes
+            root.classList.remove('theme-frenchie', 'theme-husky', 'theme-shepherd');
+            
+            // Add selected theme class if not default (retriever)
+            if (themeName === 'frenchie' || themeName === 'husky' || themeName === 'shepherd') {
+                root.classList.add(`theme-${themeName}`);
+            }
+            
+            localStorage.setItem('puppiesGame_theme', themeName);
+        }
+
+        // Load saved theme on startup (add inside window.onload or loadGame)
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('puppiesGame_theme') || 'retriever';
+            const selector = document.getElementById('theme-selector');
+            if (selector) selector.value = savedTheme;
+            changeTheme(savedTheme);
         }
     </script>
 </body>
