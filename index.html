@@ -5,33 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Puppies Game - Backyard Incremental</title>
     <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="output.css">
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Font Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        bark: {
-                            50: '#fdf8f6',
-                            100: '#f2e8e5',
-                            200: '#e4d0cb',
-                            700: '#6e473b',
-                            800: '#4a2e26',
-                            900: '#2b1915',
-                        },
-                        amberCustom: '#d97706',
-                    }
-                }
-            }
-        }
-    </script>
+
     <style>
         /* Custom UI Tweaks & Non-selectable text */
         body {
@@ -52,15 +31,33 @@
         }
     </style>
 </head>
-<body class="bg-gray-950 text-gray-100 font-sans h-screen w-screen overflow-hidden flex flex-col justify-between select-none">
+<body class="bg-body text-gray-100 font-sans h-screen w-screen overflow-hidden flex flex-col justify-between select-none">
+
+    <!-- INFO MODAL DIALOG -->
+    <div id="info-modal" onclick="if(event.target === this) closeInfoModal()" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-gray-900 border border-gray-800 rounded-2xl w-full max-w-xs p-5 shadow-2xl relative space-y-4 flex flex-col">
+            <div class="flex items-center justify-between border-b border-gray-800 pb-3">
+                <h3 id="info-modal-title" class="text-sm font-bold text-gray-200 flex items-center">
+                    <i class="fa-solid fa-circle-info text-amber-500 mr-2"></i>Info
+                </h3>
+                <button onclick="closeInfoModal()" class="text-gray-400 hover:text-gray-200 text-sm">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <p id="info-modal-text" class="text-xs text-gray-300 leading-relaxed"></p>
+            <!-- <button onclick="closeInfoModal()" class="w-full p-2 bg-gray-800 hover:bg-gray-700 text-gray-200 rounded-lg text-xs font-semibold transition">
+                Close
+            </button> -->
+        </div>
+    </div>
 
     <!-- Top Header Bar -->
-    <header class="bg-gray-900 border-b border-gray-800 px-4 py-2.5 flex items-center justify-between shrink-0 shadow-md">
+    <header class="bg-header border-b border-gray-800 px-4 py-2.5 flex items-center justify-between shrink-0 shadow-md">
         <div class="flex items-center space-x-2">
             <i class="fa-solid font-bold text-amber-500 text-xl fa-dog"></i>
             <div>
                 <h1 class="text-base font-bold text-gray-100 leading-tight">Puppies Game</h1>
-                <p class="text-xs text-amber-500/80 font-medium leading-none" id="subtitle-text">You are a puppy in a bone-shredding forest.</p>
+                <p class="text-xs text-amber-500/80 font-medium leading-none" id="subtitle-text">You are a puppy playing in the backyard.</p>
             </div>
         </div>
         <div class="flex items-center space-x-2">
@@ -73,12 +70,12 @@
 
     <!-- Options / Menu Modal Dialog -->
     <div id="menu-modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-gray-900 border border-gray-800 rounded-2xl w-full max-w-xs p-5 shadow-2xl relative space-y-4 max-h-[90vh] flex flex-col">
-            <div class="flex items-center justify-between border-b border-gray-800 pb-3 shrink-0">
-                <h3 class="text-sm font-bold text-gray-200 flex items-center">
-                    <i class="fa-solid fa-sliders text-amber-500 mr-2"></i>Pack Options
+        <div class="bg-menu border bg-menu-border rounded-2xl w-full max-w-xs p-5 shadow-2xl relative space-y-4 max-h-[90vh] flex flex-col">
+            <div class="flex items-center justify-between border-b bg-menu-border pb-3 shrink-0">
+                <h3 class="text-sm font-bold text-menu flex items-center">
+                    <i class="fa-solid fa-sliders text-menu mr-2"></i>SETTINGS
                 </h3>
-                <button onclick="toggleMenu()" class="text-gray-400 hover:text-gray-200 text-sm">
+                <button onclick="toggleMenu()" class="text-card-desc hover:text-menu text-sm">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -86,7 +83,7 @@
             <div class="space-y-4 overflow-y-auto custom-scroll pr-1">
                 <!-- Manual Save Section -->
                 <div class="space-y-2 bg-gray-950/50 p-3 rounded-xl border border-gray-800/80">
-                    <label class="text-[11px] font-semibold text-gray-400 block">Save Name</label>
+                    <label class="text-[11px] font-semibold text-card-desc block">Save Name</label>
                     <input type="text" id="save-name-input" value="My Save" class="w-full px-3 py-1.5 bg-gray-800 border border-gray-700 rounded-lg text-xs text-gray-100 focus:outline-none focus:border-amber-500">
                     <button onclick="manualSave();" class="w-full p-2.5 bg-amber-600 hover:bg-amber-500 active:bg-amber-700 text-white rounded-lg font-semibold text-xs transition flex items-center justify-center space-x-2">
                         <i class="fa-solid fa-floppy-disk"></i>
@@ -96,7 +93,7 @@
 
                 <!-- Load Save Section -->
                 <div class="space-y-2 bg-gray-950/50 p-3 rounded-xl border border-gray-800/80">
-                    <label class="text-[11px] font-semibold text-gray-400 block">Load Saved Game</label>
+                    <label class="text-[11px] font-semibold text-card-desc block">Load Saved Game</label>
                     <div id="save-slots-list" class="space-y-1.5 max-h-36 overflow-y-auto custom-scroll pr-1">
                         <!-- Dynamically populated save slots -->
                     </div>
@@ -139,18 +136,18 @@
     <main class="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-12 gap-0 overflow-hidden relative">
 
         <!-- Sidebar: Resource Bar (Always visible on Left in Desktop, Top Bar Drawer on Mobile) -->
-        <aside class="md:col-span-4 lg:col-span-3 bg-gray-900/90 border-r border-gray-800/80 p-3.5 flex flex-col overflow-y-auto custom-scroll">
+        <aside class="md:col-span-4 lg:col-span-3 bg-sidebar border-r border-gray-800/80 p-3.5 flex flex-col overflow-y-auto custom-scroll">
             <div class="flex items-center justify-between mb-3 border-b border-gray-800 pb-2">
-                <h2 class="text-xs font-bold uppercase tracking-wider text-gray-400">Pack & Supplies</h2>
-                <span class="text-xs px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 font-semibold border border-amber-500/20" id="pack-capacity-badge">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-sidebar-title">Pack & Supplies</h2>
+                <span class="text-xs px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-800 font-semibold border border-amber-500/20" id="pack-capacity-badge">
                     <i class="fa-solid fa-paw text-[10px] mr-1"></i><span id="res-pups">0</span>/<span id="res-max-pups">0</span> Pups
                 </span>
             </div>
 
             <!-- Morale / Alert Indicator -->
             <div id="morale-bar" class="mb-3 p-2 bg-amber-950/30 border border-amber-800/40 rounded-lg flex items-center justify-between text-xs">
-                <span class="text-amber-300/80 font-medium"><i class="fa-solid fa-heart text-amber-500 mr-1.5"></i>Pack Morale</span>
-                <span id="morale-val" class="font-bold text-amber-400">100%</span>
+                <span class="text-amber-800 font-medium"><i class="fa-solid fa-heart text-amber-600 mr-1.5"></i>Pack Morale</span>
+                <span id="morale-val" class="font-bold text-amber-800">100%</span>
             </div>
 
             <!-- Resource List -->
@@ -160,45 +157,45 @@
         </aside>
 
         <!-- Main Tab Area -->
-        <section class="md:col-span-8 lg:col-span-9 flex flex-col bg-gray-950 h-full overflow-hidden relative">
+        <section class="md:col-span-8 lg:col-span-9 flex flex-col bg-body h-full overflow-hidden relative">
             
             <!-- Tab Content Screens -->
             <div class="flex-1 overflow-y-auto p-4 custom-scroll relative">
                 
                 <!-- TAB 1: YARD (Manual actions & core setup) -->
                 <div id="tab-yard" class="tab-panel space-y-4">
-                    <div class="bg-gray-900 p-4 rounded-xl border border-gray-800 shadow-sm">
-                        <h2 class="text-sm font-bold text-gray-200 uppercase tracking-wider mb-1 flex items-center">
+                    <div class="bg-panel p-4 rounded-xl border border-gray-800 shadow-sm">
+                        <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-1 flex items-center">
                             <i class="fa-solid fa-tree text-emerald-500 mr-2"></i>Backyard Actions
                         </h2>
-                        <p class="text-xs text-gray-400 mb-4">Manual tasks for energetic puppies to jumpstart the pack economy.</p>
+                        <p class="text-xs text-card-desc mb-4">Manual tasks for energetic puppies to jumpstart the pack economy.</p>
                         
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <button onclick="manualGather('kibble')" class="group p-3 bg-gradient-to-r from-amber-900/40 to-amber-800/30 hover:from-amber-800/50 hover:to-amber-700/40 active:scale-[0.98] border border-amber-700/50 rounded-xl text-left transition flex items-center justify-between">
+                            <button onclick="manualGather('kibble')" class="group p-3 bg-button active:scale-[0.98] border bg-button-border rounded-xl text-left transition flex items-center justify-between">
                                 <div>
-                                    <div class="text-sm font-semibold text-amber-200 group-hover:text-amber-100 flex items-center">
+                                    <div class="text-button-header text-button-hover flex items-center">
                                         <i class="fa-solid fa-bowl-rice text-amber-400 mr-2"></i>Scavenge Kibble
                                     </div>
-                                    <div class="text-[11px] text-amber-300/60 mt-0.5">Search for dropped food chunks</div>
+                                    <div class="text-[11px] text-button mt-0.5">Search for dropped food chunks</div>
                                 </div>
-                                <span class="text-xs font-bold text-amber-400 bg-amber-950/60 px-2 py-1 rounded-md border border-amber-800/50">+1.0</span>
+                                <span class="text-button-header bg-panel px-2 py-1 rounded-md border border-amber-800/50">+1.0</span>
                             </button>
 
-                            <button onclick="manualGather('sticks')" class="group p-3 bg-gradient-to-r from-stone-900/60 to-stone-800/40 hover:from-stone-800/70 hover:to-stone-700/50 active:scale-[0.98] border border-stone-700/50 rounded-xl text-left transition flex items-center justify-between">
+                            <button onclick="manualGather('sticks')" class="group p-3 bg-button active:scale-[0.98] border bg-button-border rounded-xl text-left transition flex items-center justify-between">
                                 <div>
-                                    <div class="text-sm font-semibold text-stone-200 group-hover:text-stone-100 flex items-center">
+                                    <div class="text-button-header text-button-hover flex items-center">
                                         <i class="fa-solid fa-cubes text-stone-400 mr-2"></i>Gather Sticks
                                     </div>
-                                    <div class="text-[11px] text-stone-400/60 mt-0.5">Collect branches in the yard</div>
+                                    <div class="text-[11px] text-button mt-0.5">Collect branches in the yard</div>
                                 </div>
-                                <span class="text-xs font-bold text-stone-300 bg-stone-950/60 px-2 py-1 rounded-md border border-stone-800/50">+1.0</span>
+                                <span class="text-button-header bg-panel px-2 py-1 rounded-md border border-stone-800/50">+1.0</span>
                             </button>
                         </div>
                     </div>
 
                     <!-- Refinement / Crafting Quick Card -->
-                    <div id="crafting-card" class="bg-gray-900 p-4 rounded-xl border border-gray-800 shadow-sm">
-                        <h2 class="text-sm font-bold text-gray-200 uppercase tracking-wider mb-2 flex items-center">
+                    <div id="crafting-card" class="bg-panel p-4 rounded-xl border border-gray-800 shadow-sm">
+                        <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-2 flex items-center">
                             <i class="fa-solid fa-hammer text-amber-500 mr-2"></i>Crafting & Refinement
                         </h2>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="craft-buttons">
@@ -210,8 +207,10 @@
                 <!-- TAB 2: BUILDINGS -->
                 <div id="tab-buildings" class="tab-panel hidden space-y-3">
                     <div class="flex items-center justify-between mb-2">
-                        <h2 class="text-sm font-bold text-gray-200 uppercase tracking-wider">Structures & Housing</h2>
-                        <span class="text-xs text-gray-400">Expand capacity & automated income</span>
+                        <h2 class="text-sm font-bold text-card-header uppercase tracking-wider">Infrastructure</h2>
+                        <button onclick="openInfoModal('Infrastructure', 'Expand capacity & automated income')" class="text-card-desc hover:text-gray-200 transition p-1" title="Info">
+                            <i class="fa-solid fa-circle-info text-base"></i>
+                        </button>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" id="buildings-container">
                         <!-- Populated dynamically -->
@@ -220,13 +219,13 @@
 
                 <!-- TAB 3: PACK / JOBS -->
                 <div id="tab-pack" class="tab-panel hidden space-y-4">
-                    <div class="bg-gray-900 p-4 rounded-xl border border-gray-800 flex items-center justify-between">
+                    <div class="bg-panel p-4 rounded-xl border border-gray-800 flex items-center justify-between">
                         <div>
-                            <h2 class="text-sm font-bold text-gray-200 uppercase tracking-wider">Pack Roster</h2>
-                            <p class="text-xs text-gray-400">Assign idle puppies to jobs to automate gathering.</p>
+                            <h2 class="text-sm font-bold text-card-header uppercase tracking-wider">Pack Roster</h2>
+                            <p class="text-xs text-card-desc">Assign idle puppies to jobs to automate gathering.</p>
                         </div>
                         <div class="text-right">
-                            <div class="text-xs text-gray-400">Unassigned Pups</div>
+                            <div class="text-xs text-card-desc">Unassigned Pups</div>
                             <div class="text-lg font-bold text-amber-400" id="unassigned-pups">0</div>
                         </div>
                     </div>
@@ -239,8 +238,8 @@
                 <!-- TAB 4: SCIENCE / TECH -->
                 <div id="tab-science" class="tab-panel hidden space-y-3">
                     <div class="flex items-center justify-between mb-2">
-                        <h2 class="text-sm font-bold text-gray-200 uppercase tracking-wider">Doggy Wisdom</h2>
-                        <span class="text-xs text-gray-400">Research techniques to advance the pack</span>
+                        <h2 class="text-sm font-bold text-card-header uppercase tracking-wider">Doggy Wisdom</h2>
+                        <span class="text-xs text-card-desc">Research techniques to advance the pack</span>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="tech-container">
                         <!-- Populated dynamically -->
@@ -249,8 +248,8 @@
 
                 <!-- TAB 5: LOG -->
                 <div id="tab-log" class="tab-panel hidden h-full flex flex-col">
-                    <h2 class="text-sm font-bold text-gray-200 uppercase tracking-wider mb-2">Pack Chronicles</h2>
-                    <div id="game-log" class="flex-1 bg-gray-900 p-3 rounded-xl border border-gray-800 text-xs font-mono space-y-1.5 overflow-y-auto custom-scroll max-h-[350px]">
+                    <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-2">Pack Chronicles</h2>
+                    <div id="game-log" class="flex-1 bg-panel p-3 rounded-xl border border-gray-800 text-xs font-mono space-y-1.5 overflow-y-auto custom-scroll max-h-[350px]">
                         <!-- Log messages go here -->
                     </div>
                 </div>
@@ -260,25 +259,25 @@
     </main>
 
     <!-- Bottom Navigation Bar for Mobile -->
-    <nav class="bg-gray-900 border-t border-gray-800 grid grid-cols-5 text-center shrink-0 z-10">
+    <nav class="bg-nav-mobile border-t border-gray-800 grid grid-cols-5 text-center shrink-0 z-10">
         <button onclick="switchTab('yard')" id="nav-yard" class="py-2.5 flex flex-col items-center justify-center text-amber-500 font-semibold transition hover:bg-gray-800/50">
             <i class="fa-solid fa-bone text-base mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Yard</span>
         </button>
-        <button onclick="switchTab('buildings')" id="nav-buildings" class="py-2.5 flex flex-col items-center justify-center text-gray-400 hover:text-amber-400 font-semibold transition hover:bg-gray-800/50">
+        <button onclick="switchTab('buildings')" id="nav-buildings" class="py-2.5 flex flex-col items-center justify-center text-card-desc hover:text-amber-400 font-semibold transition hover:bg-gray-800/50">
             <i class="fa-solid fa-house text-base mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Buildings</span>
         </button>
-        <button onclick="switchTab('pack')" id="nav-pack" class="py-2.5 flex flex-col items-center justify-center text-gray-400 hover:text-amber-400 font-semibold transition hover:bg-gray-800/50 relative">
+        <button onclick="switchTab('pack')" id="nav-pack" class="py-2.5 flex flex-col items-center justify-center text-card-desc hover:text-amber-400 font-semibold transition hover:bg-gray-800/50 relative">
             <i class="fa-solid fa-paw text-base mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Pack</span>
             <span id="nav-pup-indicator" class="hidden absolute top-1.5 right-4 w-2 h-2 bg-amber-500 rounded-full animate-pulse"></span>
         </button>
-        <button onclick="switchTab('science')" id="nav-science" class="py-2.5 flex flex-col items-center justify-center text-gray-400 hover:text-amber-400 font-semibold transition hover:bg-gray-800/50">
+        <button onclick="switchTab('science')" id="nav-science" class="py-2.5 flex flex-col items-center justify-center text-card-desc hover:text-amber-400 font-semibold transition hover:bg-gray-800/50">
             <i class="fa-solid fa-graduation-cap text-base mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Science</span>
         </button>
-        <button onclick="switchTab('log')" id="nav-log" class="py-2.5 flex flex-col items-center justify-center text-gray-400 hover:text-amber-400 font-semibold transition hover:bg-gray-800/50">
+        <button onclick="switchTab('log')" id="nav-log" class="py-2.5 flex flex-col items-center justify-center text-card-desc hover:text-amber-400 font-semibold transition hover:bg-gray-800/50">
             <i class="fa-solid fa-scroll text-base mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Log</span>
         </button>
@@ -293,7 +292,7 @@
                 kibble: { amount: 20, max: 100, unlocked: true, label: 'Kibble', icon: 'fa-bowl-rice', color: 'text-amber-400' },
                 sticks: { amount: 0, max: 100, unlocked: true, label: 'Sticks', icon: 'fa-cubes', color: 'text-stone-400' },
                 dirt: { amount: 0, max: 100, unlocked: false, label: 'Dirt Clods', icon: 'fa-mound', color: 'text-yellow-700' },
-                bones: { amount: 0, max: 50, unlocked: false, label: 'Bones', icon: 'fa-bone', color: 'text-gray-200' },
+                bones: { amount: 0, max: 50, unlocked: false, label: 'Bones', icon: 'fa-bone', color: 'text-card-header' },
                 treats: { amount: 0, max: 20, unlocked: false, label: 'Treats', icon: 'fa-cookie', color: 'text-amber-300' },
                 science: { amount: 0, max: 200, unlocked: false, label: 'Science', icon: 'fa-book-open', color: 'text-blue-400' }
             },
@@ -593,7 +592,7 @@
                     <button onclick="craftItem('${cKey}')" ${!canAfford ? 'disabled' : ''} class="p-2.5 rounded-lg border text-left flex items-center justify-between ${canAfford ? 'bg-amber-950/40 border-amber-800/60 hover:bg-amber-900/40 text-amber-200' : 'bg-gray-900 border-gray-800 text-gray-600 opacity-60'}">
                         <div>
                             <div class="font-semibold text-xs flex items-center"><i class="fa-solid ${c.icon} mr-1.5"></i>${c.label}</div>
-                            <div class="text-[10px] text-gray-400">Req: ${costText.join(', ')}</div>
+                            <div class="text-[10px] text-card-desc">Req: ${costText.join(', ')}</div>
                         </div>
                         <i class="fa-solid fa-chevron-right text-xs opacity-50"></i>
                     </button>
@@ -623,15 +622,15 @@
                     <div class="bg-gray-900 p-3 rounded-xl border border-gray-800 flex flex-col justify-between space-y-3">
                         <div>
                             <div class="flex items-center justify-between mb-1">
-                                <span class="text-xs font-bold text-gray-200 flex items-center">
+                                <span class="text-xs font-bold text-card-header flex items-center">
                                     <i class="fa-solid ${b.icon} text-amber-500 mr-2"></i>${b.label}
                                 </span>
                                 <span class="text-xs font-bold px-2 py-0.5 bg-gray-800 text-amber-400 rounded-md">Lvl ${b.count}</span>
                             </div>
-                            <p class="text-[11px] text-gray-400">${b.desc}</p>
+                            <p class="text-[11px] text-card-desc">${b.desc}</p>
                         </div>
                         <div class="pt-2 border-t border-gray-800/60 flex items-center justify-between">
-                            <span class="text-[10px] text-gray-400">${costStr.join(', ')}</span>
+                            <span class="text-[10px] text-card-desc">${costStr.join(', ')}</span>
                             <button onclick="buyBuilding('${bKey}')" ${!canAfford ? 'disabled' : ''} class="px-3 py-1.5 rounded-lg text-xs font-semibold transition ${canAfford ? 'bg-amber-600 hover:bg-amber-500 active:bg-amber-700 text-white shadow' : 'bg-gray-800 text-gray-500 cursor-not-allowed'}">
                                 Build
                             </button>
@@ -654,8 +653,8 @@
                                 <i class="fa-solid ${j.icon} text-base"></i>
                             </div>
                             <div>
-                                <h3 class="text-xs font-bold text-gray-200">${j.label}</h3>
-                                <p class="text-[11px] text-gray-400">${j.desc}</p>
+                                <h3 class="text-xs font-bold text-card-header">${j.label}</h3>
+                                <p class="text-[11px] text-card-desc">${j.desc}</p>
                             </div>
                         </div>
                         <div class="flex items-center space-x-2">
@@ -687,10 +686,10 @@
                             <h3 class="text-xs font-bold text-blue-300 mb-1 flex items-center">
                                 <i class="fa-solid fa-microscope mr-2 text-blue-400"></i>${t.label}
                             </h3>
-                            <p class="text-[11px] text-gray-400">${t.desc}</p>
+                            <p class="text-[11px] text-card-desc">${t.desc}</p>
                         </div>
                         <div class="pt-2 border-t border-gray-800/60 flex items-center justify-between">
-                            <span class="text-[10px] text-gray-400">${costStr.join(', ')}</span>
+                            <span class="text-[10px] text-card-desc">${costStr.join(', ')}</span>
                             <button onclick="researchTech('${tKey}')" ${!canAfford ? 'disabled' : ''} class="px-3 py-1.5 rounded-lg text-xs font-semibold transition ${canAfford ? 'bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white shadow' : 'bg-gray-800 text-gray-500 cursor-not-allowed'}">
                                 Research
                             </button>
@@ -711,7 +710,7 @@
                 if (id === tabId) {
                     btn.className = "py-2.5 flex flex-col items-center justify-center text-amber-500 font-semibold transition hover:bg-gray-800/50";
                 } else {
-                    btn.className = "py-2.5 flex flex-col items-center justify-center text-gray-400 hover:text-amber-400 font-semibold transition hover:bg-gray-800/50";
+                    btn.className = "py-2.5 flex flex-col items-center justify-center text-card-desc hover:text-amber-400 font-semibold transition hover:bg-gray-800/50";
                 }
             });
 
@@ -737,6 +736,17 @@
             if (!modal.classList.contains('hidden')) {
                 renderSaveSlots();
             }
+        }
+
+        // --- INFO BUTTON TOGGLE ---
+        function openInfoModal(title, text) {
+            document.getElementById('info-modal-title').innerHTML = `<i class="fa-solid fa-circle-info text-amber-500 mr-2"></i>${title}`;
+            document.getElementById('info-modal-text').innerText = text;
+            document.getElementById('info-modal').classList.remove('hidden');
+        }
+
+        function closeInfoModal() {
+            document.getElementById('info-modal').classList.add('hidden');
         }
 
         // --- SAVE / LOAD SYSTEM ---
@@ -820,7 +830,7 @@
             index.forEach(name => {
                 let slotHtml = `
                     <div class="flex items-center justify-between p-2 bg-gray-800 rounded-lg text-xs border border-gray-700">
-                        <span class="font-medium text-gray-200 truncate mr-2" title="${name}">${name}</span>
+                        <span class="font-medium text-card-header truncate mr-2" title="${name}">${name}</span>
                         <div class="flex items-center space-x-1 shrink-0">
                             <button onclick="loadManualSave('${name}'); toggleMenu();" class="px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded text-[10px] font-semibold transition">Load</button>
                             <button onclick="deleteManualSave('${name}');" class="px-2 py-1 bg-red-900/60 hover:bg-red-800 text-red-300 rounded text-[10px] transition"><i class="fa-solid fa-trash"></i></button>

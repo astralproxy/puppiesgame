@@ -1,0 +1,26 @@
+@import "tailwindcss";
+
+/* --- Background Colors --- */
+.bg-body { @apply bg-amber-50; }
+.bg-sidebar { @apply bg-amber-100; }
+.bg-panel { @apply bg-amber-100; }
+.bg-resource-item { @apply bg-orange-400; }
+.bg-header { @apply bg-red-950; }
+.bg-modal { @apply bg-red-400; }
+.bg-button { @apply bg-amber-200; }
+.bg-button-border { @apply border-gray-400; }
+.bg-menu { @apply bg-gray-900; }
+.bg-menu-border { @apply border-gray-700; }
+
+/* --- Text Colors --- */
+.text-card-header { @apply text-gray-800; }
+.text-card-desc { @apply text-gray-600; }
+.text-sidebar-title { @apply text-gray-600; }
+.text-subtitle { @apply text-amber-500/80; }
+.text-resource-label { @apply text-red-300; }
+.text-resource-value { @apply text-blue-100; }
+.text-muted { @apply text-green-500; }
+.text-button { @apply text-gray-800; }
+.text-button-header { @apply text-xs font-bold text-gray-800; }
+.text-button-hover { @apply group-hover:text-gray-600; }
+.text-menu { @apply text-gray-200; }

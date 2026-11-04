@@ -1,0 +1,2 @@
+#Put tailwind in watch mode to generate css
+npx tailwindcss -i ./input.css -o ./output.css --watch
