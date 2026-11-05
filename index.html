@@ -116,7 +116,7 @@
                         <span><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Cheats</span>
                     </label>
                     <div class="grid grid-cols-1 gap-1.5">
-                        <button type="button" id="btn-cheat-tech" class="w-full p-2 bg-purple-950/60 hover:bg-purple-900/60 active:bg-purple-800/60 border border-purple-800/50 text-purple-200 rounded-lg text-xs font-medium transition flex items-center justify-between cursor-pointer">
+                        <button type="button" id="btn-cheat-reveal" class="w-full p-2 bg-purple-950/60 hover:bg-purple-900/60 active:bg-purple-800/60 border border-purple-800/50 text-purple-200 rounded-lg text-xs font-medium transition flex items-center justify-between cursor-pointer">
                             <span>Reveal All Upgrades</span>
                             <i class="fa-solid fa-eye text-purple-400"></i>
                         </button>
@@ -156,7 +156,7 @@
             </div>
 
             <!-- Morale / Alert Indicator -->
-            <div id="morale-bar" class="mb-3 p-2 bg-amber-950/30 border bg-button-border rounded-lg flex items-center justify-between text-xs">
+            <div id="morale-bar" class="mb-3 p-2 bg-amber-800/30 border bg-button-border rounded-lg flex items-center justify-between text-xs">
                 <span class="text-supply font-medium"><i class="fa-solid fa-heart mr-1.5"></i>Pack Morale</span>
                 <span id="morale-val" class="font-bold text-amber-800">100%</span>
             </div>
@@ -189,7 +189,7 @@
                                     </div>
                                     <div class="text-[11px] text-card-desc mt-0.5">Search for dropped food chunks</div>
                                 </div>
-                                <span class="text-action-value">+1.0</span>
+                                <span class="text-[14px] text-action-value">+1.0</span>
                                 <!-- <span class="text-action-value bg-badge px-2 py-1 rounded-md border bg-button-border">+1.0</span> -->
                             </button>
 
@@ -200,7 +200,7 @@
                                     </div>
                                     <div class="text-[11px] text-card-desc mt-0.5">Collect branches in the yard</div>
                                 </div>
-                                <span class="text-action-value">+1.0</span>
+                                <span class="text-[14px] text-action-value">+1.0</span>
                                 <!-- <span class="text-action-value bg-badge px-2 py-1 rounded-md border bg-button-border">+1.0</span> -->
                             </button>
                         </div>
@@ -229,11 +229,11 @@
                             </div>
                             <div class="text-right">
                                 <div class="text-[10px] uppercase tracking-wider text-card-desc font-semibold">Idle</div>
-                                <div class="text-base font-bold text-card-title" id="unassigned-pups">0</div>
+                                <div class="text-base font-bold text-resource-value" id="unassigned-pups">0</div>
                             </div>
                         </div>
                     
-                        <div class="space-y-3" id="jobs-container">
+                        <div class="space-y-2" id="jobs-container">
                             <!-- Populated dynamically -->
                         </div>
                     </div>
@@ -242,11 +242,13 @@
                 <!-- TAB 3: STRUCTURES -->
                 <div id="tab-buildings" class="tab-panel hidden space-y-4">
                     <div class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm space-y-4">
-                        <div>
-                            <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-1 flex items-center">
-                                <i class="fa-solid fa-house text-card-icon mr-2"></i>Structures
-                            </h2>
-                            <p class="text-xs text-card-desc">Expand capacity and automated income.</p>
+                        <div class="flex items-center justify-between border-b bg-button-border/40 pb-3">
+                            <div>
+                                <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-1 flex items-center">
+                                    <i class="fa-solid fa-house text-card-icon mr-2"></i>Structures
+                                </h2>
+                                <p class="text-xs text-card-desc mt-0.5">Expand capacity and automated income.</p>
+                            </div>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2" id="buildings-container">
                             <!-- Populated dynamically -->
@@ -254,16 +256,18 @@
                     </div>
                 </div>
 
-                <!-- TAB 4: UPGRADES -->
-                <div id="tab-upgrades" class="tab-panel hidden space-y-4">
+                <!-- TAB 4: TRICKS -->
+                <div id="tab-tricks" class="tab-panel hidden space-y-4">
                     <div class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm space-y-4">
-                        <div>
-                            <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-1 flex items-center">
-                                <i class="fa-solid fa-arrow-trend-up text-card-icon mr-2"></i>Upgrades
-                            </h2>
-                            <p class="text-xs text-card-desc">Research techniques to advance the pack.</p>
+                        <div class="flex items-center justify-between border-b bg-button-border/40 pb-3">
+                            <div>
+                                <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-1 flex items-center">
+                                    <i class="fa-solid fa-arrow-trend-up text-card-icon mr-2"></i>Tricks
+                                </h2>
+                                <p class="text-xs text-card-desc mt-0.5">Techniques to enhance the pack's abilities.</p>
+                            </div>
                         </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="tech-container">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="tricks-container">
                             <!-- Populated dynamically -->
                         </div>
                     </div>
@@ -281,24 +285,24 @@
         </section>
     </main>
 
-    <!-- Bottom Navigation Bar for Mobile -->
+    <!-- Bottom Navigation Bar -->
     <nav class="bg-nav-mobile border-t bg-button-border flex items-center justify-around shrink-0 z-10 py-1.5">
         <button onclick="switchTab('yard')" id="nav-yard" class="flex-1 py-1 flex flex-col items-center justify-center text-card-icon font-semibold transition hover:bg-badge border-r bg-button-border">
             <i class="fa-solid fa-bone text-base mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Yard</span>
         </button>
-        <button onclick="switchTab('pack')" id="nav-pack" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge relative border-r bg-button-border">
-            <i class="fa-solid fa-paw text-base mb-0.5"></i>
-            <span class="text-[10px] tracking-tight">Pack</span>
-            <span id="nav-pup-indicator" class="hidden absolute top-1 right-1/3 w-2 h-2 bg-newpup-indicator rounded-full animate-pulse"></span>
-        </button>
         <button onclick="switchTab('buildings')" id="nav-buildings" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge border-r bg-button-border">
             <i class="fa-solid fa-house text-base mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Structures</span>
         </button>
-        <button onclick="switchTab('upgrades')" id="nav-upgrades" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge border-r bg-button-border">
-            <i class="fa-solid fa-arrow-trend-up text-base mb-0.5"></i>
-            <span class="text-[10px] tracking-tight">Upgrades</span>
+        <button onclick="switchTab('pack')" id="nav-pack" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge relative border-r bg-button-border">
+            <i class="fa-solid fa-paw text-base mb-0.5"></i>
+            <span class="text-[10px] tracking-tight">Pack</span>
+            <span id="nav-pup-indicator" class="hidden absolute top-1.5 right-2.5 w-2 h-2 bg-newpup-indicator rounded-full animate-pulse"></span>
+        </button>
+        <button onclick="switchTab('tricks')" id="nav-tricks" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge border-r bg-button-border">
+            <i id="nav-tricks-icon" class="fa-solid fa-arrow-trend-up text-base mb-0.5"></i>
+            <span id="nav-tricks-label" class="text-[10px] tracking-tight"></span>
         </button>
         <button onclick="switchTab('log')" id="nav-log" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge">
             <i class="fa-solid fa-scroll text-base mb-0.5"></i>
@@ -322,9 +326,9 @@
             const isLocal = checkLocalEnvironment();
             if (isLocal) {
                 // Bind Cheat Button Listeners safely here
-                document.getElementById('btn-cheat-tech').addEventListener('click', cheatRevealAllTech);
                 document.getElementById('btn-cheat-kibble').addEventListener('click', () => cheatAddResource('kibble', 1000));
                 document.getElementById('btn-cheat-sticks').addEventListener('click', () => cheatAddResource('sticks', 1000));
+                document.getElementById('btn-cheat-reveal').addEventListener('click', cheatRevealAll);
             }
 
             // Apply unified tab height from const
@@ -364,11 +368,11 @@
             calculateRates();
 
             // Process Pup Population Growth
-            let totalCap = (game.buildings.doghouse.count * 1) + (game.buildings.kennel.count * 2);
+            let totalCap = (game.buildings.doghouse.count * 1) + (game.buildings.kennel.count * 3);
             game.pups.max = totalCap;
 
-            if (game.pups.total < game.pups.max && game.resources.kibble.amount > 15) {
-                // Random chance to attract new pup if space and food permit
+            if (game.pups.total < game.pups.max && game.pups.morale > 0.5 && game.resources.kibble.amount > 10) {
+                // Random chance to attract new pup if space, morale, and food permit
                 if (Math.random() < 0.1) {
                     game.pups.total++;
                     logMessage("🐾 A new stray puppy wandered into your yard and joined the pack!");
@@ -408,32 +412,42 @@
             }
 
 //#region UNLOCKS ---
-
             // Unlock Jobs
-            if (!game.jobs.snoozer.unlocked && game.pups.total >= JOB_UNLOCK_SNOOZER) {
-                game.jobs.snoozer.unlocked = true;
-                logMessage("💤 The pack is large enough to establish a resting shift. Snoozer job unlocked!");
+            if (!game.jobs.fetcher.unlocked && game.pups.total >= JOB_UNLOCK_FETCHER) {
+                game.jobs.fetcher.unlocked = true;
+                logMessage("🪾 The pack grows, and now some pups can fetch sticks.");
+            }
+            if (!game.jobs.beggar.unlocked && game.pups.total >= JOB_UNLOCK_BEGGAR) {
+                game.jobs.beggar.unlocked = true;
+                logMessage("🍬 The pack grows, and now some pups might beg for treats.");
             }
 
-            // Unlock Upgrades after ideas are formed
-            if (!game.resources.upgrades.unlocked &&game.resources.upgrades.amount > 0) {
-                game.resources.upgrades.unlocked = true;                
-                logMessage("💡 After a vivid dream, a pup had a new idea!");
+            // Unlock the first Trick after treats are made
+            let firstTrickKey = Object.keys(game.tricks)[0]
+            if (firstTrickKey && !game.tricks[firstTrickKey].unlocked && game.resources.treats.amount > 0) {
+                game.tricks[firstTrickKey].unlocked = true;                
+                logMessage("💡 Who said you can't teach an old dog new tricks?");
             }
 
             // Unlock Crafts after a bone is found
             if (game.resources.bones.amount > 0/* || game.jobs.digger.count > 0*/) {
                 game.crafts.treat.unlocked = true;
             }
+//#endregion UNLOCKS
 
             renderAll();
         }
 
         // --- RESOURCE & CALCULATION LOGIC ---
         function calculateRates() {
-            rates = { kibble: 0, sticks: 0, dirt: 0, bones: 0, upgrades: 0 };
+            rates = { kibble: 0, sticks: 0, dirt: 0, bones: 0, tricks: 0 };
 
-            let mult = (game.tech.packTactics && game.tech.packTactics.researched) ? 1.2 : 1.0;
+            /* RULES
+                - Morale Drop: if Kibble count hits zero, pack morale drops
+                - The Effect: yield from Foragers is scaled down (pups * yield * morale%)
+                - What's Bad: consumption stays flat and outpaces lower yield
+            */
+            let mult = (game.tricks.zoomies && game.tricks.zoomies.teached) ? 1.2 : 1.0;
             mult *= game.pups.morale;
 
             // Dynamically calculate yields from job definitions
@@ -446,15 +460,12 @@
                 }
             }
 
-            // Subtract consumption
-            rates.kibble -= game.pups.total * game.pups.consumptionRate;
-
             // Recalculate Max Storages
             game.resources.kibble.max = 100 + (game.buildings.feeder.count * 100);
             game.resources.sticks.max = 100 + (game.buildings.woodpile.count * 100);
             game.resources.dirt.max = 100 + (game.buildings.quarry.count * 150);
-            game.resources.bones.max = 50 + (game.buildings.quarry.count * 25);
-            game.resources.upgrades.max = 200;
+            game.resources.bones.max = 100 + (game.buildings.quarry.count * 25);
+            game.resources.treats.max = 100;
         }
 
         function manualGather(type) {
@@ -541,9 +552,9 @@
             renderAll();
         }
 
-        function researchTech(tKey) {
-            let t = game.tech[tKey];
-            if (!t || t.researched) return;
+        function teachTricks(tKey) {
+            let t = game.tricks[tKey];
+            if (!t || t.teached) return;
 
             for (let r in t.cost) {
                 if (game.resources[r].amount < t.cost[r]) return;
@@ -553,8 +564,8 @@
                 game.resources[r].amount -= t.cost[r];
             }
 
-            t.researched = true;
-            logMessage(`🎉 Research complete: ${t.label}!`);
+            t.teached = true;
+            logMessage(`🎉 Teaching complete: ${t.label}!`);
 
             // Apply unlocks
             if (t.unlocks) {
@@ -566,12 +577,12 @@
                 });
             }
 
-            // Sequential Tech Unlocking: unlock the very next unresearched tech in order
-            let keys = Object.keys(game.tech);
+            // Sequential Trick Unlocking: unlock the very next unteached tricks in order
+            let keys = Object.keys(game.tricks);
             let currIdx = keys.indexOf(tKey);
             if (currIdx !== -1 && currIdx + 1 < keys.length) {
                 let nextKey = keys[currIdx + 1];
-                game.tech[nextKey].unlocked = true;
+                game.tricks[nextKey].unlocked = true;
             }
 
             renderAll();
@@ -589,8 +600,50 @@
             let assigned = Object.values(game.jobs).reduce((sum, j) => sum + j.count, 0);
             document.getElementById('unassigned-pups').innerText = game.pups.total - assigned;
 
+            // Render Tricks button based on unlock state
+            let firstTrickKey = Object.keys(game.tricks)[0];
+            let tricksNavBtn = document.getElementById('nav-tricks');
+            let tricksNavIcon = document.getElementById('nav-tricks-icon');
+            let tricksNavLabel = document.getElementById('nav-tricks-label');
+            let isTricksUnlocked = firstTrickKey ? game.tricks[firstTrickKey].unlocked : false;
+            
+            if (tricksNavBtn) {
+                if (isTricksUnlocked) {
+                    tricksNavBtn.removeAttribute('disabled');
+                    tricksNavBtn.classList.remove('opacity-40', 'cursor-not-allowed');
+                    if (tricksNavIcon) {
+                        tricksNavIcon.style.display = ''; // Restore default display
+                    }
+                    if (tricksNavLabel) {
+                        tricksNavLabel.innerText = "Tricks";
+                    }
+                } else {
+                    tricksNavBtn.setAttribute('disabled', 'true');
+                    tricksNavBtn.classList.add('opacity-40', 'cursor-not-allowed');
+                    if (tricksNavIcon) {
+                        tricksNavIcon.style.display = 'none'; // Completely hide icon
+                    }
+                    if (tricksNavLabel) {
+                        tricksNavLabel.innerText = "";
+                    }
+                    let tricksTab = document.getElementById('tab-tricks');
+                    if (tricksTab && !tricksTab.classList.contains('hidden')) {
+                        switchTab('yard');
+                    }
+                }
+            }
+
             // Render Resources Side Panel
             let resContainer = document.getElementById('resource-container');
+
+            // Check if dirt, bones, or treats are unlocked to condense the resource view
+            let hasSpecialResources = game.resources.dirt.unlocked || game.resources.bones.unlocked || game.resources.treats.unlocked;
+            if (hasSpecialResources) {
+                resContainer.className = "grid grid-cols-2 gap-2 text-xs";
+            } else {
+                resContainer.className = "space-y-2 text-xs";
+            }
+
             resContainer.innerHTML = '';
 
             for (let key in game.resources) {
@@ -598,8 +651,12 @@
                 if (!r.unlocked && r.amount === 0) continue;
 
                 let netRate = rates[key] || 0;
-                let rateDisplay = netRate !== 0 ? (netRate > 0 ? `+${netRate.toFixed(1)}/s` : `${netRate.toFixed(1)}/s`) : '';
-                let rateColor = netRate >= 0 ? 'text-emerald-400' : 'text-red-400';
+                // Subtract consumption from kibble display rate so it reflects true net change
+                if (key === 'kibble') {
+                    netRate -= game.pups.total * game.pups.consumptionRate;
+                }
+                let rateDisplay = (netRate == 0) ? '0.0/s' : (netRate > 0 ? `+${netRate.toFixed(1)}/s` : `${netRate.toFixed(1)}/s`);
+                let rateColor = (netRate == 0) ? 'text-gray-400' : (netRate > 0 ? 'text-emerald-400' : 'text-red-400');
 
                 let itemHtml = `
                     <div class="bg-badge p-2 rounded-lg border bg-button-border flex items-center justify-between">
@@ -609,7 +666,7 @@
                         </div>
                         <div class="text-right">
                             <div class="font-bold text-resource-value">${Math.floor(r.amount)} <span class="text-[10px] text-resource-max font-normal">/ ${r.max}</span></div>
-                            ${rateDisplay ? `<div class="text-[10px] ${rateColor}">${rateDisplay}</div>` : ''}
+                            ${rateDisplay ? `<div class="text-[10px] ${rateColor}">Net: ${rateDisplay}</div>` : ''}
                         </div>
                     </div>
                 `;
@@ -673,9 +730,9 @@
                             </div>
                             <p class="text-[11px] text-card-desc">${b.desc}</p>
                         </div>
-                        <div class="pl-3 border-l border-button-border flex flex-col  items-center justify-center w-20 shrink-0 space-y-1">
-                            <button onclick="buyBuilding('${bKey}')" ${!canAfford ? 'disabled' : ''} class="w-full px-3 py-1.5 rounded-lg text-xs font-semibold transition text-center ${canAfford ? 'bg-button-active hover:bg-amber-500 active:bg-amber-700 text-button-active shadow' : 'bg-badge text-button-disabled cursor-not-allowed'}">
-                                Build
+                        <div class="pl-3 border-l border-button-border flex flex-col items-center justify-center w-20 shrink-0 space-y-1">
+                            <button onclick="buyBuilding('${bKey}')" ${!canAfford ? 'disabled' : ''} class="w-full px-3 py-1.5 rounded-lg text-xs font-semibold transition transform active:scale-[0.95] text-center ${canAfford ? 'bg-button-active hover:bg-amber-500 active:bg-amber-700 text-button-active shadow' : 'bg-badge text-button-disabled cursor-not-allowed'}">
+				                Build
                             </button>
                             <span class="text-[10px] text-card-desc text-center truncate w-full">${costStr.join(', ')}</span>
                         </div>
@@ -704,20 +761,23 @@
                             </div>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <button onclick="assignJob('${jKey}', -1)" class="w-7 h-7 rounded-lg bg-badge hover:bg-gray-700 active:bg-gray-600 text-gray-300 font-bold text-xs flex items-center justify-center transition border border-gray-700">-</button>
-                            <span class="text-xs font-bold text-gray-100 w-6 text-center">${j.count}</span>
-                            <button onclick="assignJob('${jKey}', 1)" class="w-7 h-7 rounded-lg bg-button-active hover:bg-amber-500 active:bg-amber-700 text-button-active font-bold text-xs flex items-center justify-center transition shadow">+</button>
+                            <button onclick="assignJob('${jKey}', -1)" class="w-7 h-7 rounded-lg bg-badge text-button-active font-bold text-s flex items-center justify-center transition transform active:scale-[0.95] border bg-button-border">-</button>
+                            <span class="text-xs font-bold text-action-value w-6 text-center">${j.count}</span>
+                            <button onclick="assignJob('${jKey}', 1)" class="w-7 h-7 rounded-lg bg-badge text-button-active font-bold text-s flex items-center justify-center transition transform active:scale-[0.95] border bg-button-border">+</button>
                         </div>
                     </div>
                 `;
             }
 
-            // Render Upgrades Tab
-            let tContainer = document.getElementById('tech-container');
+            // Render Tricks Tab
+            let tContainer = document.getElementById('tricks-container');
             tContainer.innerHTML = '';
-            for (let tKey in game.tech) {
-                let t = game.tech[tKey];
-                if (t.researched || !t.unlocked) continue;
+
+            let availableTricksCount = 0;
+            for (let tKey in game.tricks) {
+                let t = game.tricks[tKey];
+                if (t.teached || !t.unlocked) continue;
+                availableTricksCount++;
 
                 let canAfford = true;
                 let costStr = [];
@@ -735,11 +795,19 @@
                             <p class="text-[11px] text-card-desc">${t.desc}</p>
                         </div>
                         <div class="pl-3 border-l border-button-border flex flex-col items-center justify-center w-20 shrink-0 space-y-1">
-                            <button onclick="researchTech('${tKey}')" ${!canAfford ? 'disabled' : ''} class="w-full px-3 py-1.5 rounded-lg text-xs font-semibold transition text-center ${canAfford ? 'bg-button-active hover:bg-amber-500 active:bg-amber-700 text-button-active shadow' : 'bg-badge text-button-disabled cursor-not-allowed'}">
-                                Research
+                            <button onclick="teachTrick('${tKey}')" ${!canAfford ? 'disabled' : ''} class="w-full px-3 py-1.5 rounded-lg text-xs font-semibold transition transform active:scale-[0.95] text-center ${canAfford ? 'bg-button-active active:bg-amber-700 text-button-active shadow' : 'bg-badge text-button-disabled cursor-not-allowed'}">
+                                Teach
                             </button>
                             <span class="text-[10px] text-card-desc text-center truncate w-full">${costStr.join(', ')}</span>
                         </div>
+                    </div>
+                `;
+            }
+
+            if (availableTricksCount === 0) {
+                tContainer.innerHTML = `
+                    <div class="text-center py-6 text-xs text-card-desc italic">
+                        Improve the pack to unlock Tricks.
                     </div>
                 `;
             }
@@ -747,11 +815,16 @@
 
         // --- NAVIGATION TABS ---
         function switchTab(tabId) {
+            let firstTrickKey = Object.keys(game.tricks)[0];
+            if (tabId === 'tricks' && (!firstTrickKey || !game.tricks[firstTrickKey].unlocked)) {
+                return;
+            }
+
             document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.add('hidden'));
             document.getElementById(`tab-${tabId}`).classList.remove('hidden');
 
             // Reset navigation button highlights while keeping layout classes
-            ['yard', 'pack', 'buildings', 'upgrades', 'log'].forEach(id => {
+            ['yard', 'pack', 'buildings', 'tricks', 'log'].forEach(id => {
                 let btn = document.getElementById(`nav-${id}`);
                 let hasBorder = id !== 'log';
                 let borderClass = hasBorder ? 'border-r bg-button-border' : '';
@@ -840,13 +913,32 @@
         }
 
         // --- CHEATS SYSTEM ---
-        function cheatRevealAllTech() {
-            console.log("Cheat triggered: Reveal All Upgrades");
-            for (let key in game.tech) {
-                game.tech[key].unlocked = true;
+        function cheatRevealAll() {
+            console.log("Cheat triggered: Reveal All Content");
+            
+            // Unlock all Tricks
+            for (let key in game.tricks) {
+                game.tricks[key].unlocked = true;
             }
+            // Unlock all Buildings
+            for (let key in game.buildings) {
+                game.buildings[key].unlocked = true;
+            }
+            // Unlock all Jobs
+            for (let key in game.jobs) {
+                game.jobs[key].unlocked = true;
+            }
+            // Unlock all Resources
+            for (let key in game.resources) {
+                game.resources[key].unlocked = true;
+            }
+            // Unlock all Crafts
+            for (let key in game.crafts) {
+                game.crafts[key].unlocked = true;
+            }
+
             renderAll();
-            logMessage("✨ Cheated: All Upgrades revealed!");
+            logMessage("✨ Cheated: All structures, jobs, and tricks unlocked!");
         }
 
         function cheatAddResource(resourceKey, amount) {
