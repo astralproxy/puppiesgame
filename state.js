@@ -1,5 +1,6 @@
 // --- CONSTS ---
-let JOB_UNLOCK_SNOOZER = 10;
+const JOB_UNLOCK_SNOOZER = 10;
+const TAB_CONTENT_HEIGHT = '480px';
 
 // --- GAME STATE ---
 let game = {

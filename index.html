@@ -34,17 +34,17 @@
 <body class="bg-body text-gray-100 font-sans h-[100dvh] w-screen overflow-hidden flex flex-col justify-between select-none">
 
     <!-- INFO MODAL DIALOG -->
-    <div id="info-modal" onclick="if(event.target === this) closeInfoModal()" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div id="info-modal" onclick="if(event.target === this) closeInfoModal()" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-3">
         <div class="bg-button border bg-button-border rounded-2xl w-full max-w-xs p-5 shadow-2xl relative space-y-4 flex flex-col">
             <div class="flex items-center justify-between border-b bg-button-border pb-3">
-                <h3 id="info-modal-title" class="text-sm font-bold text-gray-200 flex items-center">
+                <h3 id="info-modal-title" class="text-sm font-bold text-modal-header flex items-center">
                     <i class="fa-solid fa-circle-info text-card-icon mr-2"></i>Info
                 </h3>
-                <button onclick="closeInfoModal()" class="text-gray-400 hover:text-gray-200 text-sm">
+                <button onclick="closeInfoModal()" class="text-gray-600 hover:text-gray-400 text-sm">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
-            <p id="info-modal-text" class="text-xs text-gray-300 leading-relaxed"></p>
+            <p id="info-modal-text" class="text-xs text-modal leading-relaxed"></p>
             <!-- <button onclick="closeInfoModal()" class="w-full p-2 bg-badge hover:bg-gray-700 text-gray-200 rounded-lg text-xs font-semibold transition">
                 Close
             </button> -->
@@ -62,14 +62,14 @@
         </div>
         <div class="flex items-center space-x-2">
             <!-- Hamburger Menu Trigger Button -->
-            <button onclick="toggleMenu()" class="p-2 text-xs bg-badge hover:bg-gray-700 active:bg-gray-600 text-gray-300 rounded-lg transition" title="Menu">
+            <button onclick="toggleMenu()" class="p-2 text-xs bg-sidebar text-subtitle rounded-lg transition" title="Menu">
                 <i class="fa-solid fa-bars text-base"></i>
             </button>
         </div>
     </header>
 
     <!-- SETTINGS / Menu Modal Dialog -->
-    <div id="menu-modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
+    <div id="menu-modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-3">
         <div class="bg-menu border bg-menu-border rounded-2xl w-full max-w-xs p-5 shadow-2xl relative space-y-4 max-h-[90vh] flex flex-col">
             <div class="flex items-center justify-between border-b bg-menu-border pb-3 shrink-0">
                 <h3 class="text-sm font-bold text-menu flex items-center">
@@ -81,9 +81,9 @@
             </div>
 
             <!-- Theme Selector Section -->
-            <div class="space-y-2 bg-setting p-3 rounded-xl border bg-button-border/80">
+            <div class="space-y-2 bg-setting p-3 rounded-xl border bg-button-border">
                 <label class="text-[11px] font-semibold text-setting-desc block">Color Theme</label>
-                <select id="theme-selector" onchange="changeTheme(this.value)" class="w-full px-3 py-1.5 bg-badge border border-gray-700 rounded-lg text-xs text-gray-100 focus:outline-none focus:border-amber-500">
+                <select id="theme-selector" onchange="changeTheme(this.value)" class="w-full px-3 py-1.5 bg-badge border border-gray-200 rounded-lg text-xs text-setting-option focus:outline-none focus:border-amber-500">
                     <option value="frenchie">Frenchie</option>
                     <option value="husky">Husky</option>
                     <option value="retriever" selected>Retriever (default)</option>
@@ -93,9 +93,9 @@
             
             <div class="space-y-4 overflow-y-auto custom-scroll pr-1">
                 <!-- Manual Save Section -->
-                <div class="space-y-2 bg-setting p-3 rounded-xl border bg-button-border/80">
+                <div class="space-y-2 bg-setting p-3 rounded-xl border bg-button-border">
                     <label class="text-[11px] font-semibold text-setting-desc block">Save Name</label>
-                    <input type="text" id="save-name-input" value="My Save" class="w-full px-3 py-1.5 bg-badge border border-gray-700 rounded-lg text-xs text-gray-100 focus:outline-none focus:border-amber-500">
+                    <input type="text" id="save-name-input" value="My Save" class="w-full px-3 py-1.5 bg-badge border border-gray-200 rounded-lg text-xs text-setting-option focus:outline-none focus:border-amber-500">
                     <button onclick="manualSave();" class="w-full p-2.5 bg-button-active hover:bg-amber-500 active:bg-amber-700 text-button-active rounded-lg font-semibold text-xs transition flex items-center justify-center space-x-2">
                         <i class="fa-solid fa-floppy-disk"></i>
                         <span>Save Game</span>
@@ -103,7 +103,7 @@
                 </div>
 
                 <!-- Load Save Section -->
-                <div class="space-y-2 bg-setting p-3 rounded-xl border bg-button-border/80">
+                <div class="space-y-2 bg-setting p-3 rounded-xl border bg-button-border">
                     <label class="text-[11px] font-semibold text-setting-desc block">Load Saved Game</label>
                     <div id="save-slots-list" class="space-y-1.5 max-h-36 overflow-y-auto custom-scroll pr-1">
                         <!-- Dynamically populated save slots -->
@@ -137,7 +137,7 @@
                 </button>
             </div>
 
-            <div class="pt-2 border-t bg-button-border/60 text-center shrink-0">
+            <div class="pt-2 border-t bg-button-border text-center shrink-0">
                 <p class="text-[10px] text-button-disabled">Puppies Game v1.0 • Backyard Edition</p>
             </div>
         </div>
@@ -171,96 +171,108 @@
         <section class="md:col-span-8 lg:col-span-9 flex flex-col bg-body h-full overflow-hidden relative">
             
             <!-- Tab Content Screens -->
-            <div class="flex-1 overflow-y-auto p-4 custom-scroll relative">
+            <div class="flex-1 overflow-y-auto p-2 custom-scroll relative">
                 
                 <!-- TAB 1: YARD (Manual actions & core setup) -->
                 <div id="tab-yard" class="tab-panel space-y-4">
-                    <div class="bg-panel p-4 rounded-xl border bg-button-border shadow-sm">
+                    <div class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm">
                         <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-1 flex items-center">
-                            <i class="fa-solid fa-tree text-emerald-500 mr-2"></i>Backyard Actions
+                            <i class="fa-solid fa-tree text-emerald-500 mr-2"></i>The Backyard
                         </h2>
                         <p class="text-xs text-card-desc mb-4">Manual tasks for energetic puppies.</p>
                         
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                            <button onclick="manualGather('kibble')" class="group p-3 bg-button active:scale-[0.98] border bg-button-border rounded-xl text-left transition flex items-center justify-between">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <button onclick="manualGather('kibble')" class="group p-2 bg-button active:scale-[0.98] border bg-button-border rounded-xl text-left transition flex items-center justify-between">
                                 <div>
                                     <div class="text-card-header flex items-center">
                                         <i class="fa-solid fa-bowl-rice text-card-title mr-2"></i>Scavenge Kibble
                                     </div>
                                     <div class="text-[11px] text-card-desc mt-0.5">Search for dropped food chunks</div>
                                 </div>
-                                <span class="text-action-value bg-badge px-2 py-1 rounded-md border border-amber-800/50">+1.0</span>
+                                <span class="text-action-value">+1.0</span>
+                                <!-- <span class="text-action-value bg-badge px-2 py-1 rounded-md border bg-button-border">+1.0</span> -->
                             </button>
 
-                            <button onclick="manualGather('sticks')" class="group p-3 bg-button active:scale-[0.98] border bg-button-border rounded-xl text-left transition flex items-center justify-between">
+                            <button onclick="manualGather('sticks')" class="group p-2 bg-button active:scale-[0.98] border bg-button-border rounded-xl text-left transition flex items-center justify-between">
                                 <div>
                                     <div class="text-card-header flex items-center">
                                         <i class="fa-solid fa-cubes text-card-title mr-2"></i>Gather Sticks
                                     </div>
                                     <div class="text-[11px] text-card-desc mt-0.5">Collect branches in the yard</div>
                                 </div>
-                                <span class="text-action-value bg-badge px-2 py-1 rounded-md border border-stone-800/50">+1.0</span>
+                                <span class="text-action-value">+1.0</span>
+                                <!-- <span class="text-action-value bg-badge px-2 py-1 rounded-md border bg-button-border">+1.0</span> -->
                             </button>
                         </div>
                     </div>
 
                     <!-- Refinement / Crafting Quick Card -->
-                    <div id="crafting-card" class="bg-panel p-4 rounded-xl border bg-button-border shadow-sm">
+                    <div id="crafting-card" class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm">
                         <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-2 flex items-center">
                             <i class="fa-solid fa-hammer text-card-icon mr-2"></i>Crafting & Refinement
                         </h2>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="craft-buttons">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="craft-buttons">
                             <!-- Populated dynamically -->
                         </div>
                     </div>
                 </div>
 
-                <!-- TAB 2: BUILDINGS -->
-                <div id="tab-buildings" class="tab-panel hidden space-y-3">
-                    <div class="flex items-center justify-between mb-2">
-                        <h2 class="text-sm font-bold text-card-header uppercase tracking-wider">Infrastructure</h2>
-                        <button onclick="openInfoModal('Infrastructure', 'Expand capacity & automated income')" class="text-card-desc hover:text-gray-200 transition p-1" title="Info">
-                            <i class="fa-solid fa-circle-info text-base"></i>
-                        </button>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" id="buildings-container">
-                        <!-- Populated dynamically -->
+                <!-- TAB 2: PACK / JOBS -->
+                <div id="tab-pack" class="tab-panel hidden space-y-4">
+                    <div class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm space-y-4">
+                        <div class="flex items-center justify-between border-b bg-button-border/40 pb-3">
+                            <div>
+                                <h2 class="text-sm font-bold text-card-header uppercase tracking-wider flex items-center">
+                                    <i class="fa-solid fa-paw text-card-icon mr-2"></i>Pack Roster
+                                </h2>
+                                <p class="text-xs text-card-desc mt-0.5">Give pups jobs to automate gathering.</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-[10px] uppercase tracking-wider text-card-desc font-semibold">Idle</div>
+                                <div class="text-base font-bold text-card-title" id="unassigned-pups">0</div>
+                            </div>
+                        </div>
+                    
+                        <div class="space-y-3" id="jobs-container">
+                            <!-- Populated dynamically -->
+                        </div>
                     </div>
                 </div>
 
-                <!-- TAB 3: PACK / JOBS -->
-                <div id="tab-pack" class="tab-panel hidden space-y-4">
-                    <div class="bg-panel p-4 rounded-xl border bg-button-border flex items-center justify-between">
+                <!-- TAB 3: STRUCTURES -->
+                <div id="tab-buildings" class="tab-panel hidden space-y-4">
+                    <div class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm space-y-4">
                         <div>
-                            <h2 class="text-sm font-bold text-card-header uppercase tracking-wider">Pack Roster</h2>
-                            <p class="text-xs text-card-desc">Assign idle puppies to jobs to automate gathering.</p>
+                            <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-1 flex items-center">
+                                <i class="fa-solid fa-house text-card-icon mr-2"></i>Structures
+                            </h2>
+                            <p class="text-xs text-card-desc">Expand capacity and automated income.</p>
                         </div>
-                        <div class="text-right">
-                            <div class="text-xs text-card-desc">Unassigned Pups</div>
-                            <div class="text-lg font-bold text-card-title" id="unassigned-pups">0</div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2" id="buildings-container">
+                            <!-- Populated dynamically -->
                         </div>
-                    </div>
-
-                    <div class="space-y-3" id="jobs-container">
-                        <!-- Populated dynamically -->
                     </div>
                 </div>
 
                 <!-- TAB 4: UPGRADES -->
-                <div id="tab-upgrades" class="tab-panel hidden space-y-3">
-                    <div class="flex items-center justify-between mb-2">
-                        <h2 class="text-sm font-bold text-card-header uppercase tracking-wider">Upgrades</h2>
-                        <span class="text-xs text-card-desc">Research techniques to advance the pack</span>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="tech-container">
-                        <!-- Populated dynamically -->
+                <div id="tab-upgrades" class="tab-panel hidden space-y-4">
+                    <div class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm space-y-4">
+                        <div>
+                            <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-1 flex items-center">
+                                <i class="fa-solid fa-arrow-trend-up text-card-icon mr-2"></i>Upgrades
+                            </h2>
+                            <p class="text-xs text-card-desc">Research techniques to advance the pack.</p>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="tech-container">
+                            <!-- Populated dynamically -->
+                        </div>
                     </div>
                 </div>
 
                 <!-- TAB 5: LOG -->
                 <div id="tab-log" class="tab-panel hidden h-full flex flex-col">
                     <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-2">Pack Chronicles</h2>
-                    <div id="game-log" class="flex-1 bg-panel p-3 rounded-xl border bg-button-border text-xs font-mono space-y-1.5 overflow-y-auto custom-scroll max-h-[350px]">
+                    <div id="game-log" class="flex-1 bg-panel p-2 rounded-xl border bg-button-border text-xs font-mono space-y-1.5 overflow-y-auto custom-scroll max-h-[350px]">
                         <!-- Log messages go here -->
                     </div>
                 </div>
@@ -271,20 +283,20 @@
 
     <!-- Bottom Navigation Bar for Mobile -->
     <nav class="bg-nav-mobile border-t bg-button-border flex items-center justify-around shrink-0 z-10 py-1.5">
-        <button onclick="switchTab('yard')" id="nav-yard" class="flex-1 py-1 flex flex-col items-center justify-center text-card-icon font-semibold transition hover:bg-badge border-r bg-button-border/40">
+        <button onclick="switchTab('yard')" id="nav-yard" class="flex-1 py-1 flex flex-col items-center justify-center text-card-icon font-semibold transition hover:bg-badge border-r bg-button-border">
             <i class="fa-solid fa-bone text-base mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Yard</span>
         </button>
-        <button onclick="switchTab('buildings')" id="nav-buildings" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge border-r bg-button-border/40">
+        <button onclick="switchTab('pack')" id="nav-pack" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge relative border-r bg-button-border">
+            <i class="fa-solid fa-paw text-base mb-0.5"></i>
+            <span class="text-[10px] tracking-tight">Pack</span>
+            <span id="nav-pup-indicator" class="hidden absolute top-1 right-1/3 w-2 h-2 bg-newpup-indicator rounded-full animate-pulse"></span>
+        </button>
+        <button onclick="switchTab('buildings')" id="nav-buildings" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge border-r bg-button-border">
             <i class="fa-solid fa-house text-base mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Structures</span>
         </button>
-        <button onclick="switchTab('pack')" id="nav-pack" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge relative border-r bg-button-border/40">
-            <i class="fa-solid fa-paw text-base mb-0.5"></i>
-            <span class="text-[10px] tracking-tight">Pack</span>
-            <span id="nav-pup-indicator" class="hidden absolute top-1 right-1/3 w-2 h-2 bg-amber-500 rounded-full animate-pulse"></span>
-        </button>
-        <button onclick="switchTab('upgrades')" id="nav-upgrades" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge border-r bg-button-border/40">
+        <button onclick="switchTab('upgrades')" id="nav-upgrades" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge border-r bg-button-border">
             <i class="fa-solid fa-arrow-trend-up text-base mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Upgrades</span>
         </button>
@@ -305,7 +317,6 @@
         // --- CORE INITIALIZATION ---
         window.onload = function() {
             loadGame();
-
             loadTheme();
 
             const isLocal = checkLocalEnvironment();
@@ -315,6 +326,11 @@
                 document.getElementById('btn-cheat-kibble').addEventListener('click', () => cheatAddResource('kibble', 1000));
                 document.getElementById('btn-cheat-sticks').addEventListener('click', () => cheatAddResource('sticks', 1000));
             }
+
+            // Apply unified tab height from const
+            document.querySelectorAll('.tab-panel').forEach(panel => {
+                panel.style.height = TAB_CONTENT_HEIGHT;
+            });
 
             renderAll();
             logMessage("Scavenge Kibble and gather Sticks to expand your pack.");
@@ -648,7 +664,7 @@
 
                 bContainer.innerHTML += `
                     <div class="bg-button p-3 rounded-xl border bg-button-border flex items-center justify-between">
-                        <div class="flex-1 mr-4 space-y-1">
+                        <div class="flex-1 pr-4 space-y-1">
                             <div class="flex items-center justify-between">
                                 <span class="text-xs font-bold text-card-header flex items-center">
                                     <i class="fa-solid ${b.icon} text-card-icon mr-2"></i>${b.label}
@@ -657,7 +673,7 @@
                             </div>
                             <p class="text-[11px] text-card-desc">${b.desc}</p>
                         </div>
-                        <div class="flex flex-col items-center justify-center w-20 shrink-0 space-y-1">
+                        <div class="pl-3 border-l border-button-border flex flex-col  items-center justify-center w-20 shrink-0 space-y-1">
                             <button onclick="buyBuilding('${bKey}')" ${!canAfford ? 'disabled' : ''} class="w-full px-3 py-1.5 rounded-lg text-xs font-semibold transition text-center ${canAfford ? 'bg-button-active hover:bg-amber-500 active:bg-amber-700 text-button-active shadow' : 'bg-badge text-button-disabled cursor-not-allowed'}">
                                 Build
                             </button>
@@ -711,18 +727,18 @@
                 }
 
                 tContainer.innerHTML += `
-                    <div class="bg-button p-3 rounded-xl border bg-button-border flex flex-col justify-between space-y-3">
-                        <div>
-                            <h3 class="text-xs font-bold text-blue-300 mb-1 flex items-center">
-                                <i class="fa-solid fa-microscope mr-2 text-blue-400"></i>${t.label}
-                            </h3>
+                    <div class="bg-button p-3 rounded-xl border bg-button-border flex items-center justify-between">
+                        <div class="flex-1 pr-3 space-y-1">
+                            <span class="text-xs font-bold text-card-header flex items-center">
+                                <i class="fa-solid fa-microscope text-card-icon mr-2"></i>${t.label}
+                            </span>
                             <p class="text-[11px] text-card-desc">${t.desc}</p>
                         </div>
-                        <div class="pt-2 border-t bg-button-border/60 flex items-center justify-between">
-                            <span class="text-[10px] text-card-desc">${costStr.join(', ')}</span>
-                            <button onclick="researchTech('${tKey}')" ${!canAfford ? 'disabled' : ''} class="px-3 py-1.5 rounded-lg text-xs font-semibold transition ${canAfford ? 'bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-button-active shadow' : 'bg-badge text-button-disabled cursor-not-allowed'}">
+                        <div class="pl-3 border-l border-button-border flex flex-col items-center justify-center w-20 shrink-0 space-y-1">
+                            <button onclick="researchTech('${tKey}')" ${!canAfford ? 'disabled' : ''} class="w-full px-3 py-1.5 rounded-lg text-xs font-semibold transition text-center ${canAfford ? 'bg-button-active hover:bg-amber-500 active:bg-amber-700 text-button-active shadow' : 'bg-badge text-button-disabled cursor-not-allowed'}">
                                 Research
                             </button>
+                            <span class="text-[10px] text-card-desc text-center truncate w-full">${costStr.join(', ')}</span>
                         </div>
                     </div>
                 `;
@@ -735,15 +751,16 @@
             document.getElementById(`tab-${tabId}`).classList.remove('hidden');
 
             // Reset navigation button highlights while keeping layout classes
-            ['yard', 'buildings', 'pack', 'upgrades', 'log'].forEach(id => {
+            ['yard', 'pack', 'buildings', 'upgrades', 'log'].forEach(id => {
                 let btn = document.getElementById(`nav-${id}`);
                 let hasBorder = id !== 'log';
-                let borderClass = hasBorder ? 'border-r bg-button-border/40' : '';
+                let borderClass = hasBorder ? 'border-r bg-button-border' : '';
+                let relativeClass = id === 'pack' ? 'relative' : '';
                 
                 if (id === tabId) {
-                    btn.className = `flex-1 py-1 flex flex-col items-center justify-center text-card-icon font-semibold transition hover:bg-badge ${borderClass}`;
+                    btn.className = `flex-1 py-1 flex flex-col items-center justify-center text-card-icon font-semibold transition hover:bg-badge ${relativeClass} ${borderClass}`;
                 } else {
-                    btn.className = `flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge ${borderClass}`;
+                    btn.className = `flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge ${relativeClass} ${borderClass}`;
                 }
             });
 
@@ -757,7 +774,7 @@
             let log = document.getElementById('game-log');
             let time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
             let entry = document.createElement('div');
-            entry.className = "text-gray-300 border-b bg-button-border/40 pb-1";
+            entry.className = "text-gray-300 border-b bg-button-border pb-1";
             entry.innerHTML = `<span class="text-button-disabled text-[10px]">[${time}]</span> ${msg}`;
             log.prepend(entry);
         }
