@@ -1,5 +1,4 @@
 // --- CONSTS ---
-const JOB_UNLOCK_FETCHER = 5;
 const JOB_UNLOCK_BEGGAR = 10;
 const TAB_CONTENT_HEIGHT = '480px';
 
@@ -43,10 +42,10 @@ let game = {
         - DIGGER: digs up dirt and bones for crafting
     */
     jobs: {
-        forager: { count: 0, unlocked: true,  label: 'Forager', icon: 'fa-wheat-awn',   yields: { kibble: 0.2 } },
-        fetcher: { count: 0, unlocked: false, label: 'Fetcher', icon: 'fa-tree',        yields: { sticks: 0.2 } },
-        beggar:  { count: 0, unlocked: false, label: 'Beggar',  icon: 'fa-hands-helping', yields: { treats: 0.1 } },
-        digger:  { count: 0, unlocked: false, label: 'Digger',  icon: 'fa-shovels',     yields: { dirt: 0.1, bones: 0.01 } }
+        forager: { count: 0, unlocked: true,  label: 'Forager', icon: 'fa-bowl-rice',   yields: { kibble: 0.3 } },
+        fetcher: { count: 0, unlocked: false, label: 'Fetcher', icon: 'fa-cubes',       yields: { sticks: 0.2 } },
+        beggar:  { count: 0, unlocked: false, label: 'Beggar',  icon: 'fa-cookie',      yields: { treats: 0.1 } },
+        digger:  { count: 0, unlocked: false, label: 'Digger',  icon: 'fa-mound',       yields: { dirt: 0.1, bones: 0.01 } }
     },
 
     /* BUILDINGS

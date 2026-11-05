@@ -413,7 +413,7 @@
 
 //#region UNLOCKS ---
             // Unlock Jobs
-            if (!game.jobs.fetcher.unlocked && game.pups.total >= JOB_UNLOCK_FETCHER) {
+            if (!game.jobs.fetcher.unlocked && game.tricks.fetchTechniques.teached) {
                 game.jobs.fetcher.unlocked = true;
                 logMessage("🪾 The pack grows, and now some pups can fetch sticks.");
             }
@@ -440,7 +440,7 @@
 
         // --- RESOURCE & CALCULATION LOGIC ---
         function calculateRates() {
-            rates = { kibble: 0, sticks: 0, dirt: 0, bones: 0, tricks: 0 };
+            rates = { kibble: 0, sticks: 0, dirt: 0, bones: 0, treats: 0 };
 
             /* RULES
                 - Morale Drop: if Kibble count hits zero, pack morale drops
@@ -448,6 +448,7 @@
                 - What's Bad: consumption stays flat and outpaces lower yield
             */
             let mult = (game.tricks.zoomies && game.tricks.zoomies.teached) ? 1.2 : 1.0;
+            mult *= (game.tricks.zoomies2 && game.tricks.zoomies2.teached) ? 1.5 : 1.0;
             mult *= game.pups.morale;
 
             // Dynamically calculate yields from job definitions
@@ -552,7 +553,7 @@
             renderAll();
         }
 
-        function teachTricks(tKey) {
+        function teachTrick(tKey) {
             let t = game.tricks[tKey];
             if (!t || t.teached) return;
 
@@ -636,8 +637,8 @@
             // Render Resources Side Panel
             let resContainer = document.getElementById('resource-container');
 
-            // Check if dirt, bones, or treats are unlocked to condense the resource view
-            let hasSpecialResources = game.resources.dirt.unlocked || game.resources.bones.unlocked || game.resources.treats.unlocked;
+            // Check if treats, dirt, bones are unlocked to condense the resource view
+            let hasSpecialResources = game.resources.treats.unlocked || game.resources.dirt.unlocked || game.resources.bones.unlocked;
             if (hasSpecialResources) {
                 resContainer.className = "grid grid-cols-2 gap-2 text-xs";
             } else {
@@ -776,35 +777,50 @@
             let availableTricksCount = 0;
             for (let tKey in game.tricks) {
                 let t = game.tricks[tKey];
-                if (t.teached || !t.unlocked) continue;
-                availableTricksCount++;
+                if (!t.unlocked) continue; // Skip completely locked/hidden tricks
 
-                let canAfford = true;
-                let costStr = [];
-                for (let r in t.cost) {
-                    costStr.push(`${t.cost[r]} ${game.resources[r].label}`);
-                    if (game.resources[r].amount < t.cost[r]) canAfford = false;
+                if (!t.teached) {
+                    // --- UNTEACHED / ACTIVE TRICK CARD ---
+                    availableTricksCount++;
+
+                    let canAfford = true;
+                    let costStr = [];
+                    for (let r in t.cost) {
+                        costStr.push(`${t.cost[r]} ${game.resources[r].label}`);
+                        if (game.resources[r].amount < t.cost[r]) canAfford = false;
+                    }
+
+                    tContainer.innerHTML += `
+                        <div class="bg-button p-3 rounded-xl border bg-button-border flex items-center justify-between">
+                            <div class="flex-1 pr-3 space-y-1">
+                                <span class="text-xs font-bold text-card-header flex items-center">
+                                    <i class="fa-solid fa-microscope text-card-icon mr-2"></i>${t.label}
+                                </span>
+                                <p class="text-[11px] text-card-desc">${t.desc}</p>
+                            </div>
+                            <div class="pl-3 border-l border-button-border flex flex-col items-center justify-center w-20 shrink-0 space-y-1">
+                                <button onclick="teachTricks('${tKey}')" ${!canAfford ? 'disabled' : ''} class="w-full px-3 py-1.5 rounded-lg text-xs font-semibold transition transform active:scale-[0.95] text-center ${canAfford ? 'bg-button-active text-button-active' : 'bg-badge text-button-disabled cursor-not-allowed'}">
+                                    Teach
+                                </button>
+                                <span class="text-[10px] text-card-desc text-center truncate w-full">${costStr.join(', ')}</span>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    // --- TEACHED / COMPLETED TRICK (Smaller, no button) ---
+                    tContainer.innerHTML += `
+                        <div class="bg-badge/50 p-2.5 rounded-xl border border-amber-500/20 flex items-center justify-between opacity-80">
+                            <div class="flex items-center space-x-2">
+                                <i class="fa-solid fa-check text-emerald-400 text-xs"></i>
+                                <span class="text-xs font-bold text-card-header">${t.label}</span>
+                            </div>
+                            <span class="text-[10px] text-button-active font-medium bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-800/40">Learned</span>
+                        </div>
+                    `;
                 }
-
-                tContainer.innerHTML += `
-                    <div class="bg-button p-3 rounded-xl border bg-button-border flex items-center justify-between">
-                        <div class="flex-1 pr-3 space-y-1">
-                            <span class="text-xs font-bold text-card-header flex items-center">
-                                <i class="fa-solid fa-microscope text-card-icon mr-2"></i>${t.label}
-                            </span>
-                            <p class="text-[11px] text-card-desc">${t.desc}</p>
-                        </div>
-                        <div class="pl-3 border-l border-button-border flex flex-col items-center justify-center w-20 shrink-0 space-y-1">
-                            <button onclick="teachTrick('${tKey}')" ${!canAfford ? 'disabled' : ''} class="w-full px-3 py-1.5 rounded-lg text-xs font-semibold transition transform active:scale-[0.95] text-center ${canAfford ? 'bg-button-active active:bg-amber-700 text-button-active shadow' : 'bg-badge text-button-disabled cursor-not-allowed'}">
-                                Teach
-                            </button>
-                            <span class="text-[10px] text-card-desc text-center truncate w-full">${costStr.join(', ')}</span>
-                        </div>
-                    </div>
-                `;
             }
 
-            if (availableTricksCount === 0) {
+            if (availableTricksCount === 0 && Object.values(game.tricks).every(t => !t.unlocked)) {
                 tContainer.innerHTML = `
                     <div class="text-center py-6 text-xs text-card-desc italic">
                         Improve the pack to unlock Tricks.
@@ -1047,11 +1063,16 @@
 
         function mergeDeep(target, source) {
             for (const key in source) {
-                if (source[key] instanceof Object && key in target) {
-                    Object.assign(source[key], mergeDeep(target[key], source[key]));
+                // Skip definition/structural properties so they always update from code at runtime
+                if (['yields', 'cost', 'icon', 'label', 'desc'].includes(key)) {
+                    continue;
+                }
+                if (source[key] instanceof Object && target[key] instanceof Object) {
+                    mergeDeep(target[key], source[key]);
+                } else {
+                    target[key] = source[key];
                 }
             }
-            Object.assign(target || {}, source);
             return target;
         }
 
