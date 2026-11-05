@@ -7,7 +7,7 @@
     <!-- Tailwind CSS CDN -->
     <link rel="stylesheet" href="output.css">
     <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css">
     <!-- Google Font Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -35,24 +35,24 @@
 
     <!-- INFO MODAL DIALOG -->
     <div id="info-modal" onclick="if(event.target === this) closeInfoModal()" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-gray-900 border border-gray-800 rounded-2xl w-full max-w-xs p-5 shadow-2xl relative space-y-4 flex flex-col">
-            <div class="flex items-center justify-between border-b border-gray-800 pb-3">
+        <div class="bg-button border bg-button-border rounded-2xl w-full max-w-xs p-5 shadow-2xl relative space-y-4 flex flex-col">
+            <div class="flex items-center justify-between border-b bg-button-border pb-3">
                 <h3 id="info-modal-title" class="text-sm font-bold text-gray-200 flex items-center">
-                    <i class="fa-solid fa-circle-info text-amber-500 mr-2"></i>Info
+                    <i class="fa-solid fa-circle-info text-card-icon mr-2"></i>Info
                 </h3>
                 <button onclick="closeInfoModal()" class="text-gray-400 hover:text-gray-200 text-sm">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
             <p id="info-modal-text" class="text-xs text-gray-300 leading-relaxed"></p>
-            <!-- <button onclick="closeInfoModal()" class="w-full p-2 bg-gray-800 hover:bg-gray-700 text-gray-200 rounded-lg text-xs font-semibold transition">
+            <!-- <button onclick="closeInfoModal()" class="w-full p-2 bg-badge hover:bg-gray-700 text-gray-200 rounded-lg text-xs font-semibold transition">
                 Close
             </button> -->
         </div>
     </div>
 
     <!-- Top Header Bar -->
-    <header class="bg-header border-b border-gray-800 px-4 py-2.5 flex items-center justify-between shrink-0 shadow-md">
+    <header class="bg-header border-b bg-button-border px-4 py-2.5 flex items-center justify-between shrink-0 shadow-md">
         <div class="flex items-center space-x-2">
             <i class="fa-solid font-bold text-dog-icon text-xl fa-dog"></i>
             <div>
@@ -62,7 +62,7 @@
         </div>
         <div class="flex items-center space-x-2">
             <!-- Hamburger Menu Trigger Button -->
-            <button onclick="toggleMenu()" class="p-2 text-xs bg-gray-800 hover:bg-gray-700 active:bg-gray-600 text-gray-300 rounded-lg transition" title="Menu">
+            <button onclick="toggleMenu()" class="p-2 text-xs bg-badge hover:bg-gray-700 active:bg-gray-600 text-gray-300 rounded-lg transition" title="Menu">
                 <i class="fa-solid fa-bars text-base"></i>
             </button>
         </div>
@@ -81,9 +81,9 @@
             </div>
 
             <!-- Theme Selector Section -->
-            <div class="space-y-2 bg-setting p-3 rounded-xl border border-gray-800/80">
+            <div class="space-y-2 bg-setting p-3 rounded-xl border bg-button-border/80">
                 <label class="text-[11px] font-semibold text-setting-desc block">Color Theme</label>
-                <select id="theme-selector" onchange="changeTheme(this.value)" class="w-full px-3 py-1.5 bg-gray-800 border border-gray-700 rounded-lg text-xs text-gray-100 focus:outline-none focus:border-amber-500">
+                <select id="theme-selector" onchange="changeTheme(this.value)" class="w-full px-3 py-1.5 bg-badge border border-gray-700 rounded-lg text-xs text-gray-100 focus:outline-none focus:border-amber-500">
                     <option value="frenchie">Frenchie</option>
                     <option value="husky">Husky</option>
                     <option value="retriever" selected>Retriever (default)</option>
@@ -93,17 +93,17 @@
             
             <div class="space-y-4 overflow-y-auto custom-scroll pr-1">
                 <!-- Manual Save Section -->
-                <div class="space-y-2 bg-setting p-3 rounded-xl border border-gray-800/80">
+                <div class="space-y-2 bg-setting p-3 rounded-xl border bg-button-border/80">
                     <label class="text-[11px] font-semibold text-setting-desc block">Save Name</label>
-                    <input type="text" id="save-name-input" value="My Save" class="w-full px-3 py-1.5 bg-gray-800 border border-gray-700 rounded-lg text-xs text-gray-100 focus:outline-none focus:border-amber-500">
-                    <button onclick="manualSave();" class="w-full p-2.5 bg-amber-600 hover:bg-amber-500 active:bg-amber-700 text-white rounded-lg font-semibold text-xs transition flex items-center justify-center space-x-2">
+                    <input type="text" id="save-name-input" value="My Save" class="w-full px-3 py-1.5 bg-badge border border-gray-700 rounded-lg text-xs text-gray-100 focus:outline-none focus:border-amber-500">
+                    <button onclick="manualSave();" class="w-full p-2.5 bg-button-active hover:bg-amber-500 active:bg-amber-700 text-button-active rounded-lg font-semibold text-xs transition flex items-center justify-center space-x-2">
                         <i class="fa-solid fa-floppy-disk"></i>
                         <span>Save Game</span>
                     </button>
                 </div>
 
                 <!-- Load Save Section -->
-                <div class="space-y-2 bg-setting p-3 rounded-xl border border-gray-800/80">
+                <div class="space-y-2 bg-setting p-3 rounded-xl border bg-button-border/80">
                     <label class="text-[11px] font-semibold text-setting-desc block">Load Saved Game</label>
                     <div id="save-slots-list" class="space-y-1.5 max-h-36 overflow-y-auto custom-scroll pr-1">
                         <!-- Dynamically populated save slots -->
@@ -122,7 +122,7 @@
                         </button>
                         <button type="button" id="btn-cheat-kibble" class="w-full p-2 bg-amber-950/60 hover:bg-amber-900/60 active:bg-amber-800/60 border border-amber-800/50 text-amber-200 rounded-lg text-xs font-medium transition flex items-center justify-between cursor-pointer">
                             <span>+1,000 Kibble</span>
-                            <i class="fa-solid fa-bowl-rice text-amber-400"></i>
+                            <i class="fa-solid fa-bowl-rice text-card-title"></i>
                         </button>
                         <button type="button" id="btn-cheat-sticks" class="w-full p-2 bg-stone-900 hover:bg-stone-800 active:bg-stone-700 border border-stone-700/50 text-stone-200 rounded-lg text-xs font-medium transition flex items-center justify-between cursor-pointer">
                             <span>+1,000 Sticks (Wood)</span>
@@ -137,8 +137,8 @@
                 </button>
             </div>
 
-            <div class="pt-2 border-t border-gray-800/60 text-center shrink-0">
-                <p class="text-[10px] text-gray-500">Puppies Game v1.0 • Backyard Edition</p>
+            <div class="pt-2 border-t bg-button-border/60 text-center shrink-0">
+                <p class="text-[10px] text-button-disabled">Puppies Game v1.0 • Backyard Edition</p>
             </div>
         </div>
     </div>
@@ -147,17 +147,17 @@
     <main class="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-12 gap-0 overflow-hidden relative">
 
         <!-- Sidebar: Resource Bar (Always visible on Left in Desktop, Top Bar Drawer on Mobile) -->
-        <aside class="md:col-span-4 lg:col-span-3 bg-sidebar border-r border-gray-800/80 p-3.5 flex flex-col overflow-y-auto custom-scroll">
-            <div class="flex items-center justify-between mb-3 border-b border-gray-800 pb-2">
+        <aside class="md:col-span-4 lg:col-span-3 bg-sidebar border-r bg-button-border p-3.5 flex flex-col overflow-y-auto custom-scroll">
+            <div class="flex items-center justify-between mb-3 border-b bg-button-border pb-2">
                 <h2 class="text-xs font-bold uppercase tracking-wider text-sidebar-title">Pack & Supplies</h2>
-                <span class="text-xs px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-800 font-semibold border border-amber-500/20" id="pack-capacity-badge">
+                <span class="text-xs px-2 py-0.5 rounded-full bg-amber-500/10 text-supply font-semibold border border-amber-500/20" id="pack-capacity-badge">
                     <i class="fa-solid fa-paw text-[10px] mr-1"></i><span id="res-pups">0</span>/<span id="res-max-pups">0</span> Pups
                 </span>
             </div>
 
             <!-- Morale / Alert Indicator -->
-            <div id="morale-bar" class="mb-3 p-2 bg-amber-950/30 border border-amber-800/40 rounded-lg flex items-center justify-between text-xs">
-                <span class="text-amber-800 font-medium"><i class="fa-solid fa-heart text-amber-600 mr-1.5"></i>Pack Morale</span>
+            <div id="morale-bar" class="mb-3 p-2 bg-amber-950/30 border bg-button-border rounded-lg flex items-center justify-between text-xs">
+                <span class="text-supply font-medium"><i class="fa-solid fa-heart mr-1.5"></i>Pack Morale</span>
                 <span id="morale-val" class="font-bold text-amber-800">100%</span>
             </div>
 
@@ -175,7 +175,7 @@
                 
                 <!-- TAB 1: YARD (Manual actions & core setup) -->
                 <div id="tab-yard" class="tab-panel space-y-4">
-                    <div class="bg-panel p-4 rounded-xl border border-gray-800 shadow-sm">
+                    <div class="bg-panel p-4 rounded-xl border bg-button-border shadow-sm">
                         <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-1 flex items-center">
                             <i class="fa-solid fa-tree text-emerald-500 mr-2"></i>Backyard Actions
                         </h2>
@@ -184,30 +184,30 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <button onclick="manualGather('kibble')" class="group p-3 bg-button active:scale-[0.98] border bg-button-border rounded-xl text-left transition flex items-center justify-between">
                                 <div>
-                                    <div class="text-button-header text-button-hover flex items-center">
-                                        <i class="fa-solid fa-bowl-rice text-amber-400 mr-2"></i>Scavenge Kibble
+                                    <div class="text-card-header flex items-center">
+                                        <i class="fa-solid fa-bowl-rice text-card-title mr-2"></i>Scavenge Kibble
                                     </div>
-                                    <div class="text-[11px] text-button mt-0.5">Search for dropped food chunks</div>
+                                    <div class="text-[11px] text-card-desc mt-0.5">Search for dropped food chunks</div>
                                 </div>
-                                <span class="text-action-value bg-panel px-2 py-1 rounded-md border border-amber-800/50">+1.0</span>
+                                <span class="text-action-value bg-badge px-2 py-1 rounded-md border border-amber-800/50">+1.0</span>
                             </button>
 
                             <button onclick="manualGather('sticks')" class="group p-3 bg-button active:scale-[0.98] border bg-button-border rounded-xl text-left transition flex items-center justify-between">
                                 <div>
-                                    <div class="text-button-header text-button-hover flex items-center">
-                                        <i class="fa-solid fa-cubes text-stone-400 mr-2"></i>Gather Sticks
+                                    <div class="text-card-header flex items-center">
+                                        <i class="fa-solid fa-cubes text-card-title mr-2"></i>Gather Sticks
                                     </div>
-                                    <div class="text-[11px] text-button mt-0.5">Collect branches in the yard</div>
+                                    <div class="text-[11px] text-card-desc mt-0.5">Collect branches in the yard</div>
                                 </div>
-                                <span class="text-action-value bg-panel px-2 py-1 rounded-md border border-stone-800/50">+1.0</span>
+                                <span class="text-action-value bg-badge px-2 py-1 rounded-md border border-stone-800/50">+1.0</span>
                             </button>
                         </div>
                     </div>
 
                     <!-- Refinement / Crafting Quick Card -->
-                    <div id="crafting-card" class="bg-panel p-4 rounded-xl border border-gray-800 shadow-sm">
+                    <div id="crafting-card" class="bg-panel p-4 rounded-xl border bg-button-border shadow-sm">
                         <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-2 flex items-center">
-                            <i class="fa-solid fa-hammer text-amber-500 mr-2"></i>Crafting & Refinement
+                            <i class="fa-solid fa-hammer text-card-icon mr-2"></i>Crafting & Refinement
                         </h2>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="craft-buttons">
                             <!-- Populated dynamically -->
@@ -230,14 +230,14 @@
 
                 <!-- TAB 3: PACK / JOBS -->
                 <div id="tab-pack" class="tab-panel hidden space-y-4">
-                    <div class="bg-panel p-4 rounded-xl border border-gray-800 flex items-center justify-between">
+                    <div class="bg-panel p-4 rounded-xl border bg-button-border flex items-center justify-between">
                         <div>
                             <h2 class="text-sm font-bold text-card-header uppercase tracking-wider">Pack Roster</h2>
                             <p class="text-xs text-card-desc">Assign idle puppies to jobs to automate gathering.</p>
                         </div>
                         <div class="text-right">
                             <div class="text-xs text-card-desc">Unassigned Pups</div>
-                            <div class="text-lg font-bold text-amber-400" id="unassigned-pups">0</div>
+                            <div class="text-lg font-bold text-card-title" id="unassigned-pups">0</div>
                         </div>
                     </div>
 
@@ -246,10 +246,10 @@
                     </div>
                 </div>
 
-                <!-- TAB 4: SCIENCE / TECH -->
-                <div id="tab-science" class="tab-panel hidden space-y-3">
+                <!-- TAB 4: UPGRADES -->
+                <div id="tab-upgrades" class="tab-panel hidden space-y-3">
                     <div class="flex items-center justify-between mb-2">
-                        <h2 class="text-sm font-bold text-card-header uppercase tracking-wider">Doggy Wisdom</h2>
+                        <h2 class="text-sm font-bold text-card-header uppercase tracking-wider">Upgrades</h2>
                         <span class="text-xs text-card-desc">Research techniques to advance the pack</span>
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="tech-container">
@@ -260,7 +260,7 @@
                 <!-- TAB 5: LOG -->
                 <div id="tab-log" class="tab-panel hidden h-full flex flex-col">
                     <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-2">Pack Chronicles</h2>
-                    <div id="game-log" class="flex-1 bg-panel p-3 rounded-xl border border-gray-800 text-xs font-mono space-y-1.5 overflow-y-auto custom-scroll max-h-[350px]">
+                    <div id="game-log" class="flex-1 bg-panel p-3 rounded-xl border bg-button-border text-xs font-mono space-y-1.5 overflow-y-auto custom-scroll max-h-[350px]">
                         <!-- Log messages go here -->
                     </div>
                 </div>
@@ -270,25 +270,25 @@
     </main>
 
     <!-- Bottom Navigation Bar for Mobile -->
-    <nav class="bg-nav-mobile border-t border-gray-800 flex items-center justify-around shrink-0 z-10 py-1.5">
-        <button onclick="switchTab('yard')" id="nav-yard" class="flex-1 py-1 flex flex-col items-center justify-center text-amber-500 font-semibold transition hover:bg-gray-800/50 border-r border-gray-800/40">
+    <nav class="bg-nav-mobile border-t bg-button-border flex items-center justify-around shrink-0 z-10 py-1.5">
+        <button onclick="switchTab('yard')" id="nav-yard" class="flex-1 py-1 flex flex-col items-center justify-center text-card-icon font-semibold transition hover:bg-badge border-r bg-button-border/40">
             <i class="fa-solid fa-bone text-base mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Yard</span>
         </button>
-        <button onclick="switchTab('buildings')" id="nav-buildings" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-amber-400 font-semibold transition hover:bg-gray-800/50 border-r border-gray-800/40">
+        <button onclick="switchTab('buildings')" id="nav-buildings" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge border-r bg-button-border/40">
             <i class="fa-solid fa-house text-base mb-0.5"></i>
-            <span class="text-[10px] tracking-tight">Buildings</span>
+            <span class="text-[10px] tracking-tight">Structures</span>
         </button>
-        <button onclick="switchTab('pack')" id="nav-pack" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-amber-400 font-semibold transition hover:bg-gray-800/50 relative border-r border-gray-800/40">
+        <button onclick="switchTab('pack')" id="nav-pack" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge relative border-r bg-button-border/40">
             <i class="fa-solid fa-paw text-base mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Pack</span>
             <span id="nav-pup-indicator" class="hidden absolute top-1 right-1/3 w-2 h-2 bg-amber-500 rounded-full animate-pulse"></span>
         </button>
-        <button onclick="switchTab('science')" id="nav-science" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-amber-400 font-semibold transition hover:bg-gray-800/50 border-r border-gray-800/40">
-            <i class="fa-solid fa-graduation-cap text-base mb-0.5"></i>
-            <span class="text-[10px] tracking-tight">Science</span>
+        <button onclick="switchTab('upgrades')" id="nav-upgrades" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge border-r bg-button-border/40">
+            <i class="fa-solid fa-arrow-trend-up text-base mb-0.5"></i>
+            <span class="text-[10px] tracking-tight">Upgrades</span>
         </button>
-        <button onclick="switchTab('log')" id="nav-log" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-amber-400 font-semibold transition hover:bg-gray-800/50">
+        <button onclick="switchTab('log')" id="nav-log" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge">
             <i class="fa-solid fa-scroll text-base mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Log</span>
         </button>
@@ -347,20 +347,20 @@
         function gameLoop() {
             calculateRates();
 
-            // 1. Process Pup Population Growth
+            // Process Pup Population Growth
             let totalCap = (game.buildings.doghouse.count * 1) + (game.buildings.kennel.count * 2);
             game.pups.max = totalCap;
 
             if (game.pups.total < game.pups.max && game.resources.kibble.amount > 15) {
                 // Random chance to attract new pup if space and food permit
-                if (Math.random() < 0.25) {
+                if (Math.random() < 0.1) {
                     game.pups.total++;
                     logMessage("🐾 A new stray puppy wandered into your yard and joined the pack!");
                     document.getElementById('nav-pup-indicator').classList.remove('hidden');
                 }
             }
 
-            // 2. Consume Kibble for Pups
+            // Consume Kibble for Pups
             let totalKibbleNeeded = game.pups.total * game.pups.consumptionRate;
             if (game.resources.kibble.amount >= totalKibbleNeeded) {
                 game.resources.kibble.amount -= totalKibbleNeeded;
@@ -380,7 +380,7 @@
                 }
             }
 
-            // 3. Add Automated Resource Yields
+            // Add Automated Resource Yields
             for (let rKey in rates) {
                 if (game.resources[rKey]) {
                     game.resources[rKey].amount += rates[rKey];
@@ -391,11 +391,22 @@
                 }
             }
 
-            // 4. Update Tech Visibility Check
-            if (game.resources.science.amount > 0 || game.jobs.scholar.count > 0) {
-                game.resources.science.unlocked = true;
+//#region UNLOCKS ---
+
+            // Unlock Jobs
+            if (!game.jobs.snoozer.unlocked && game.pups.total >= JOB_UNLOCK_SNOOZER) {
+                game.jobs.snoozer.unlocked = true;
+                logMessage("💤 The pack is large enough to establish a resting shift. Snoozer job unlocked!");
             }
-            if (game.resources.bones.amount > 0 || game.jobs.digger.count > 0) {
+
+            // Unlock Upgrades after ideas are formed
+            if (!game.resources.upgrades.unlocked &&game.resources.upgrades.amount > 0) {
+                game.resources.upgrades.unlocked = true;                
+                logMessage("💡 After a vivid dream, a pup had a new idea!");
+            }
+
+            // Unlock Crafts after a bone is found
+            if (game.resources.bones.amount > 0/* || game.jobs.digger.count > 0*/) {
                 game.crafts.treat.unlocked = true;
             }
 
@@ -404,26 +415,30 @@
 
         // --- RESOURCE & CALCULATION LOGIC ---
         function calculateRates() {
-            // Reset rates
-            rates = { kibble: 0, sticks: 0, dirt: 0, bones: 0, science: 0 };
+            rates = { kibble: 0, sticks: 0, dirt: 0, bones: 0, upgrades: 0 };
 
             let mult = (game.tech.packTactics && game.tech.packTactics.researched) ? 1.2 : 1.0;
-            mult *= game.pups.morale; // Morale affects overall worker output
+            mult *= game.pups.morale;
 
-            // Job outputs
-            rates.kibble += game.jobs.forager.count * 0.8 * mult;
-            rates.kibble -= game.pups.total * game.pups.consumptionRate; // net rate
-            rates.sticks += game.jobs.fetcher.count * 0.5 * mult;
-            rates.dirt += game.jobs.digger.count * 0.3 * mult;
-            rates.bones += game.jobs.digger.count * 0.05 * mult;
-            rates.science += game.jobs.scholar.count * 0.25 * mult;
+            // Dynamically calculate yields from job definitions
+            for (let jKey in game.jobs) {
+                let job = game.jobs[jKey];
+                if (job.count > 0 && job.yields) {
+                    for (let rKey in job.yields) {
+                        rates[rKey] += job.count * job.yields[rKey] * mult;
+                    }
+                }
+            }
+
+            // Subtract consumption
+            rates.kibble -= game.pups.total * game.pups.consumptionRate;
 
             // Recalculate Max Storages
             game.resources.kibble.max = 100 + (game.buildings.feeder.count * 100);
             game.resources.sticks.max = 100 + (game.buildings.woodpile.count * 100);
             game.resources.dirt.max = 100 + (game.buildings.quarry.count * 150);
             game.resources.bones.max = 50 + (game.buildings.quarry.count * 25);
-            game.resources.science.max = 200;
+            game.resources.upgrades.max = 200;
         }
 
         function manualGather(type) {
@@ -456,6 +471,17 @@
         }
 
         // --- ASSIGN & UNASSIGN JOBS ---
+        function getJobDescription(job) {
+            if (!job.yields) return '';
+            let parts = [];
+            for (let rKey in job.yields) {
+                let amount = job.yields[rKey];
+                let resourceLabel = game.resources[rKey] ? game.resources[rKey].label : rKey;
+                parts.push(`+${amount} ${resourceLabel}/s`);
+            }
+            return parts.join(', ');
+        }
+
         function assignJob(jobKey, delta) {
             let currentAssigned = Object.values(game.jobs).reduce((sum, j) => sum + j.count, 0);
             let unassigned = game.pups.total - currentAssigned;
@@ -539,7 +565,7 @@
         function renderAll() {
             calculateRates();
 
-            // 1. Render Pups / Morale Bar
+            // Render Pups / Morale Bar
             document.getElementById('res-pups').innerText = game.pups.total;
             document.getElementById('res-max-pups').innerText = game.pups.max;
             document.getElementById('morale-val').innerText = `${Math.round(game.pups.morale * 100)}%`;
@@ -547,7 +573,7 @@
             let assigned = Object.values(game.jobs).reduce((sum, j) => sum + j.count, 0);
             document.getElementById('unassigned-pups').innerText = game.pups.total - assigned;
 
-            // 2. Render Resources Side Panel
+            // Render Resources Side Panel
             let resContainer = document.getElementById('resource-container');
             resContainer.innerHTML = '';
 
@@ -560,10 +586,10 @@
                 let rateColor = netRate >= 0 ? 'text-emerald-400' : 'text-red-400';
 
                 let itemHtml = `
-                    <div class="bg-gray-800/60 p-2 rounded-lg border border-gray-800 flex items-center justify-between">
+                    <div class="bg-badge p-2 rounded-lg border bg-button-border flex items-center justify-between">
                         <div class="flex items-center space-x-2">
                             <i class="fa-solid ${r.icon} ${r.color} w-4 text-center"></i>
-                            <span class="font-medium text-gray-300">${r.label}</span>
+                            <span class="font-medium text-supply">${r.label}</span>
                         </div>
                         <div class="text-right">
                             <div class="font-bold text-resource-value">${Math.floor(r.amount)} <span class="text-[10px] text-resource-max font-normal">/ ${r.max}</span></div>
@@ -574,7 +600,7 @@
                 resContainer.innerHTML += itemHtml;
             }
 
-            // 3. Render Crafting Buttons
+            // Render Crafting Buttons
             let craftContainer = document.getElementById('craft-buttons');
             craftContainer.innerHTML = '';
             let hasCrafts = false;
@@ -591,7 +617,7 @@
                 }
 
                 craftContainer.innerHTML += `
-                    <button onclick="craftItem('${cKey}')" ${!canAfford ? 'disabled' : ''} class="p-2.5 rounded-lg border text-left flex items-center justify-between ${canAfford ? 'bg-amber-950/40 border-amber-800/60 hover:bg-amber-900/40 text-amber-200' : 'bg-gray-900 border-gray-800 text-gray-600 opacity-60'}">
+                    <button onclick="craftItem('${cKey}')" ${!canAfford ? 'disabled' : ''} class="p-2.5 rounded-lg border text-left flex items-center justify-between ${canAfford ? 'bg-amber-950/40 border-amber-800/60 hover:bg-amber-900/40 text-amber-200' : 'bg-button bg-button-border text-gray-600 opacity-60'}">
                         <div>
                             <div class="font-semibold text-xs flex items-center"><i class="fa-solid ${c.icon} mr-1.5"></i>${c.label}</div>
                             <div class="text-[10px] text-card-desc">Req: ${costText.join(', ')}</div>
@@ -602,7 +628,7 @@
             }
             document.getElementById('crafting-card').style.display = hasCrafts ? 'block' : 'none';
 
-            // 4. Render Buildings Tab
+            // Render Buildings Tab
             let bContainer = document.getElementById('buildings-container');
             bContainer.innerHTML = '';
             for (let bKey in game.buildings) {
@@ -621,54 +647,56 @@
                 }
 
                 bContainer.innerHTML += `
-                    <div class="bg-gray-900 p-3 rounded-xl border border-gray-800 flex flex-col justify-between space-y-3">
-                        <div>
-                            <div class="flex items-center justify-between mb-1">
+                    <div class="bg-button p-3 rounded-xl border bg-button-border flex items-center justify-between">
+                        <div class="flex-1 mr-4 space-y-1">
+                            <div class="flex items-center justify-between">
                                 <span class="text-xs font-bold text-card-header flex items-center">
-                                    <i class="fa-solid ${b.icon} text-amber-500 mr-2"></i>${b.label}
+                                    <i class="fa-solid ${b.icon} text-card-icon mr-2"></i>${b.label}
                                 </span>
-                                <span class="text-xs font-bold px-2 py-0.5 bg-gray-800 text-amber-400 rounded-md">Lvl ${b.count}</span>
+                                <span class="text-[10px] font-bold px-1.5 py-0.5 bg-badge text-card-level rounded">LVL ${b.count}</span>
                             </div>
                             <p class="text-[11px] text-card-desc">${b.desc}</p>
                         </div>
-                        <div class="pt-2 border-t border-gray-800/60 flex items-center justify-between">
-                            <span class="text-[10px] text-card-desc">${costStr.join(', ')}</span>
-                            <button onclick="buyBuilding('${bKey}')" ${!canAfford ? 'disabled' : ''} class="px-3 py-1.5 rounded-lg text-xs font-semibold transition ${canAfford ? 'bg-amber-600 hover:bg-amber-500 active:bg-amber-700 text-white shadow' : 'bg-gray-800 text-gray-500 cursor-not-allowed'}">
+                        <div class="flex flex-col items-center justify-center w-20 shrink-0 space-y-1">
+                            <button onclick="buyBuilding('${bKey}')" ${!canAfford ? 'disabled' : ''} class="w-full px-3 py-1.5 rounded-lg text-xs font-semibold transition text-center ${canAfford ? 'bg-button-active hover:bg-amber-500 active:bg-amber-700 text-button-active shadow' : 'bg-badge text-button-disabled cursor-not-allowed'}">
                                 Build
                             </button>
+                            <span class="text-[10px] text-card-desc text-center truncate w-full">${costStr.join(', ')}</span>
                         </div>
                     </div>
                 `;
             }
 
-            // 5. Render Jobs / Pack Tab
+            // Render Pack / Jobs Tab
             let jContainer = document.getElementById('jobs-container');
             jContainer.innerHTML = '';
             for (let jKey in game.jobs) {
                 let j = game.jobs[jKey];
                 if (!j.unlocked) continue;
 
+                let dynamicDesc = getJobDescription(j);
+
                 jContainer.innerHTML += `
-                    <div class="bg-gray-900 p-3 rounded-xl border border-gray-800 flex items-center justify-between">
+                    <div class="bg-button p-3 rounded-xl border bg-button-border flex items-center justify-between">
                         <div class="flex items-center space-x-3">
-                            <div class="w-9 h-9 rounded-lg bg-gray-800 flex items-center justify-center text-amber-500">
+                            <div class="w-9 h-9 rounded-lg bg-badge flex items-center justify-center text-card-icon">
                                 <i class="fa-solid ${j.icon} text-base"></i>
                             </div>
                             <div>
                                 <h3 class="text-xs font-bold text-card-header">${j.label}</h3>
-                                <p class="text-[11px] text-card-desc">${j.desc}</p>
+                                <p class="text-[11px] text-card-desc">${dynamicDesc}</p>
                             </div>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <button onclick="assignJob('${jKey}', -1)" class="w-7 h-7 rounded-lg bg-gray-800 hover:bg-gray-700 active:bg-gray-600 text-gray-300 font-bold text-xs flex items-center justify-center transition border border-gray-700">-</button>
+                            <button onclick="assignJob('${jKey}', -1)" class="w-7 h-7 rounded-lg bg-badge hover:bg-gray-700 active:bg-gray-600 text-gray-300 font-bold text-xs flex items-center justify-center transition border border-gray-700">-</button>
                             <span class="text-xs font-bold text-gray-100 w-6 text-center">${j.count}</span>
-                            <button onclick="assignJob('${jKey}', 1)" class="w-7 h-7 rounded-lg bg-amber-600 hover:bg-amber-500 active:bg-amber-700 text-white font-bold text-xs flex items-center justify-center transition shadow">+</button>
+                            <button onclick="assignJob('${jKey}', 1)" class="w-7 h-7 rounded-lg bg-button-active hover:bg-amber-500 active:bg-amber-700 text-button-active font-bold text-xs flex items-center justify-center transition shadow">+</button>
                         </div>
                     </div>
                 `;
             }
 
-            // 6. Render Science / Tech Tab
+            // Render Upgrades Tab
             let tContainer = document.getElementById('tech-container');
             tContainer.innerHTML = '';
             for (let tKey in game.tech) {
@@ -683,16 +711,16 @@
                 }
 
                 tContainer.innerHTML += `
-                    <div class="bg-gray-900 p-3 rounded-xl border border-gray-800 flex flex-col justify-between space-y-3">
+                    <div class="bg-button p-3 rounded-xl border bg-button-border flex flex-col justify-between space-y-3">
                         <div>
                             <h3 class="text-xs font-bold text-blue-300 mb-1 flex items-center">
                                 <i class="fa-solid fa-microscope mr-2 text-blue-400"></i>${t.label}
                             </h3>
                             <p class="text-[11px] text-card-desc">${t.desc}</p>
                         </div>
-                        <div class="pt-2 border-t border-gray-800/60 flex items-center justify-between">
+                        <div class="pt-2 border-t bg-button-border/60 flex items-center justify-between">
                             <span class="text-[10px] text-card-desc">${costStr.join(', ')}</span>
-                            <button onclick="researchTech('${tKey}')" ${!canAfford ? 'disabled' : ''} class="px-3 py-1.5 rounded-lg text-xs font-semibold transition ${canAfford ? 'bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white shadow' : 'bg-gray-800 text-gray-500 cursor-not-allowed'}">
+                            <button onclick="researchTech('${tKey}')" ${!canAfford ? 'disabled' : ''} class="px-3 py-1.5 rounded-lg text-xs font-semibold transition ${canAfford ? 'bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-button-active shadow' : 'bg-badge text-button-disabled cursor-not-allowed'}">
                                 Research
                             </button>
                         </div>
@@ -707,15 +735,15 @@
             document.getElementById(`tab-${tabId}`).classList.remove('hidden');
 
             // Reset navigation button highlights while keeping layout classes
-            ['yard', 'buildings', 'pack', 'science', 'log'].forEach(id => {
+            ['yard', 'buildings', 'pack', 'upgrades', 'log'].forEach(id => {
                 let btn = document.getElementById(`nav-${id}`);
                 let hasBorder = id !== 'log';
-                let borderClass = hasBorder ? 'border-r border-gray-800/40' : '';
+                let borderClass = hasBorder ? 'border-r bg-button-border/40' : '';
                 
                 if (id === tabId) {
-                    btn.className = `flex-1 py-1 flex flex-col items-center justify-center text-amber-500 font-semibold transition hover:bg-gray-800/50 ${borderClass}`;
+                    btn.className = `flex-1 py-1 flex flex-col items-center justify-center text-card-icon font-semibold transition hover:bg-badge ${borderClass}`;
                 } else {
-                    btn.className = `flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-amber-400 font-semibold transition hover:bg-gray-800/50 ${borderClass}`;
+                    btn.className = `flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge ${borderClass}`;
                 }
             });
 
@@ -729,8 +757,8 @@
             let log = document.getElementById('game-log');
             let time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
             let entry = document.createElement('div');
-            entry.className = "text-gray-300 border-b border-gray-800/40 pb-1";
-            entry.innerHTML = `<span class="text-gray-500 text-[10px]">[${time}]</span> ${msg}`;
+            entry.className = "text-gray-300 border-b bg-button-border/40 pb-1";
+            entry.innerHTML = `<span class="text-button-disabled text-[10px]">[${time}]</span> ${msg}`;
             log.prepend(entry);
         }
 
@@ -745,7 +773,7 @@
 
         // --- INFO BUTTON TOGGLE ---
         function openInfoModal(title, text) {
-            document.getElementById('info-modal-title').innerHTML = `<i class="fa-solid fa-circle-info text-amber-500 mr-2"></i>${title}`;
+            document.getElementById('info-modal-title').innerHTML = `<i class="fa-solid fa-circle-info text-card-icon mr-2"></i>${title}`;
             document.getElementById('info-modal-text').innerText = text;
             document.getElementById('info-modal').classList.remove('hidden');
         }
@@ -796,12 +824,12 @@
 
         // --- CHEATS SYSTEM ---
         function cheatRevealAllTech() {
-            console.log("Cheat triggered: Reveal All Tech");
+            console.log("Cheat triggered: Reveal All Upgrades");
             for (let key in game.tech) {
                 game.tech[key].unlocked = true;
             }
             renderAll();
-            logMessage("✨ Cheated: All science technologies revealed!");
+            logMessage("✨ Cheated: All Upgrades revealed!");
         }
 
         function cheatAddResource(resourceKey, amount) {
@@ -841,17 +869,17 @@
             }
 
             if (index.length === 0) {
-                listContainer.innerHTML = `<div class="text-[11px] text-gray-500 italic py-1 text-center">No manual saves found</div>`;
+                listContainer.innerHTML = `<div class="text-[11px] text-button-disabled italic py-1 text-center">No manual saves found</div>`;
                 return;
             }
 
             listContainer.innerHTML = '';
             index.forEach(name => {
                 let slotHtml = `
-                    <div class="flex items-center justify-between p-2 bg-gray-800 rounded-lg text-xs border border-gray-700">
+                    <div class="flex items-center justify-between p-2 bg-badge rounded-lg text-xs border border-gray-700">
                         <span class="font-medium text-card-header truncate mr-2" title="${name}">${name}</span>
                         <div class="flex items-center space-x-1 shrink-0">
-                            <button onclick="loadManualSave('${name}'); toggleMenu();" class="px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded text-[10px] font-semibold transition">Load</button>
+                            <button onclick="loadManualSave('${name}'); toggleMenu();" class="px-2 py-1 bg-blue-600 hover:bg-blue-500 text-button-active rounded text-[10px] font-semibold transition">Load</button>
                             <button onclick="deleteManualSave('${name}');" class="px-2 py-1 bg-red-900/60 hover:bg-red-800 text-red-300 rounded text-[10px] transition"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </div>

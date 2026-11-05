@@ -5,30 +5,34 @@
     --bg-header: #8a5a1f;           /* page header */
     --bg-sidebar: #f5e9d3;          /* sidebar/top section */
     --bg-body: #faf5ed;             /* main/bottom section */
-    --bg-panel: #ffffff;            /* actions buttons area */
-    --bg-modal: #2c2217;
-    --bg-button: #ebd7b5;
-    --bg-button-border: #d4b88b;
-    --bg-menu: #2c2217;
-    --bg-menu-border: #8a5a1f;
-    --bg-setting: #2c2217;
+    --bg-panel: #ffffff;            /* actions card area */
+    --bg-button: #ebd7b5;           /* action card aka button */
+    --bg-button-active: #ffffb6;    /* affordable "Build" button background */
+    --bg-badge: #ededed;            /* level and action badge */
+    --bg-button-border: #d4b88b;    /* button border */
+    --bg-menu: #2c2217;             /* settings menu */
+    --bg-menu-border: #8a5a1f;      /* settings menu border */
+    --bg-setting: #2c2217;          /* setting card */
 
     /* --- Text Colors --- */
-    --text-card-header: #3d2b18;
-    --text-card-desc: #6e5842;
-    --text-sidebar-title: #543f29;
-    --text-subtitle: #e09f3e;
-    --text-resource-label: #8a5a1f;
-    --text-resource-value: #e6dfd6;
-    --text-resource-max: #3e280e;
-    --text-action-value: #000000;
-    --text-muted: #6e5842;
-    --text-button: #3d2b18;
-    --text-button-header: #3d2b18;
+    --text-card-header: #3d2b18;    /* action card header */
+    --text-card-desc: #6e5842;      /* action card description */
+    --text-card-icon: #f59e0b;      /* item icon color */
+    --text-card-level: #7e7e7e;     /* upgrade level label */
+    --text-sidebar-title: #543f29;  /* sidebar/top title */
+    --text-subtitle: #e09f3e;       /* subtitle */
+    --text-supply: #543f29;         /* morale and supply text */
+    --text-resource-label: #8a5a1f; /* resource label */
+    --text-resource-value: #77736e; /* resource value */
+    --text-resource-max: #3e280e;   /* resoruce value max */
+    --text-action-value: #000000;   /* action value */
+    --text-muted: #6e5842;          /* muted text */
     --text-button-hover: #6e5842;
     --text-menu: #f5e9d3;
     --text-setting-desc: #f5e9d3;
     --text-dog-icon: #f3ab3b;
+    --text-button-active: #2f2f2f;  /* text-white (Affordable "Build" button text) */
+    --text-button-disabled: #bfafaf;/* text-gray-500 (Disabled "Build" button text) */
 }
 
 /* --- Frenchie Theme Overrides (Black & White) --- */
@@ -37,7 +41,6 @@ html.theme-frenchie {
     --bg-sidebar: #f3f4f6;
     --bg-body: #ffffff;
     --bg-panel: #000000;
-    --bg-modal: #e5e7eb;
     --bg-button: #e5e7eb;
     --bg-button-border: #000000;
     --bg-menu: #ffffff;
@@ -46,8 +49,11 @@ html.theme-frenchie {
 
     --text-card-header: #e5e7eb;
     --text-card-desc: #767b81;
+    --text-card-icon: #292929;      /* item icon color */
+    --text-card-level: #000000;     /* upgrade level label */
     --text-sidebar-title: #374151;
     --text-subtitle: #808183;
+    --text-supply: #141414;         /* morale and supply text */
     --text-resource-label: #000000;
     --text-resource-value: #e5e7eb;
     --text-resource-max: #8b6231;
@@ -67,7 +73,6 @@ html.theme-husky {
     --bg-sidebar: #f1f5f9;       /* Light Slate / Snow White Sidebar */
     --bg-body: #f8fafc;          /* Pure Crisp Snow Body */
     --bg-panel: #ffffff;         /* Bright White Cards */
-    --bg-modal: #0f172a;         /* Dark Slate Modal */
     --bg-button: #e2e8f0;        /* Cool Grey Button */
     --bg-button-border: #94a3b8; /* Medium Slate Border */
     --bg-menu: #0f172a;          /* Dark Charcoal Menu */
@@ -76,8 +81,11 @@ html.theme-husky {
 
     --text-card-header: #0f172a; /* Deep Charcoal Header */
     --text-card-desc: #64748b;   /* Muted Slate Subtext */
+    --text-card-icon: #727272;      /* item icon color */
+    --text-card-level: #000000;     /* upgrade level label */
     --text-sidebar-title: #334155;/* Slate Title */
     --text-subtitle: #38bdf8;    /* Bright Icy Blue Subtitle Accent */
+    --text-supply: #5a5a5a;         /* morale and supply text */
     --text-resource-label: #0284c7; /* Deep Blue Resource Label */
     --text-resource-value: #0f172a; /* Dark Charcoal Value */
     --text-resource-max: #161c2b; /* Dark Charcoal Max Value */
@@ -97,7 +105,6 @@ html.theme-shepherd {
     --bg-sidebar: #f5ebd6;       /* Soft Tan Fur Tone */
     --bg-body: #fcf8f0;          /* Warm Cream Background */
     --bg-panel: #f3e6d0;         /* Warm Fawn Panel */
-    --bg-modal: #2b1b12;         /* Dark Brown Modal */
     --bg-button: #e6d2b5;        /* Tan Button */
     --bg-button-border: #7a5230; /* Rich Leather Brown Border */
     --bg-menu: #2b1b12;          /* Dark Brown Menu */
@@ -106,8 +113,11 @@ html.theme-shepherd {
 
     --text-card-header: #2b1b12;
     --text-card-desc: #6b584c;
+    --text-card-icon: #6c5731;      /* item icon color */
+    --text-card-level: #000000;     /* upgrade level label */
     --text-sidebar-title: #3b261b;
     --text-subtitle: #8c6747;
+    --text-supply: #433321;         /* morale and supply text */
     --text-resource-label: #4a2e1c;
     --text-resource-value: #2b1b12;
     --text-resource-max: #8a5a1f;
@@ -127,8 +137,9 @@ html.theme-shepherd {
 .bg-panel { background-color: var(--bg-panel); }
 .bg-resource-item { background-color: var(--bg-resource-item); }
 .bg-header { background-color: var(--bg-header); }
-.bg-modal { background-color: var(--bg-modal); }
 .bg-button { background-color: var(--bg-button); }
+.bg-button-active { background-color: var(--bg-button-active); }
+.bg-badge { background-color: var(--bg-badge); }
 .bg-button-border { border-color: var(--bg-button-border); }
 .bg-menu { background-color: var(--bg-menu); }
 .bg-menu-border { border-color: var(--bg-menu-border); }
@@ -136,8 +147,11 @@ html.theme-shepherd {
 
 .text-card-header { color: var(--text-card-header); }
 .text-card-desc { color: var(--text-card-desc); }
+.text-card-icon { color: var(--text-card-icon); }
+.text-card-level { color: var(--text-card-level); }
 .text-sidebar-title { color: var(--text-sidebar-title); }
 .text-subtitle { color: var(--text-subtitle); }
+.text-supply { color: var(--text-supply); }
 .text-resource-label { color: var(--text-resource-label); }
 .text-resource-value { color: var(--text-resource-value); }
 .text-resource-max { color: var(--text-resource-max); }
@@ -147,6 +161,8 @@ html.theme-shepherd {
 .text-menu { color: var(--text-menu); }
 .text-setting-desc { color: var(--text-setting-desc); }
 .text-dog-icon { color: var(--text-dog-icon); }
+.text-button-active { color: var(--text-button-active); }
+.text-button-disabled { color: var(--text-button-disabled); }
 
 /* Other standard utilities */
 .text-button-header { @apply text-xs font-bold; color: var(--text-button-header); }
