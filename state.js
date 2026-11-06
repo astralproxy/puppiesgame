@@ -57,13 +57,15 @@ let game = {
         - WOODPILE: increases stick storage
         - FOODBIN: increases kibble storage
         - HOLE: unlocks deeper digging and storage
+        - TREATBIN: increases treat storage
         - KENNEL: increases puppy capacity
     */
     buildings: {
         doghouse: { count: 0, unlocked: true, label: 'Doghouse', desc: '+1 Pup capacity', cost: { sticks: 10 }, icon: 'fa-house-user' },
-        foodbin: { count: 0, unlocked: true, label: 'Food Bin', desc: '+100 Kibble storage', cost: { sticks: 15 }, icon: 'fa-utensils' },
-        woodpile: { count: 0, unlocked: true, label: 'Stick Shed', desc: '+100 Stick storage', cost: { sticks: 25 }, icon: 'fa-boxes-stacked' },
+        foodbin: { count: 0, unlocked: true, label: 'Food Bin', desc: '+Kibble storage', cost: { sticks: 15 }, icon: 'fa-utensils' },
+        woodpile: { count: 0, unlocked: true, label: 'Stick Shed', desc: '+Stick storage', cost: { sticks: 25 }, icon: 'fa-boxes-stacked' },
         hole: { count: 0, unlocked: false, label: 'Deep Hole', desc: 'Deeper dirt storage', cost: { sticks: 40, dirt: 10 }, icon: 'fa-bore-hole' },
+        treatbin: { count: 0, unlocked: false, label: 'Treat Bin', desc: '+Treat storage', cost: { sticks: 80 }, icon: 'fa-utensils' },
         kennel: { count: 0, unlocked: false, label: 'Kennel', desc: '+3 Pup capacity', cost: { sticks: 100, dirt: 20 }, icon: 'fa-warehouse' }
     },
 
@@ -80,10 +82,11 @@ let game = {
         fetchTechniques: { teached: false, unlocked: false, label: 'Fetch!', desc: 'Teach puppies to bring back sticks.', cost: { treats: 10 }, unlocks: ['jobs.fetcher'] },
         excavation: { teached: false, unlocked: false, label: 'Excavation', desc: 'Allow digging up dirt and bones.', cost: { treats: 25 }, unlocks: ['resources.dirt', 'resources.bones', 'jobs.digger', 'buildings.hole'] },
         zoomies: { teached: false, unlocked: false, label: 'Zoomies', desc: 'Increase all puppy efficiency by 10%.', cost: { treats: 50 }, effectMultiplier: 1.1 },
+        selfcontrol: { teached: false, unlocked: false, label: 'Self-Control', desc: 'Control your cravings, make room for more treats.', cost: { treats: 80 }, unlocks: ['buildings.treatbin'] },
         playdead: { teached: false, unlocked: false, label: 'Play Dead', desc: 'Reduce kibble consumption by 10%.', cost: { treats: 100 }, effectMultiplier: 0.9 },
-        scent: { teached: false, unlocked: false, label: 'Scent Tracking', desc: 'Shortens the time for strays to join the pack.', cost: { treats: 100 }, effectMultiplier: 2.0 },
+        scent: { teached: false, unlocked: false, label: 'Scent Tracking', desc: 'Shortens the time for strays to join the pack.', cost: { treats: 120 }, effectMultiplier: 2.0 },
         zoomies2: { teached: false, unlocked: false, label: 'Zoomies Too', desc: 'Increase all puppy efficiency by another 10%.', cost: { treats: 200 }, effectMultiplier: 1.1 },
-        scraps: { teached: false, unlocked: false, label: 'Table Scraps', desc: 'Decrease kibble reliance by 10%.', cost: { treats: 200 }, effectMultiplier: 0.9 },
+        scraps: { teached: false, unlocked: false, label: 'Table Scraps', desc: 'Decrease kibble reliance by 20%.', cost: { treats: 200 }, effectMultiplier: 0.8 },
     },
 
     /* CRAFTS

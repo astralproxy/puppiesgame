@@ -478,9 +478,9 @@
             // Recalculate Max Storages
             game.resources.kibble.max = 100 + (game.buildings.foodbin.count * 50);
             game.resources.sticks.max = 100 + (game.buildings.woodpile.count * 50);
-            game.resources.dirt.max = 100 + (game.buildings.hole.count * 50);
+            game.resources.dirt.max = 100 + (game.buildings.hole.count * 20);
             game.resources.bones.max = 100 + (game.buildings.hole.count * 20);
-            game.resources.treats.max = 100;
+            game.resources.treats.max = 100 + (game.buildings.treatbin.count * 20);
         }
 
         function manualGather(type) {
@@ -991,8 +991,8 @@
             let log = document.getElementById('game-log');
             let time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
             let entry = document.createElement('div');
-            entry.className = "text-gray-300 border-b bg-button-border pb-1";
-            entry.innerHTML = `<span class="text-button-disabled text-[10px]">[${time}]</span> ${msg}`;
+            entry.className = "text-modal border-b bg-button-border pb-1";
+            entry.innerHTML = `<span class="text-modal-header text-[10px]">[${time}]</span> ${msg}`;
             log.prepend(entry);
         }
 
