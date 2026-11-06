@@ -1,6 +1,6 @@
 // --- CONSTS ---
 const STRAY_JOIN_CHANCE = 0.1;
-const JOB_UNLOCK_BEGGAR = 10;
+const JOB_UNLOCK_TREATS = 5;
 const BUILDING_UNLOCK_KENNEL = 20;
 const TAB_CONTENT_HEIGHT = '480px';
 
@@ -90,7 +90,7 @@ let game = {
         - TREAT: baked from kibble to boost puppy morale
     */
     crafts: {
-        treat: { unlocked: false, label: 'Bake Treat', cost: { kibble: 25 }, yields: { treats: 1 }, icon: 'fa-cookie' },
+        treat: { unlocked: false, label: 'Baked Treat', cost: { kibble: 25 }, yields: { treats: 1 }, icon: 'fa-cookie' },
         // chewtoy: { unlocked: false, label: 'Chew Toy', cost: { sticks: 25, bones: 5 }, yields: { trinket: 1 }, icon: 'fa-cookie' }
     }
 };

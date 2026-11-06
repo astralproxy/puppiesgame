@@ -20,7 +20,7 @@
         }
         /* Custom Scrollbar for inner tab panels */
         .custom-scroll::-webkit-scrollbar {
-            width: 4px;
+            width: 6px;
         }
         .custom-scroll::-webkit-scrollbar-track {
             background: rgba(0,0,0,0.1);
@@ -171,7 +171,7 @@
         <section class="md:col-span-8 lg:col-span-9 flex flex-col bg-body h-full overflow-hidden relative">
             
             <!-- Tab Content Screens -->
-            <div class="flex-1 overflow-y-auto p-2 custom-scroll relative">
+            <div id="tab-content-wrapper" class="overflow-y-auto p-2 custom-scroll relative">
                 
                 <!-- TAB 1: YARD (Manual actions & core setup) -->
                 <div id="tab-yard" class="tab-panel space-y-4">
@@ -209,7 +209,7 @@
                     <!-- Refinement / Crafting Quick Card -->
                     <div id="crafting-card" class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm">
                         <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-2 flex items-center">
-                            <i class="fa-solid fa-hammer text-card-icon mr-2"></i>Crafting & Refinement
+                            <i class="fa-solid fa-hammer text-card-icon mr-2"></i>Crafting
                         </h2>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="craft-buttons">
                             <!-- Populated dynamically -->
@@ -332,9 +332,14 @@
             }
 
             // Apply unified tab height from const
-            document.querySelectorAll('.tab-panel').forEach(panel => {
-                panel.style.height = TAB_CONTENT_HEIGHT;
-            });
+            const wrapper = document.getElementById('tab-content-wrapper');
+            if (wrapper) {
+                wrapper.style.height = TAB_CONTENT_HEIGHT; // Sets the fixed zone height on the outer wrapper
+            }
+            // This isn't ideal because it may extend past the visible panel and enable a scroll bar
+            // document.querySelectorAll('.tab-panel').forEach(panel => {
+            //     panel.style.height = TAB_CONTENT_HEIGHT;
+            // });
 
             renderAll();
             logMessage("Scavenge Kibble and gather Sticks to expand your pack.");
@@ -363,7 +368,7 @@
             return false;
         }
 
-        // --- GAME LOOP ---
+        // region --- GAME LOOP ---
         function gameLoop() {
             calculateRates();
 
@@ -417,32 +422,32 @@
                     }
                 }
             }
+            // #endregion --- GAME LOOP ---
 
-//#region UNLOCKS ---
+// #region UNLOCKS
             // Unlock STRUCTURES
             if (!game.buildings.kennel.unlocked && game.pups.total >= BUILDING_UNLOCK_KENNEL) {
                 game.buildings.kennel.unlocked = true;
             }
 
-            // Unlock PACK JOBS
-            // FETCHER is unlocked by tricks.fetchTechniques properties
-            if (!game.jobs.beggar.unlocked && game.pups.total >= JOB_UNLOCK_BEGGAR) {
-                game.jobs.beggar.unlocked = true;
-                logMessage("🍬 The pack grows, and now some pups might beg for treats.");
-
-                // and the ability to manually bake Treats which Beggars provide
+            // the ability to manually bake Treats which Beggars provide
+            if (!game.resources.treats.unlocked && game.pups.total >= JOB_UNLOCK_TREATS) {                
+                logMessage("🍬 Yummy! Now you can make the sweet little pups a treat.");
+                game.resources.treats.unlocked = true;
                 game.crafts.treat.unlocked = true;
             }
 
-            // Unlock TRICKS
-            // Unlock the first Trick after treats are made
-            // The rest are unlocked sequentially as upgrades are bought
+            // Unlock Beggar job and the first Trick after treats are made
+            // The rest of Tricks are unlocked sequentially as upgrades are bought
             let firstTrickKey = Object.keys(game.tricks)[0]
             if (firstTrickKey && !game.tricks[firstTrickKey].unlocked && game.resources.treats.amount > 0) {
+                game.jobs.beggar.unlocked = true;
+                logMessage("🍬 The pack grows. Uh oh, they don't smell treats, they smell blood!");
+
                 game.tricks[firstTrickKey].unlocked = true;                
                 logMessage("💡 Who said you can't teach an old dog new tricks?");
             }
-//#endregion UNLOCKS
+// #endregion UNLOCKS
 
             renderAll();
         }
@@ -598,6 +603,20 @@
             renderAll();
         }
 
+        function updateScrollbarState() {
+            const wrapper = document.getElementById('tab-content-wrapper');
+            if (!wrapper) return;
+
+            const activePanel = wrapper.querySelector('.tab-panel:not(.hidden)');
+            if (!activePanel) return;
+
+            if (activePanel.scrollHeight <= wrapper.clientHeight) {
+                wrapper.style.overflowY = 'hidden';
+            } else {
+                wrapper.style.overflowY = 'auto';
+            }
+        }
+
         // --- RENDERING CONTROLLER ---
         function renderAll() {
             calculateRates();
@@ -646,9 +665,9 @@
             // Render Resources Side Panel
             let resContainer = document.getElementById('resource-container');
 
-            // Check if treats, dirt, bones are unlocked to condense the resource view
-            let hasSpecialResources = game.resources.treats.unlocked || game.resources.dirt.unlocked || game.resources.bones.unlocked;
-            if (hasSpecialResources) {
+            // Count how many resources are actually unlocked to condense Resource view
+            let unlockedResources = Object.values(game.resources).filter(r => r.unlocked);
+            if (unlockedResources.length > 2) {
                 resContainer.className = "grid grid-cols-2 gap-2 text-xs";
             } else {
                 resContainer.className = "space-y-2 text-xs";
@@ -707,7 +726,7 @@
                 }
 
                 craftContainer.innerHTML += `
-                    <button onclick="craftItem('${cKey}')" ${!canAfford ? 'disabled' : ''} class="p-2.5 rounded-lg border text-left flex items-center justify-between ${canAfford ? 'bg-amber-950/40 border-amber-800/60 hover:bg-amber-900/40 text-amber-200' : 'bg-button bg-button-border text-gray-600 opacity-60'}">
+                    <button onclick="craftItem('${cKey}')" ${!canAfford ? 'disabled' : ''} class="p-2.5 rounded-lg border text-left flex items-center justify-between ${canAfford ? 'bg-yellow-400 border-green-800 text-green-800' : 'bg-button bg-button-border text-red-600 opacity-60'}">
                         <div>
                             <div class="font-semibold text-xs flex items-center"><i class="fa-solid ${c.icon} mr-1.5"></i>${c.label}</div>
                             <div class="text-[10px] text-card-desc">Req: ${costText.join(', ')}</div>
@@ -843,6 +862,9 @@
                     </div>
                 `;
             }
+
+            // Update dynamic scrollbar visibility
+            updateScrollbarState();
         }
 
         // --- NAVIGATION TABS ---
@@ -872,6 +894,9 @@
             if (tabId === 'pack') {
                 document.getElementById('nav-pup-indicator').classList.add('hidden');
             }
+
+            // Recalculate scrollbar state for the newly active tab
+            setTimeout(updateScrollbarState, 0);
         }
 
         // --- LOGGING ---
