@@ -373,7 +373,14 @@
 
             if (game.pups.total < game.pups.max && game.pups.morale > 0.5 && game.resources.kibble.amount > 10) {
                 // Random chance to attract new pup if space, morale, and food permit
-                if (Math.random() < 0.1) {
+                let strayChance = STRAY_JOIN_CHANCE;
+
+                // Increase chance if certain tricks are known
+                if (game.tricks.scentTracking && game.tricks.scentTracking.teached) {
+                    strayChance *= game.tricks.scentTracking.effectMultiplier;
+                }
+
+                if (Math.random() < strayChance) {
                     game.pups.total++;
                     logMessage("🐾 A new stray puppy wandered into your yard and joined the pack!");
                     document.getElementById('nav-pup-indicator').classList.remove('hidden');
@@ -412,26 +419,28 @@
             }
 
 //#region UNLOCKS ---
-            // Unlock Jobs
-            if (!game.jobs.fetcher.unlocked && game.tricks.fetchTechniques.teached) {
-                game.jobs.fetcher.unlocked = true;
-                logMessage("🪾 The pack grows, and now some pups can fetch sticks.");
+            // Unlock STRUCTURES
+            if (!game.buildings.kennel.unlocked && game.pups.total >= BUILDING_UNLOCK_KENNEL) {
+                game.buildings.kennel.unlocked = true;
             }
+
+            // Unlock PACK JOBS
+            // FETCHER is unlocked by tricks.fetchTechniques properties
             if (!game.jobs.beggar.unlocked && game.pups.total >= JOB_UNLOCK_BEGGAR) {
                 game.jobs.beggar.unlocked = true;
                 logMessage("🍬 The pack grows, and now some pups might beg for treats.");
+
+                // and the ability to manually bake Treats which Beggars provide
+                game.crafts.treat.unlocked = true;
             }
 
+            // Unlock TRICKS
             // Unlock the first Trick after treats are made
+            // The rest are unlocked sequentially as upgrades are bought
             let firstTrickKey = Object.keys(game.tricks)[0]
             if (firstTrickKey && !game.tricks[firstTrickKey].unlocked && game.resources.treats.amount > 0) {
                 game.tricks[firstTrickKey].unlocked = true;                
                 logMessage("💡 Who said you can't teach an old dog new tricks?");
-            }
-
-            // Unlock Crafts after a bone is found
-            if (game.resources.bones.amount > 0/* || game.jobs.digger.count > 0*/) {
-                game.crafts.treat.unlocked = true;
             }
 //#endregion UNLOCKS
 
@@ -462,10 +471,10 @@
             }
 
             // Recalculate Max Storages
-            game.resources.kibble.max = 100 + (game.buildings.feeder.count * 100);
+            game.resources.kibble.max = 100 + (game.buildings.foodbin.count * 100);
             game.resources.sticks.max = 100 + (game.buildings.woodpile.count * 100);
-            game.resources.dirt.max = 100 + (game.buildings.quarry.count * 150);
-            game.resources.bones.max = 100 + (game.buildings.quarry.count * 25);
+            game.resources.dirt.max = 100 + (game.buildings.hole.count * 100);
+            game.resources.bones.max = 100 + (game.buildings.hole.count * 50);
             game.resources.treats.max = 100;
         }
 
@@ -655,6 +664,13 @@
                 // Subtract consumption from kibble display rate so it reflects true net change
                 if (key === 'kibble') {
                     netRate -= game.pups.total * game.pups.consumptionRate;
+                    if (game.tricks.playdead && game.tricks.playdead.unlocked)
+                    {
+                        netRate *= tricks.playdead.effectMultiplier;
+                    }
+                    if (game.tricks.scraps && game.tricks.scraps.unlocked) {
+                        netRate *= game.tricks.scraps.effectMultiplier;
+                    }
                 }
                 let rateDisplay = (netRate == 0) ? '0.0/s' : (netRate > 0 ? `+${netRate.toFixed(1)}/s` : `${netRate.toFixed(1)}/s`);
                 let rateColor = (netRate == 0) ? 'text-gray-400' : (netRate > 0 ? 'text-emerald-400' : 'text-red-400');

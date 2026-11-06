@@ -1,5 +1,7 @@
 // --- CONSTS ---
+const STRAY_JOIN_CHANCE = 0.1;
 const JOB_UNLOCK_BEGGAR = 10;
+const BUILDING_UNLOCK_KENNEL = 20;
 const TAB_CONTENT_HEIGHT = '480px';
 
 // --- GAME STATE ---
@@ -26,6 +28,7 @@ let game = {
             - DIRT: used with sticks to build advanced structures
         - BONES: unlocks additional crafting options
         - TREATS: used to teach Tricks
+        - TRINKET: trade for cosmetics that may or may not have effects
     */
     resources: {
         kibble: { amount: 20, max: 100, unlocked: true, label: 'Kibble', icon: 'fa-bowl-rice', color: 'text-supply' },
@@ -33,6 +36,7 @@ let game = {
         dirt: { amount: 0, max: 100, unlocked: false, label: 'Dirt Clods', icon: 'fa-mound', color: 'text-supply' },
         bones: { amount: 0, max: 100, unlocked: false, label: 'Bones', icon: 'fa-bone', color: 'text-supply' },
         treats: { amount: 0, max: 100, unlocked: false, label: 'Treats', icon: 'fa-cookie', color: 'text-supply' },
+        // trinket: { amount: 0, max: 100, unlocked: false, label: 'Trinket', icon: 'fa-gem', color: 'text-supply' },
     },
 
     /* JOB DESCRIPTIONS
@@ -51,35 +55,42 @@ let game = {
     /* BUILDINGS
         - DOGHOUSE: increases puppy capacity
         - WOODPILE: increases stick storage
-        - FEEDER: increases kibble storage
-        - QUARRY: unlocks deeper digging and storage
+        - FOODBIN: increases kibble storage
+        - HOLE: unlocks deeper digging and storage
         - KENNEL: increases puppy capacity
     */
     buildings: {
-        doghouse: { count: 0, unlocked: true, label: 'Doghouse', desc: '+1 Pup Capacity', cost: { sticks: 10 }, icon: 'fa-house-user' },
-        feeder: { count: 0, unlocked: true, label: 'Food Container', desc: '+100 Kibble Storage', cost: { sticks: 15 }, icon: 'fa-utensils' },
-        woodpile: { count: 0, unlocked: true, label: 'Stick Shed', desc: '+100 Stick Storage', cost: { sticks: 25 }, icon: 'fa-boxes-stacked' },
-        quarry: { count: 0, unlocked: false, label: 'Dirt Hole', desc: 'Unlocks deeper digging & storage', cost: { sticks: 40, dirt: 10 }, icon: 'fa-mountain' },
-        kennel: { count: 0, unlocked: false, label: 'Kennel', desc: '+3 Pup Capacity', cost: { sticks: 75, dirt: 30 }, icon: 'fa-warehouse' }
+        doghouse: { count: 0, unlocked: true, label: 'Doghouse', desc: '+1 Pup capacity', cost: { sticks: 10 }, icon: 'fa-house-user' },
+        foodbin: { count: 0, unlocked: true, label: 'Food Bin', desc: '+100 Kibble storage', cost: { sticks: 15 }, icon: 'fa-utensils' },
+        woodpile: { count: 0, unlocked: true, label: 'Stick Shed', desc: '+100 Stick storage', cost: { sticks: 25 }, icon: 'fa-boxes-stacked' },
+        hole: { count: 0, unlocked: false, label: 'Deep Hole', desc: 'Deeper dirt storage', cost: { sticks: 40, dirt: 10 }, icon: 'fa-bore-hole' },
+        kennel: { count: 0, unlocked: false, label: 'Kennel', desc: '+3 Pup capacity', cost: { sticks: 100, dirt: 20 }, icon: 'fa-warehouse' }
     },
 
     /* TRICKS
         - FETCH TECHNIQUES: teaches puppies to bring back sticks
         - EXCAVATION: allows digging up mud, dirt, and hidden bones
-        - DOGGY WISDOM: unlocks Wise Pup job for rapid research
-        - PACK TACTICS: increases all worker pup efficiency by 20%
+        - ZOOMIES: increases all puppy efficiency by 10%
+        - PLAYDEAD: reduces kibble consumption by 10%
+        - SCENT: shortens the time for strays to join the pack
+        - ZOOMIES2: increases all puppy efficiency by another 10%
+        - SCRAPS: decreases kibble reliance by 10%
     */
     tricks: {
-        fetchTechniques: { teached: false, unlocked: false, label: 'Fetch Training', desc: 'Teach puppies to bring back sticks.', cost: { treats: 10 }, unlocks: ['jobs.fetcher'] },
-        excavation: { teached: false, unlocked: false, label: 'Backyard Excavation', desc: 'Allow digging up dirt and bones.', cost: { treats: 25 }, unlocks: ['resources.dirt', 'resources.bones', 'jobs.digger', 'buildings.quarry'] },
-        zoomies: { teached: false, unlocked: false, label: 'Zoomies', desc: 'Increase all puppy efficiency by 20%.', cost: { treats: 50 }, effectMultiplier: 1.2 },
-        zoomies2: { teached: false, unlocked: false, label: 'Zoomies', desc: 'Increase all puppy efficiency by 20%.', cost: { treats: 50 }, effectMultiplier: 1.5 },
+        fetchTechniques: { teached: false, unlocked: false, label: 'Fetch!', desc: 'Teach puppies to bring back sticks.', cost: { treats: 10 }, unlocks: ['jobs.fetcher'] },
+        excavation: { teached: false, unlocked: false, label: 'Excavation', desc: 'Allow digging up dirt and bones.', cost: { treats: 25 }, unlocks: ['resources.dirt', 'resources.bones', 'jobs.digger', 'buildings.hole'] },
+        zoomies: { teached: false, unlocked: false, label: 'Zoomies', desc: 'Increase all puppy efficiency by 10%.', cost: { treats: 50 }, effectMultiplier: 1.1 },
+        playdead: { teached: false, unlocked: false, label: 'Play Dead', desc: 'Reduce kibble consumption by 10%.', cost: { treats: 100 }, effectMultiplier: 0.9 },
+        scent: { teached: false, unlocked: false, label: 'Scent Tracking', desc: 'Shortens the time for strays to join the pack.', cost: { treats: 100 }, effectMultiplier: 2.0 },
+        zoomies2: { teached: false, unlocked: false, label: 'Zoomies Too', desc: 'Increase all puppy efficiency by another 10%.', cost: { treats: 200 }, effectMultiplier: 1.1 },
+        scraps: { teached: false, unlocked: false, label: 'Table Scraps', desc: 'Decrease kibble reliance by 10%.', cost: { treats: 200 }, effectMultiplier: 0.9 },
     },
 
     /* CRAFTS
         - TREAT: baked from kibble to boost puppy morale
     */
     crafts: {
-        treat: { unlocked: false, label: 'Bake Treat', cost: { kibble: 25 }, yields: { treats: 1 }, icon: 'fa-cookie' }
+        treat: { unlocked: false, label: 'Bake Treat', cost: { kibble: 25 }, yields: { treats: 1 }, icon: 'fa-cookie' },
+        // chewtoy: { unlocked: false, label: 'Chew Toy', cost: { sticks: 25, bones: 5 }, yields: { trinket: 1 }, icon: 'fa-cookie' }
     }
 };
