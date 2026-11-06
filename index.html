@@ -685,7 +685,7 @@
                     netRate -= game.pups.total * game.pups.consumptionRate;
                     if (game.tricks.playdead && game.tricks.playdead.unlocked)
                     {
-                        netRate *= tricks.playdead.effectMultiplier;
+                        netRate *= game.tricks.playdead.effectMultiplier;
                     }
                     if (game.tricks.scraps && game.tricks.scraps.unlocked) {
                         netRate *= game.tricks.scraps.effectMultiplier;
