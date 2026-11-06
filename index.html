@@ -617,6 +617,93 @@
             }
         }
 
+        function showResourceInfo(resourceKey) {
+            let res = game.resources[resourceKey];
+            if (!res) return;
+
+            let title = `${res.label} Breakdown`;
+            let rows = [];
+
+            // Consumption effects
+            if (resourceKey === 'kibble') {
+                let consumptionTotal = game.pups.total * game.pups.consumptionRate;
+                rows.push(`
+                    <div class="flex justify-between py-1 border-b border-button-border/50 text-xs">
+                        <span class="text-modal font-medium">Pups Consumption</span>
+                        <span class="text-modal font-bold">-${consumptionTotal.toFixed(2)}/s (${game.pups.total} pups)</span>
+                    </div>
+                `);
+                rows.push(`
+                    <div class="flex justify-between py-1 border-b border-button-border/50 text-xs">
+                        <span class="text-modal font-medium">Pack Morale</span>
+                        <span class="text-modal font-bold">${Math.round(game.pups.morale * 100)}%</span>
+                    </div>
+                `);
+            }
+
+            // Base generation breakdown
+            let productionTotal = 0;
+            for (let jKey in game.jobs) {
+                let job = game.jobs[jKey];
+                if (job.count > 0 && job.yields && job.yields[resourceKey]) {
+                    let mult = 1.0;
+                    if (game.tricks.zoomies && game.tricks.zoomies.teached) mult *= game.tricks.zoomies.effectMultiplier;
+                    if (game.tricks.zoomies2 && game.tricks.zoomies2.teached) mult *= game.tricks.zoomies2.effectMultiplier;
+                    mult *= game.pups.morale;
+
+                    let yieldVal = job.count * job.yields[resourceKey] * mult;
+                    rows.push(`
+                        <div class="flex justify-between py-1 border-b border-button-border/50 text-xs">
+                            <span class="text-modal font-medium">${job.count} ${job.label}(s)</span>
+                            <span class="text-modal font-bold">+${yieldVal.toFixed(2)}/s</span>
+                        </div>
+                    `);
+                    productionTotal += yieldVal;
+                }
+            }
+
+            if (productionTotal === 0 && resourceKey !== 'kibble') {
+                rows.push(`
+                    <div class="flex justify-between py-1 border-b border-button-border/50 text-xs">
+                        <span class="text-modal font-medium">Base Generation</span>
+                        <span class="text-modal font-bold">0.0/s</span>
+                    </div>
+                `);
+            }
+
+            // Specific resource rules & modifiers (Tricks)
+            if (resourceKey === 'kibble') {
+                if (game.tricks.playdead && game.tricks.playdead.teached) {
+                    rows.push(`
+                        <div class="flex justify-between py-1 border-b border-button-border/50 text-xs">
+                            <span class="text-modal font-medium">${game.tricks.playdead.label}</span>
+                            <span class="text-modal font-bold">×${game.tricks.playdead.effectMultiplier}</span>
+                        </div>
+                    `);
+                }
+                if (game.tricks.scraps && game.tricks.scraps.teached) {
+                    rows.push(`
+                        <div class="flex justify-between py-1 border-b border-button-border/50 text-xs">
+                            <span class="text-modal font-medium">${game.tricks.scraps.label}</span>
+                            <span class="text-modal font-bold">×${game.tricks.scraps.effectMultiplier}</span>
+                        </div>
+                    `);
+                }
+            }
+
+            if (rows.length === 0) {
+                rows.push(`
+                    <div class="text-center py-2 text-xs text-modal italic">
+                        No active modifiers affecting this resource currently.
+                    </div>
+                `);
+            }
+
+            // Wrap in a container with vertical spacing
+            let htmlContent = `<div class="space-y-1">${rows.join('')}</div>`;
+            openInfoModalHtml(title, htmlContent);
+        }
+
         // --- RENDERING CONTROLLER ---
         function renderAll() {
             calculateRates();
@@ -683,19 +770,19 @@
                 // Subtract consumption from kibble display rate so it reflects true net change
                 if (key === 'kibble') {
                     netRate -= game.pups.total * game.pups.consumptionRate;
-                    if (game.tricks.playdead && game.tricks.playdead.unlocked)
+                    if (game.tricks.playdead && game.tricks.playdead.teached)
                     {
                         netRate *= game.tricks.playdead.effectMultiplier;
                     }
-                    if (game.tricks.scraps && game.tricks.scraps.unlocked) {
+                    if (game.tricks.scraps && game.tricks.scraps.teached) {
                         netRate *= game.tricks.scraps.effectMultiplier;
                     }
                 }
-                let rateDisplay = (netRate == 0) ? '0.0/s' : (netRate > 0 ? `+${netRate.toFixed(1)}/s` : `${netRate.toFixed(1)}/s`);
+                let rateDisplay = (netRate == 0) ? '0.0/s' : (netRate > 0 ? `+${netRate.toFixed(2)}/s` : `${netRate.toFixed(2)}/s`);
                 let rateColor = (netRate == 0) ? 'text-gray-400' : (netRate > 0 ? 'text-emerald-400' : 'text-red-400');
 
                 let itemHtml = `
-                    <div class="bg-badge p-2 rounded-lg border bg-button-border flex items-center justify-between">
+                    <div onclick="showResourceInfo('${key}')" class="bg-badge p-2 rounded-lg border bg-button-border flex items-center justify-between cursor-pointer hover:brightness-95 transition">
                         <div class="flex items-center space-x-2">
                             <i class="fa-solid ${r.icon} ${r.color} w-4 text-center"></i>
                             <span class="font-medium text-supply">${r.label}</span>
@@ -922,6 +1009,12 @@
         function openInfoModal(title, text) {
             document.getElementById('info-modal-title').innerHTML = `<i class="fa-solid fa-circle-info text-card-icon mr-2"></i>${title}`;
             document.getElementById('info-modal-text').innerText = text;
+            document.getElementById('info-modal').classList.remove('hidden');
+        }
+
+        function openInfoModalHtml(title, htmlContent) {
+            document.getElementById('info-modal-title').innerHTML = `<i class="fa-solid fa-circle-info text-card-icon mr-2"></i>${title}`;
+            document.getElementById('info-modal-text').innerHTML = htmlContent;
             document.getElementById('info-modal').classList.remove('hidden');
         }
 
