@@ -215,7 +215,7 @@
                         <p class="text-xs text-card-desc mb-4">Manual tasks for energetic puppies.</p>
                         
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            <button onclick="manualGather('kibble')" class="group p-2 bg-button active:scale-[0.98] border bg-button-border rounded-xl text-left transition flex items-center justify-between">
+                            <button onmousedown="startGather('kibble')" onmouseup="stopGather()" onmouseleave="stopGather()" ontouchstart="startGather('kibble')" ontouchend="stopGather()" ontouchcancel="stopGather()" class="group p-2 bg-button active:scale-[0.98] border bg-button-border rounded-xl text-left transition flex items-center justify-between">
                                 <div>
                                     <div class="text-card-header flex items-center">
                                         <i class="fa-solid fa-bowl-rice text-card-title mr-2"></i>Scavenge Kibble
@@ -223,10 +223,9 @@
                                     <div class="text-[11px] text-card-desc mt-0.5">Search for dropped food chunks</div>
                                 </div>
                                 <span class="text-[14px] text-action-value">+1.0</span>
-                                <!-- <span class="text-action-value bg-badge px-2 py-1 rounded-md border bg-button-border">+1.0</span> -->
                             </button>
 
-                            <button onclick="manualGather('sticks')" class="group p-2 bg-button active:scale-[0.98] border bg-button-border rounded-xl text-left transition flex items-center justify-between">
+                            <button onmousedown="startGather('sticks')" onmouseup="stopGather()" onmouseleave="stopGather()" ontouchstart="startGather('sticks')" ontouchend="stopGather()" ontouchcancel="stopGather()" class="group p-2 bg-button active:scale-[0.98] border bg-button-border rounded-xl text-left transition flex items-center justify-between">
                                 <div>
                                     <div class="text-card-header flex items-center">
                                         <i class="fa-solid fa-cubes text-card-title mr-2"></i>Gather Sticks
@@ -234,7 +233,6 @@
                                     <div class="text-[11px] text-card-desc mt-0.5">Collect branches in the yard</div>
                                 </div>
                                 <span class="text-[14px] text-action-value">+1.0</span>
-                                <!-- <span class="text-action-value bg-badge px-2 py-1 rounded-md border bg-button-border">+1.0</span> -->
                             </button>
                         </div>
                     </div>
@@ -399,6 +397,28 @@
                 return true;
             }
             return false;
+        }
+
+        let gatherInterval = null;
+
+        function startGather(type) {
+            // Trigger once immediately upon click/tap
+            manualGather(type);
+            
+            // Prevent multiple overlapping intervals if already holding down
+            if (gatherInterval) return;
+
+            // Repeat every X seconds (in ms) while held down
+            gatherInterval = setInterval(() => {
+                manualGather(type);
+            }, GATHER_INTERVAL);
+        }
+
+        function stopGather() {
+            if (gatherInterval) {
+                clearInterval(gatherInterval);
+                gatherInterval = null;
+            }
         }
 
         // region --- GAME LOOP ---

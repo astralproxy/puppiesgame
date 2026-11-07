@@ -1,4 +1,5 @@
 // --- CONSTS ---
+const GATHER_INTERVAL = 1000; // 1 second in milliseconds
 const STRAY_JOIN_CHANCE = 0.1;
 const JOB_UNLOCK_TREATS = 5;
 const BUILDING_UNLOCK_KENNEL = 20;
