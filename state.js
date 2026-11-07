@@ -76,7 +76,7 @@ let game = {
         - PLAYDEAD: reduces kibble consumption by 10%
         - SCENT: shortens the time for strays to join the pack
         - ZOOMIES2: increases all puppy efficiency by another 10%
-        - SCRAPS: decreases kibble reliance by 10%
+        - SCRAPS: decreases kibble reliance by 20%
     */
     tricks: {
         fetchTechniques: { teached: false, unlocked: false, label: 'Fetch!', desc: 'Teach puppies to bring back sticks.', cost: { treats: 10 }, unlocks: ['jobs.fetcher'] },

@@ -18,6 +18,32 @@
             -webkit-user-select: none;
             touch-action: manipulation;
         }
+
+        /* Add to <style> in index.html */
+        @keyframes marqueeLTR {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .animate-marquee {
+            animation: marqueeLTR 20s linear infinite;
+        }
+        #pup-marquee-wrapper {
+            overflow: hidden;
+            position: relative;
+            height: 32px; /* Taller height prevents top/bottom clipping */
+            display: flex;
+            align-items: center;
+        }
+
+        @keyframes pupBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .pup-bounce {
+            animation: pupBounce 1.0s ease-in-out infinite; /* Slower, smoother bounce */
+        }
+
         /* Custom Scrollbar for inner tab panels */
         .custom-scroll::-webkit-scrollbar {
             width: 6px;
@@ -153,6 +179,13 @@
                 <span class="text-xs px-2 py-0.5 rounded-full bg-amber-500/10 text-supply font-semibold border border-amber-500/20" id="pack-capacity-badge">
                     <i class="fa-solid fa-paw text-[10px] mr-1"></i><span id="res-pups">0</span>/<span id="res-max-pups">0</span> Pups
                 </span>
+            </div>
+
+            <!-- Animated Puppy Line Marquee -->
+            <div id="pup-marquee-wrapper" class="overflow-hidden relative h-7 mb-3 bg-button/40 rounded-lg border border-button-border flex items-center hidden">
+                <div id="pup-marquee-track" class="absolute whitespace-nowrap flex items-center space-x-3 animate-marquee">
+                    <!-- Dynamically Populated by JS -->
+                </div>
             </div>
 
             <!-- Morale / Alert Indicator -->
@@ -704,9 +737,40 @@
             openInfoModalHtml(title, htmlContent);
         }
 
+        function renderPupMarquee() {
+            let pupMarqueeWrapper = document.getElementById('pup-marquee-wrapper');
+            let pupMarqueeTrack = document.getElementById('pup-marquee-track');
+            
+            if (pupMarqueeWrapper && pupMarqueeTrack) {
+                if (game.pups.total > 0) {
+                    pupMarqueeWrapper.classList.remove('hidden');
+                    let pupsHtml = '';
+                    
+                    for (let i = 0; i < game.pups.total; i++) {
+                        let dogNumber = i + 1;
+                        // Count from the front of the marching line (end of the array)
+                        let positionFromFront = game.pups.total - i;
+                        let isThirdDog = positionFromFront >= 3 && positionFromFront % 3 === 0;
+                        if (isThirdDog) {
+                            // Every 3rd dog bounces in sync without delay so the pattern is obvious
+                            pupsHtml += `<i class="fa-solid fa-dog text-dog-icon text-sm inline-block pup-bounce mx-2" title="Pack Puppy ${dogNumber}"></i>`;
+                        } else {
+                            pupsHtml += `<i class="fa-solid fa-dog text-dog-icon text-sm inline-block mx-2" title="Pack Puppy ${dogNumber}"></i>`;
+                        }
+                    }
+                    pupMarqueeTrack.innerHTML = pupsHtml;
+                } else {
+                    pupMarqueeWrapper.classList.add('hidden');
+                    pupMarqueeTrack.innerHTML = '';
+                }
+            }
+        }
+
         // --- RENDERING CONTROLLER ---
         function renderAll() {
             calculateRates();
+
+            renderPupMarquee();
 
             // Render Pups / Morale Bar
             document.getElementById('res-pups').innerText = game.pups.total;
