@@ -141,7 +141,7 @@
         </div>
         <div class="flex items-center space-x-2">
             <!-- Hamburger Menu Trigger Button -->
-            <button onclick="toggleMenu()" class="p-2 text-xs bg-sidebar text-subtitle rounded-lg transition" title="Menu">
+            <button onclick="toggleMenu()" class="p-2 text-xs bg-sidebar text-hamburger rounded-lg transition" title="Menu">
                 <i class="fa-solid fa-bars text-base"></i>
             </button>
         </div>
@@ -394,26 +394,26 @@
     </main>
 
     <!-- Bottom Navigation Bar -->
-    <nav class="bg-panel border-t bg-button-border flex items-center justify-around shrink-0 z-10 py-1.5">
-        <button onclick="switchTab('yard')" id="nav-yard" class="flex-1 py-1 flex flex-col items-center justify-center text-tab-active font-semibold transition hover:bg-badge border-r bg-button-border">
-            <i class="fa-solid fa-bone text-base mb-0.5"></i>
+    <nav class="bg-tab-panel border-t bg-button-border flex items-center justify-around shrink-0 z-10 py-1.5">
+        <button onclick="switchTab('yard')" id="nav-yard" class="flex-1 py-1 flex flex-col items-center justify-center text-tab-current font-semibold transition hover:bg-badge border-r bg-button-border">
+            <i class="fa-solid fa-bone text-tab-current mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Yard</span>
         </button>
         <button onclick="switchTab('buildings')" id="nav-buildings" class="flex-1 py-1 flex flex-col items-center justify-center text-tab-inactive hover:text-card-title font-semibold transition hover:bg-badge border-r bg-button-border">
-            <i class="fa-solid fa-house text-base mb-0.5"></i>
+            <i class="fa-solid fa-house text-tab-inactive mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Structures</span>
         </button>
         <button onclick="switchTab('pack')" id="nav-pack" class="flex-1 py-1 flex flex-col items-center justify-center text-tab-inactive hover:text-card-title font-semibold transition hover:bg-badge relative border-r bg-button-border">
-            <i class="fa-solid fa-paw text-base mb-0.5"></i>
+            <i class="fa-solid fa-paw text-tab-inactive mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Pack</span>
             <span id="nav-pup-indicator" class="hidden absolute top-1.5 right-2.5 w-2 h-2 bg-newpup-indicator rounded-full animate-pulse"></span>
         </button>
         <button onclick="switchTab('tricks')" id="nav-tricks" class="flex-1 py-1 flex flex-col items-center justify-center text-tab-inactive hover:text-card-title font-semibold transition hover:bg-badge border-r bg-button-border">
-            <i id="nav-tricks-icon" class="fa-solid fa-arrow-trend-up text-base mb-0.5"></i>
+            <i id="nav-tricks-icon" class="fa-solid fa-arrow-trend-up text-tab-inactive mb-0.5"></i>
             <span id="nav-tricks-label" class="text-[10px] tracking-tight"></span>
         </button>
         <button onclick="switchTab('log')" id="nav-log" class="flex-1 py-1 flex flex-col items-center justify-center text-tab-inactive hover:text-card-title font-semibold transition hover:bg-badge">
-            <i class="fa-solid fa-scroll text-base mb-0.5"></i>
+            <i class="fa-solid fa-scroll text-tab-inactive mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Log</span>
         </button>
     </nav>
