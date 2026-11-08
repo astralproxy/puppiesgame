@@ -24,7 +24,7 @@
             0% { transform: translateX(-100%); }
             100% { transform: translateX(100%); }
         }
-        .animate-marquee {
+        .animate-marquee-ltr {
             animation: marqueeLTR 20s linear infinite;
         }
         #pup-marquee-wrapper {
@@ -35,13 +35,57 @@
             align-items: center;
         }
 
+        @keyframes marqueeRTL {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+        .animate-marquee-rtl {
+            animation: marqueeRTL 20s linear infinite;
+        }
+        #resource-marquee-wrapper {
+            overflow: hidden;
+            position: relative;
+            height: 24px; /* Compact height for single line */
+            white-space: nowrap;
+        }
+
         @keyframes pupBounce {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-5px); }
         }
-
         .pup-bounce {
             animation: pupBounce 1.0s ease-in-out infinite; /* Slower, smoother bounce */
+        }
+
+        @keyframes iconBounce {
+            0%   { transform: translateY(0); }
+            10%  { transform: translateY(-4px); } /* Bounces up at 0.25s */
+            20%  { transform: translateY(0); }    /* Back down at 0.5s */
+            20.1%, 100% { transform: translateY(0); } /* Dead still pause for 2 full seconds */
+        }
+        .anim-job-bounce {
+            animation: iconBounce 2.5s linear infinite;
+            will-change: transform;
+        }
+
+        @keyframes iconWiggle {
+            0%, 100% { transform: rotate(0deg); }
+            10% { transform: rotate(-6deg); }
+            20% { transform: rotate(6deg); }
+            30% { transform: rotate(0deg); }
+        }
+        .anim-job-wiggle { 
+            animation: iconWiggle 2.5s ease-in-out infinite; 
+            will-change: transform;
+        }
+
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .anim-job-pulse { 
+            animation: iconPulse 2.5s ease-in-out infinite; 
+            will-change: transform;
         }
 
         /* Custom Scrollbar for inner tab panels */
@@ -174,29 +218,42 @@
 
         <!-- Sidebar: Resource Bar (Always visible on Left in Desktop, Top Bar Drawer on Mobile) -->
         <aside class="md:col-span-4 lg:col-span-3 bg-sidebar border-r bg-button-border p-3.5 flex flex-col overflow-y-auto custom-scroll">
-            <div class="flex items-center justify-between mb-3 border-b bg-button-border pb-2">
-                <h2 class="text-xs font-bold uppercase tracking-wider text-sidebar-title">Pack & Supplies</h2>
+            <div onclick="togglePackCollapse()" class="flex items-center justify-between mb-3 border-b bg-button-border pb-2 cursor-pointer select-none">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-sidebar-title flex items-center">
+                    <span>Pack & Supplies</span>&nbsp;
+                    <i id="pack-collapse-icon" class="fa-solid fa-chevron-down ml-4 text-[10px] transition-transform duration-200"></i>
+                </h2>
                 <span class="text-xs px-2 py-0.5 rounded-full bg-amber-500/10 text-supply font-semibold border border-amber-500/20" id="pack-capacity-badge">
                     <i class="fa-solid fa-paw text-[10px] mr-1"></i><span id="res-pups">0</span>/<span id="res-max-pups">0</span> Pups
                 </span>
             </div>
 
-            <!-- Animated Puppy Line Marquee -->
-            <div id="pup-marquee-wrapper" class="overflow-hidden relative h-7 mb-3 bg-button/40 rounded-lg border border-button-border flex items-center hidden">
-                <div id="pup-marquee-track" class="absolute whitespace-nowrap flex items-center space-x-3 animate-marquee">
+            <!-- Expandable Container -->
+            <div id="pack-expandable-content" class="space-y-3">
+                <!-- Animated Puppy Line Marquee -->
+                <div id="pup-marquee-wrapper" class="overflow-hidden relative h-7 bg-button/40 rounded-lg border border-button-border flex items-center hidden">
+                    <div id="pup-marquee-track" class="absolute whitespace-nowrap flex items-center space-x-3 animate-marquee-ltr">
+                        <!-- Dynamically Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Morale / Alert Indicator -->
+                <div id="morale-bar" class="p-2 bg-amber-800/30 border bg-button-border rounded-lg flex items-center justify-between text-xs">
+                    <span class="text-supply font-medium"><i class="fa-solid fa-heart mr-1.5"></i>Pack Morale</span>
+                    <span id="morale-val" class="font-bold text-amber-800">100%</span>
+                </div>
+
+                <!-- Resource List -->
+                <div class="space-y-2 text-xs" id="resource-container">
                     <!-- Dynamically Populated by JS -->
                 </div>
             </div>
 
-            <!-- Morale / Alert Indicator -->
-            <div id="morale-bar" class="mb-3 p-2 bg-amber-800/30 border bg-button-border rounded-lg flex items-center justify-between text-xs">
-                <span class="text-supply font-medium"><i class="fa-solid fa-heart mr-1.5"></i>Pack Morale</span>
-                <span id="morale-val" class="font-bold text-amber-800">100%</span>
-            </div>
-
-            <!-- Resource List -->
-            <div class="space-y-2 text-xs" id="resource-container">
-                <!-- Dynamically Populated by JS -->
+            <!-- Resource Ticker Marquee (Shown when collapsed) -->
+            <div id="resource-marquee-wrapper" class="overflow-hidden relative h-7 bg-button rounded-lg border border-button-border items-center hidden flex">
+                <div id="resource-marquee-track" class="absolute whitespace-nowrap flex items-center space-x-6 animate-marquee-rtl text-xs text-supply font-medium">				   
+                    <!-- Dynamically Populated by JS -->
+                </div>
             </div>
         </aside>
 
@@ -786,11 +843,75 @@
             }
         }
 
+        // --- COLLAPSE & RESOURCE TICKER MARQUEE ---
+        function togglePackCollapse() {
+            if (game.packSuppliesCollapsed === undefined) {
+                game.packSuppliesCollapsed = false;
+            }
+            game.packSuppliesCollapsed = !game.packSuppliesCollapsed;
+            renderAll();
+        }
+
+        function renderResourceMarquee() {
+            let track = document.getElementById('resource-marquee-track');
+            if (!track) return;
+
+            let resourceItems = [];
+            for (let key in game.resources) {
+                let r = game.resources[key];
+                if (!r.unlocked && r.amount === 0) continue;
+
+                let netRate = rates[key] || 0;
+                if (key === 'kibble') {
+                    netRate -= game.pups.total * game.pups.consumptionRate;
+                    if (game.tricks.playdead && game.tricks.playdead.teached) {
+                        netRate *= game.tricks.playdead.effectMultiplier;
+                    }
+                    if (game.tricks.scraps && game.tricks.scraps.teached) {
+                        netRate *= game.tricks.scraps.effectMultiplier;
+                    }
+                }
+                let rateDisplay = (netRate == 0) ? '(+0.00/s)' : (netRate > 0 ? `(+${netRate.toFixed(2)}/s)` : `(${netRate.toFixed(2)}/s)`);
+                
+                resourceItems.push(`${r.label}: ${Math.floor(r.amount)}/${r.max} ${rateDisplay}`);
+            }
+
+            let separator = ' &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp; ';
+            let marqueeText = resourceItems.join(separator);
+            track.innerHTML = `<span>${marqueeText}</span> ${separator} <span>${marqueeText}</span>`;
+        }
+
         // --- RENDERING CONTROLLER ---
         function renderAll() {
             calculateRates();
 
-            renderPupMarquee();
+            if (game.packSuppliesCollapsed === undefined) {
+                game.packSuppliesCollapsed = false;
+            }
+
+            const expandableContent = document.getElementById('pack-expandable-content');
+            const resourceMarqueeWrapper = document.getElementById('resource-marquee-wrapper');
+            const collapseIcon = document.getElementById('pack-collapse-icon');
+
+            if (game.packSuppliesCollapsed) {
+                expandableContent.classList.add('hidden');
+                resourceMarqueeWrapper.classList.remove('hidden');
+                resourceMarqueeWrapper.classList.add('flex');
+                if (collapseIcon) {
+                    collapseIcon.classList.remove('fa-chevron-down');
+                    collapseIcon.classList.add('fa-chevron-up');
+                }
+                renderResourceMarquee();
+            } else {
+                expandableContent.classList.remove('hidden');
+                resourceMarqueeWrapper.classList.add('hidden');
+                resourceMarqueeWrapper.classList.remove('flex');
+                if (collapseIcon) {
+                    collapseIcon.classList.remove('fa-chevron-up');
+                    collapseIcon.classList.add('fa-chevron-down');
+                }
+                renderPupMarquee();
+            }
 
             // Render Pups / Morale Bar
             document.getElementById('res-pups').innerText = game.pups.total;
@@ -956,11 +1077,23 @@
 
                 let dynamicDesc = getJobDescription(j);
 
+                // Determine animation class based on job type or yields when active (j.count > 0)
+                let animClass = '';
+                if (j.count > 0) {
+                    if (j.yields && j.yields.kibble) {
+                        animClass = 'anim-job-bounce';
+                    } else if (j.yields && j.yields.sticks) {
+                        animClass = 'anim-job-wiggle';
+                    } else {
+                        animClass = 'anim-job-pulse';
+                    }
+                }
+
                 jContainer.innerHTML += `
                     <div class="bg-button p-3 rounded-xl border bg-button-border flex items-center justify-between">
                         <div class="flex items-center space-x-3">
-                            <div class="w-9 h-9 rounded-lg bg-badge flex items-center justify-center text-card-icon">
-                                <i class="fa-solid ${j.icon} text-base"></i>
+                            <div class="w-9 h-9 rounded-lg bg-badge flex items-center justify-center text-card-icon relative">
+                                <i class="fa-solid ${j.icon} text-base ${animClass}"></i>
                             </div>
                             <div>
                                 <h3 class="text-xs font-bold text-card-header">${j.label}</h3>
