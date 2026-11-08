@@ -30,7 +30,7 @@
         #pup-marquee-wrapper {
             overflow: hidden;
             position: relative;
-            height: 32px; /* Taller height prevents top/bottom clipping */
+            height: 24px; /* Taller height prevents top/bottom clipping */
             display: flex;
             align-items: center;
         }
@@ -223,9 +223,19 @@
                     <span>Pack & Supplies</span>&nbsp;
                     <i id="pack-collapse-icon" class="fa-solid fa-chevron-down ml-4 text-[10px] transition-transform duration-200"></i>
                 </h2>
-                <span class="text-xs px-2 py-0.5 rounded-full bg-amber-500/10 text-supply font-semibold border border-amber-500/20" id="pack-capacity-badge">
-                    <i class="fa-solid fa-paw text-[10px] mr-1"></i><span id="res-pups">0</span>/<span id="res-max-pups">0</span> Pups
-                </span>
+                
+                <!-- Right side container holding both Morale and Pups count -->
+                <div class="flex items-center space-x-2">
+                    <!-- Morale shown only when collapsed -->
+                    <span id="collapsed-morale-badge" class="hidden text-[11px] font-semibold text-supply items-center">
+                        <i class="fa-solid fa-heart mr-1 text-amber-500"></i><span id="collapsed-morale-val">100%</span>
+                    </span>
+                    
+                    <!-- Pup Capacity -->
+                    <span class="text-xs px-2 py-0.5 rounded-full bg-amber-500/10 text-supply font-semibold border border-amber-500/20" id="pack-capacity-badge">
+                        <i class="fa-solid fa-paw text-[10px] mr-1"></i><span id="res-pups">0</span>/<span id="res-max-pups">0</span> Pups
+                    </span>
+                </div>
             </div>
 
             <!-- Expandable Container -->
@@ -238,9 +248,9 @@
                 </div>
 
                 <!-- Morale / Alert Indicator -->
-                <div id="morale-bar" class="p-2 bg-amber-800/30 border bg-button-border rounded-lg flex items-center justify-between text-xs">
+                <div id="morale-bar" class="p-2 mb-2 bg-amber-800/30 border bg-button-border rounded-lg flex items-center justify-between text-xs">
                     <span class="text-supply font-medium"><i class="fa-solid fa-heart mr-1.5"></i>Pack Morale</span>
-                    <span id="morale-val" class="font-bold text-amber-800">100%</span>
+                    <span id="morale-val" class="font-bold text-supply">100%</span>
                 </div>
 
                 <!-- Resource List -->
@@ -405,6 +415,14 @@
     <script>
         // Rates calculation cache
         let rates = {};
+
+        // Auto-expand sidebar if window is resized to wide screen
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= WINDOW_WIDTH_THRESHOLD && game.packSuppliesCollapsed) {
+                game.packSuppliesCollapsed = false;
+                renderAll();
+            }
+        });
 
         // --- CORE INITIALIZATION ---
         window.onload = function() {
@@ -845,6 +863,9 @@
 
         // --- COLLAPSE & RESOURCE TICKER MARQUEE ---
         function togglePackCollapse() {
+            // Prevent collapsing on wide screens (768px and up)
+            if (window.innerWidth >= 768) return;
+
             if (game.packSuppliesCollapsed === undefined) {
                 game.packSuppliesCollapsed = false;
             }
@@ -893,6 +914,10 @@
             const resourceMarqueeWrapper = document.getElementById('resource-marquee-wrapper');
             const collapseIcon = document.getElementById('pack-collapse-icon');
 
+            const collapsedMoraleBadge = document.getElementById('collapsed-morale-badge');
+            const collapsedMoraleVal = document.getElementById('collapsed-morale-val');
+            const moralePercent = Math.round(game.pups.morale * 100);
+
             if (game.packSuppliesCollapsed) {
                 expandableContent.classList.add('hidden');
                 resourceMarqueeWrapper.classList.remove('hidden');
@@ -900,6 +925,13 @@
                 if (collapseIcon) {
                     collapseIcon.classList.remove('fa-chevron-down');
                     collapseIcon.classList.add('fa-chevron-up');
+                }
+                if (collapsedMoraleBadge) {
+                    collapsedMoraleBadge.classList.remove('hidden');
+                    collapsedMoraleBadge.classList.add('flex');
+                }
+                if (collapsedMoraleVal) {
+                    collapsedMoraleVal.innerText = `${moralePercent}%`;
                 }
                 renderResourceMarquee();
             } else {
@@ -909,6 +941,10 @@
                 if (collapseIcon) {
                     collapseIcon.classList.remove('fa-chevron-up');
                     collapseIcon.classList.add('fa-chevron-down');
+                }
+                if (collapsedMoraleBadge) {
+                    collapsedMoraleBadge.classList.add('hidden');
+                    collapsedMoraleBadge.classList.remove('flex');
                 }
                 renderPupMarquee();
             }
