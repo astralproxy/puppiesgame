@@ -1388,14 +1388,21 @@
             // Reset navigation button highlights while keeping layout classes
             ['yard', 'pack', 'buildings', 'tricks', 'log'].forEach(id => {
                 let btn = document.getElementById(`nav-${id}`);
+                let icon = btn.querySelector('i');
                 let hasBorder = id !== 'log';
                 let borderClass = hasBorder ? 'border-r bg-button-border' : '';
                 let relativeClass = id === 'pack' ? 'relative' : '';
+
+                const isActive = id === tabId;
+                const colorClass = isActive ? 'text-tab-current' : 'text-tab-inactive';
                 
-                if (id === tabId) {
-                    btn.className = `flex-1 py-1 flex flex-col items-center justify-center text-tab-current font-semibold transition hover:bg-badge ${relativeClass} ${borderClass}`;
-                } else {
-                    btn.className = `flex-1 py-1 flex flex-col items-center justify-center text-tab-inactive hover:text-card-title font-semibold transition hover:bg-badge ${relativeClass} ${borderClass}`;
+                // Update button text color & layout
+                btn.className = `flex-1 py-1 flex flex-col items-center justify-center ${colorClass} font-semibold transition hover:bg-badge ${relativeClass} ${borderClass}`;
+        
+                // Update icon color
+                if (icon) {
+                    icon.classList.remove('text-tab-current', 'text-tab-inactive');
+                    icon.classList.add(colorClass);
                 }
             });
 
