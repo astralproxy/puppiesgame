@@ -9,7 +9,7 @@
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css">
     <!-- Google Font Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
         /* Custom UI Tweaks & Non-selectable text */
@@ -22,12 +22,13 @@
         /* Add to <style> in index.html */
         @keyframes marqueeLTR {
             0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+            100% { transform: translateX(100cqw); }
         }
         .animate-marquee-ltr {
             animation: marqueeLTR 20s linear infinite;
         }
         #pup-marquee-wrapper {
+            container-type: inline-size;
             overflow: hidden;
             position: relative;
             height: 24px; /* Taller height prevents top/bottom clipping */
@@ -35,14 +36,22 @@
             align-items: center;
         }
 
+        @keyframes marqueeEnter {
+            from { transform: translateX(100cqw); }
+            to   { transform: translateX(0); }
+        }
         @keyframes marqueeRTL {
             0% { transform: translateX(0%); }
             100% { transform: translateX(-50%); }
         }
         .animate-marquee-rtl {
-            animation: marqueeRTL 20s linear infinite;
+            --marquee-enter: 5s; /* start from right side */
+            animation:
+                marqueeEnter var(--marquee-enter) linear 1,
+                marqueeRTL 20s linear var(--marquee-enter) infinite;
         }
         #resource-marquee-wrapper {
+            container-type: inline-size;
             overflow: hidden;
             position: relative;
             height: 24px; /* Compact height for single line */
@@ -241,14 +250,14 @@
             <!-- Expandable Container -->
             <div id="pack-expandable-content" class="space-y-3">
                 <!-- Animated Puppy Line Marquee -->
-                <div id="pup-marquee-wrapper" class="overflow-hidden relative h-7 bg-button/40 rounded-lg border border-button-border flex items-center hidden">
+                <div id="pup-marquee-wrapper" class="overflow-hidden relative h-7 bg-button rounded-lg border border-button-border flex items-center hidden">
                     <div id="pup-marquee-track" class="absolute whitespace-nowrap flex items-center space-x-3 animate-marquee-ltr">
                         <!-- Dynamically Populated by JS -->
                     </div>
                 </div>
 
                 <!-- Morale / Alert Indicator -->
-                <div id="morale-bar" class="p-2 mb-2 bg-amber-800/30 border bg-button-border rounded-lg flex items-center justify-between text-xs">
+                <div id="morale-bar" class="p-2 mb-2 bg-button border bg-button-border rounded-lg flex items-center justify-between text-xs">
                     <span class="text-supply font-medium"><i class="fa-solid fa-heart mr-1.5"></i>Pack Morale</span>
                     <span id="morale-val" class="font-bold text-supply">100%</span>
                 </div>
@@ -268,7 +277,7 @@
         </aside>
 
         <!-- Main Tab Area -->
-        <section class="md:col-span-8 lg:col-span-9 flex flex-col justify-start bg-body h-full overflow-hidden relative">
+        <section id="tab-area" class="md:col-span-8 lg:col-span-9 flex flex-col justify-start bg-body h-full overflow-hidden relative">
             
             <!-- Tab Content Screens -->
             <div id="tab-content-wrapper" class="overflow-y-auto p-2 custom-scroll relative flex flex-col">
@@ -282,7 +291,7 @@
                         <p class="text-xs text-card-desc mb-4">Manual tasks for energetic puppies.</p>
                         
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            <button onmousedown="startGather('kibble')" onmouseup="stopGather()" onmouseleave="stopGather()" ontouchstart="startGather('kibble')" ontouchend="stopGather()" ontouchcancel="stopGather()" class="group p-2 bg-button active:scale-[0.98] border bg-button-border rounded-xl text-left transition flex items-center justify-between">
+                            <button id="btn-gather-kibble" onmousedown="startGather('kibble', this)" onmouseup="stopGather()" onmouseleave="stopGather()" ontouchstart="startGather('kibble')" ontouchend="stopGather()" ontouchcancel="stopGather()" class="gather-btn group p-2 bg-button active:scale-[0.98] border bg-button-border rounded-xl text-left transition flex items-center justify-between">
                                 <div>
                                     <div class="text-card-header flex items-center">
                                         <i class="fa-solid fa-bowl-rice text-card-title mr-2"></i>Scavenge Kibble
@@ -292,7 +301,7 @@
                                 <span class="text-[14px] text-action-value">+1.0</span>
                             </button>
 
-                            <button onmousedown="startGather('sticks')" onmouseup="stopGather()" onmouseleave="stopGather()" ontouchstart="startGather('sticks')" ontouchend="stopGather()" ontouchcancel="stopGather()" class="group p-2 bg-button active:scale-[0.98] border bg-button-border rounded-xl text-left transition flex items-center justify-between">
+                            <button id="btn-gather-sticks" onmousedown="startGather('sticks', this)" onmouseup="stopGather()" onmouseleave="stopGather()" ontouchstart="startGather('sticks')" ontouchend="stopGather()" ontouchcancel="stopGather()" class="gather-btn group p-2 bg-button active:scale-[0.98] border bg-button-border rounded-xl text-left transition flex items-center justify-between">
                                 <div>
                                     <div class="text-card-header flex items-center">
                                         <i class="fa-solid fa-cubes text-card-title mr-2"></i>Gather Sticks
@@ -362,7 +371,7 @@
                                 <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-1 flex items-center">
                                     <i class="fa-solid fa-arrow-trend-up text-card-icon mr-2"></i>Tricks
                                 </h2>
-                                <p class="text-xs text-card-desc mt-0.5">Techniques to enhance the pack's abilities.</p>
+                                <p class="text-xs text-card-desc mt-0.5">Learn techniques to enhance the pack's abilities.</p>
                             </div>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="tricks-container">
@@ -470,9 +479,10 @@
 
         let gatherInterval = null;
 
-        function startGather(type) {
+        function startGather(type, el) {
             // Trigger once immediately upon click/tap
             manualGather(type);
+            if (el) spawnBurst(el, type);
             
             // Prevent multiple overlapping intervals if already holding down
             if (gatherInterval) return;
@@ -480,6 +490,7 @@
             // Repeat every X seconds (in ms) while held down
             gatherInterval = setInterval(() => {
                 manualGather(type);
+                if (el) spawnBurst(el, type);
             }, GATHER_INTERVAL);
         }
 
@@ -487,6 +498,36 @@
             if (gatherInterval) {
                 clearInterval(gatherInterval);
                 gatherInterval = null;
+            }
+        }
+
+        function spawnBurst(el, type) {
+            if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            const rect = el.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+            const res = game.resources[type];
+            const count = 6;
+
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement('i');
+                p.className = `fa-solid ${res.icon} ${res.color}`;
+                p.style.cssText = `position:fixed; left:${cx}px; top:${cy}px; font-size:${6 + Math.random() * 6}px; pointer-events:none; z-index:50;`;
+                document.body.appendChild(p);
+
+                const angle = (Math.PI * 2 * i / count) + (Math.random() - 0.5) * 0.6;
+                const dist = 30 + Math.random() * 30;
+                const dx = Math.cos(angle) * dist;
+                const dy = Math.sin(angle) * dist;
+                const spin = (Math.random() - 0.5) * 180;
+
+                const anim = p.animate([
+                    { transform: 'translate(-50%, -50%) scale(1) rotate(0deg)', opacity: 0.35 },
+                    { transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(0.4) rotate(${spin}deg)`, opacity: 0 }
+                ], { duration: 450 + Math.random() * 150, easing: 'cubic-bezier(0.2, 0.7, 0.3, 1)' });
+
+                anim.onfinish = () => p.remove();
             }
         }
 
@@ -503,10 +544,8 @@
                 let strayChance = STRAY_JOIN_CHANCE;
 
                 // Increase chance if certain tricks are known
-                if (game.tricks.scentTracking && game.tricks.scentTracking.teached) {
-                    strayChance *= game.tricks.scentTracking.effectMultiplier;
-                }
-
+                strayChance *= getEffectMult('strayJoin');
+                
                 if (Math.random() < strayChance) {
                     game.pups.total++;
                     logMessage("🐾 A new stray puppy wandered into your yard and joined the pack!");
@@ -515,7 +554,7 @@
             }
 
             // Consume Kibble for Pups
-            let totalKibbleNeeded = game.pups.total * game.pups.consumptionRate;
+            let totalKibbleNeeded = game.pups.total * game.pups.consumptionRate * getEffectMult('kibbleUse');
             if (game.resources.kibble.amount >= totalKibbleNeeded) {
                 game.resources.kibble.amount -= totalKibbleNeeded;
                 game.pups.morale = Math.min(1.0, game.pups.morale + 0.05);
@@ -575,6 +614,19 @@
         }
 
         // --- RESOURCE & CALCULATION LOGIC ---
+        // Product of every learned trick/upgrade whose `effect` matches (1 if none)
+        function getEffectMult(effect) {
+            let m = 1;
+            for (const k in game.tricks) {
+                const t = game.tricks[k];
+                if (t.teached && t.effect === effect) m *= t.effectMultiplier;
+            }
+            game.trickUpgrades.forEach(u => {
+                if (u.teached && u.effect === effect) m *= u.effectMultiplier;
+            });
+            return m;
+        }
+
         function calculateRates() {
             rates = { kibble: 0, sticks: 0, dirt: 0, bones: 0, treats: 0 };
 
@@ -583,16 +635,14 @@
                 - The Effect: yield from Foragers is scaled down (pups * yield * morale%)
                 - What's Bad: consumption stays flat and outpaces lower yield
             */
-            let mult = (game.tricks.zoomies && game.tricks.zoomies.teached) ? 1.2 : 1.0;
-            mult *= (game.tricks.zoomies2 && game.tricks.zoomies2.teached) ? 1.5 : 1.0;
-            mult *= game.pups.morale;
+            let mult = game.pups.morale * getEffectMult('efficiency');
 
             // Dynamically calculate yields from job definitions
             for (let jKey in game.jobs) {
                 let job = game.jobs[jKey];
                 if (job.count > 0 && job.yields) {
                     for (let rKey in job.yields) {
-                        rates[rKey] += job.count * job.yields[rKey] * mult;
+                        rates[rKey] += job.count * job.yields[rKey] * mult * getEffectMult(rKey);
                     }
                 }
             }
@@ -606,6 +656,12 @@
         }
 
         function manualGather(type) {
+            const res = game.resources[type];
+            if (res && res.amount >= res.max) {
+                stopGather();
+                return;
+            }
+
             if (type === 'kibble') {
                 game.resources.kibble.amount = Math.min(game.resources.kibble.max, game.resources.kibble.amount + 1);
             } else if (type === 'sticks') {
@@ -614,7 +670,7 @@
             renderAll();
         }
 
-        function craftItem(craftKey) {
+        function craftItem(craftKey, el) {
             let craft = game.crafts[craftKey];
             if (!craft) return;
 
@@ -631,7 +687,22 @@
                 game.resources[r].amount = Math.min(game.resources[r].max, game.resources[r].amount + craft.yields[r]);
             }
             logMessage(`Crafted 1 ${craft.label}!`);
+
+            // Burst from the button's center (before renderAll replaces the element),
+            // using the icon/color of the first resource the craft yields
+            //spawnBurst(el, Object.keys(craft.yields)[0]);
+
             renderAll();
+
+            // The button was rebuilt by renderAll, so pulse the new one
+            const newBtn = document.getElementById(`btn-craft-${craftKey}`);
+            if (newBtn) {
+                newBtn.animate([
+                    { transform: 'scale(1)' },
+                    { transform: 'scale(0.98)', offset: 0.2 },
+                    { transform: 'scale(1)' }
+                ], { duration: 100, easing: 'ease-out' });
+            }
         }
 
         // --- ASSIGN & UNASSIGN JOBS ---
@@ -725,6 +796,55 @@
             renderAll();
         }
 
+        function trickUpgradeVisible(u) {
+            return u.req.every(k => game.tricks[k] && game.tricks[k].teached);
+        }
+        function trickUpgradeBlocked(u) {
+            return (u.excludes || []).some(k => hasTrickUpgrade(k));
+        }
+        function hasTrickUpgrade(key) {
+            const u = game.trickUpgrades.find(x => x.key === key);
+            return !!(u && u.teached);
+        }
+
+        function teachUpgrade(uKey) {
+            const u = game.trickUpgrades.find(x => x.key === uKey);
+            if (!u || u.teached || !trickUpgradeVisible(u) || trickUpgradeBlocked(u)) return;
+
+            for (let r in u.cost) {
+                if (game.resources[r].amount < u.cost[r]) return;
+            }
+            for (let r in u.cost) {
+                game.resources[r].amount -= u.cost[r];
+            }
+
+            u.teached = true;
+            logMessage(`🎉 Upgrade learned: ${u.label}!`);
+            renderAll();
+        }
+
+        function renderUpgradeButton(u) {
+            if (u.teached) {
+                return `<div style="flex:1 1 0; min-width:0;" class="bg-badge p-2 rounded-lg border border-amber-500 text-xs font-bold text-card-header opacity-80">
+                    <i class="fa-solid fa-check text-emerald-400 mr-1"></i>${u.label}
+                    <span class="font-normal text-[10px] text-card-desc">(${u.shortDesc})</span>
+                </div>`;
+            }
+            const blocked = trickUpgradeBlocked(u);
+            let canAfford = true, costStr = [];
+            for (let r in u.cost) {
+                costStr.push(`${u.cost[r]} ${game.resources[r].label}`);
+                if (game.resources[r].amount < u.cost[r]) canAfford = false;
+            }
+            const disabled = blocked || !canAfford;
+            return `<button style="flex:1 1 0; min-width:0;" onclick="teachUpgrade('${u.key}')" ${disabled ? 'disabled' : ''}
+                class="bg-button-active p-2 rounded-lg border bg-button-border text-left transition transform active:scale-[0.95] ${blocked ? 'opacity-40' : (!canAfford ? 'opacity-60' : '')} ${disabled ? 'cursor-not-allowed' : ''}">
+                <div class="text-xs font-bold text-card-header" ${blocked ? 'style="text-decoration:line-through;"' : ''}>${u.label} <span class="font-normal text-[10px] text-card-desc">(${u.shortDesc})</span></div>
+                ${blocked ? '' : `<div class="text-[10px] text-card-desc">${u.desc}</div>`}
+                ${blocked ? '' : `<div class="text-[10px] text-card-desc mt-0.5">${costStr.join(', ')}</div>`}
+            </button>`;
+        }
+
         function updateScrollbarState() {
             const wrapper = document.getElementById('tab-content-wrapper');
             if (!wrapper) return;
@@ -748,7 +868,8 @@
 
             // Consumption effects
             if (resourceKey === 'kibble') {
-                let consumptionTotal = game.pups.total * game.pups.consumptionRate;
+                let consumptionTotal = game.pups.total * game.pups.consumptionRate * getEffectMult('kibbleUse');
+                
                 rows.push(`
                     <div class="flex justify-between py-1 border-b border-button-border/50 text-xs">
                         <span class="text-modal font-medium">Pups Consumption</span>
@@ -768,12 +889,9 @@
             for (let jKey in game.jobs) {
                 let job = game.jobs[jKey];
                 if (job.count > 0 && job.yields && job.yields[resourceKey]) {
-                    let mult = 1.0;
-                    if (game.tricks.zoomies && game.tricks.zoomies.teached) mult *= game.tricks.zoomies.effectMultiplier;
-                    if (game.tricks.zoomies2 && game.tricks.zoomies2.teached) mult *= game.tricks.zoomies2.effectMultiplier;
-                    mult *= game.pups.morale;
-
+                    let mult = getEffectMult('efficiency') * getEffectMult(resourceKey) * game.pups.morale;
                     let yieldVal = job.count * job.yields[resourceKey] * mult;
+                    
                     rows.push(`
                         <div class="flex justify-between py-1 border-b border-button-border/50 text-xs">
                             <span class="text-modal font-medium">${job.count} ${job.label}(s)</span>
@@ -795,22 +913,16 @@
 
             // Specific resource rules & modifiers (Tricks)
             if (resourceKey === 'kibble') {
-                if (game.tricks.playdead && game.tricks.playdead.teached) {
-                    rows.push(`
-                        <div class="flex justify-between py-1 border-b border-button-border/50 text-xs">
-                            <span class="text-modal font-medium">${game.tricks.playdead.label}</span>
-                            <span class="text-modal font-bold">×${game.tricks.playdead.effectMultiplier}</span>
-                        </div>
-                    `);
-                }
-                if (game.tricks.scraps && game.tricks.scraps.teached) {
-                    rows.push(`
-                        <div class="flex justify-between py-1 border-b border-button-border/50 text-xs">
-                            <span class="text-modal font-medium">${game.tricks.scraps.label}</span>
-                            <span class="text-modal font-bold">×${game.tricks.scraps.effectMultiplier}</span>
-                        </div>
-                    `);
-                }
+                [...Object.values(game.tricks), ...game.trickUpgrades]
+                    .filter(m => m.teached && m.effect === 'kibbleUse')
+                    .forEach(m => {
+                        rows.push(`
+                            <div class="flex justify-between py-1 border-b border-button-border/50 text-xs">
+                                <span class="text-modal font-medium">${m.label}</span>
+                                <span class="text-modal font-bold">×${m.effectMultiplier}</span>
+                            </div>
+                        `);
+                    });
             }
 
             if (rows.length === 0) {
@@ -880,17 +992,15 @@
 
                 let netRate = rates[key] || 0;
                 if (key === 'kibble') {
-                    netRate -= game.pups.total * game.pups.consumptionRate;
-                    if (game.tricks.playdead && game.tricks.playdead.teached) {
-                        netRate *= game.tricks.playdead.effectMultiplier;
-                    }
-                    if (game.tricks.scraps && game.tricks.scraps.teached) {
-                        netRate *= game.tricks.scraps.effectMultiplier;
-                    }
+                    netRate -= game.pups.total * game.pups.consumptionRate * getEffectMult('kibbleUse');
                 }
                 let rateDisplay = (netRate == 0) ? '(+0.00/s)' : (netRate > 0 ? `(+${netRate.toFixed(2)}/s)` : `(${netRate.toFixed(2)}/s)`);
-                
-                resourceItems.push(`${r.label}: ${Math.floor(r.amount)}/${r.max} ${rateDisplay}`);
+
+                // Color by the displayed (rounded) value so "+0.00" / "-0.00" stay neutral
+                const roundedRate = Number(netRate.toFixed(2));
+                const rateColor = roundedRate > 0 ? 'text-emerald-400' : (roundedRate < 0 ? 'text-red-400' : '');
+
+                resourceItems.push(`${r.label}: <span style="font-weight:300">${Math.floor(r.amount)}/${r.max} <span class="${rateColor}">${rateDisplay}</span></span>`);
             }
 
             let separator = ' &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp; ';
@@ -949,6 +1059,12 @@
         // --- RENDERING CONTROLLER ---
         function renderAll() {
             calculateRates();
+
+            ['kibble', 'sticks'].forEach(type => {
+                const btn = document.getElementById(`btn-gather-${type}`);
+                const res = game.resources[type];
+                if (btn) btn.disabled = res.amount >= res.max;
+            });
 
             if (game.packSuppliesCollapsed === undefined) {
                 game.packSuppliesCollapsed = false;
@@ -1054,14 +1170,7 @@
                 let netRate = rates[key] || 0;
                 // Subtract consumption from kibble display rate so it reflects true net change
                 if (key === 'kibble') {
-                    netRate -= game.pups.total * game.pups.consumptionRate;
-                    if (game.tricks.playdead && game.tricks.playdead.teached)
-                    {
-                        netRate *= game.tricks.playdead.effectMultiplier;
-                    }
-                    if (game.tricks.scraps && game.tricks.scraps.teached) {
-                        netRate *= game.tricks.scraps.effectMultiplier;
-                    }
+                    netRate -= game.pups.total * game.pups.consumptionRate * getEffectMult('kibbleUse');
                 }
                 let rateDisplay = (netRate == 0) ? '0.0/s' : (netRate > 0 ? `+${netRate.toFixed(2)}/s` : `${netRate.toFixed(2)}/s`);
                 let rateColor = (netRate == 0) ? 'text-gray-400' : (netRate > 0 ? 'text-emerald-400' : 'text-red-400');
@@ -1098,7 +1207,8 @@
                 }
 
                 craftContainer.innerHTML += `
-                    <button onclick="craftItem('${cKey}')" ${!canAfford ? 'disabled' : ''} class="p-2.5 rounded-lg border text-left flex items-center justify-between ${canAfford ? 'bg-yellow-400 border-green-800 text-green-800' : 'bg-button bg-button-border text-red-600 opacity-60'}">
+                    <button id="btn-craft-${cKey}" onclick="craftItem('${cKey}')" ${!canAfford ? 'disabled' : ''} class="p-2.5 rounded-lg border text-left flex items-center justify-between
+                    ${canAfford ? 'bg-button border bg-button-border text-card-desc' : 'bg-button border bg-button-border text-card-desc opacity-50'}">
                         <div>
                             <div class="font-semibold text-xs flex items-center"><i class="fa-solid ${c.icon} mr-1.5"></i>${c.label}</div>
                             <div class="text-[10px] text-card-desc">Req: ${costText.join(', ')}</div>
@@ -1227,15 +1337,28 @@
                     `;
                 } else {
                     // --- TEACHED / COMPLETED TRICK (Smaller, no button) ---
-                    tContainer.innerHTML += `
+                    const cardHtml = `
                         <div class="bg-badge/50 p-2.5 rounded-xl border border-amber-500/20 flex items-center justify-between opacity-80">
                             <div class="flex items-center space-x-2">
                                 <i class="fa-solid fa-check text-emerald-400 text-xs"></i>
-                                <span class="text-xs font-bold text-card-header">${t.label}</span>
+                                <span class="text-xs font-bold text-card-header">${t.label}${t.shortDesc ? ` <span class="font-normal text-[10px] text-card-desc">(${t.shortDesc})</span>` : ''}</span>
                             </div>
                             <span class="text-[10px] text-button-active font-medium bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-800/40">Learned</span>
-                        </div>
-                    `;
+                        </div>`;
+
+                    const ups = game.trickUpgrades.filter(u => u.req[0] === tKey && trickUpgradeVisible(u));
+                    if (ups.length === 0) {
+                        tContainer.innerHTML += cardHtml;
+                    } else {
+                        // Card + upgrade row become one full-width cell in the tricks grid
+                        tContainer.innerHTML += `
+                            <div class="space-y-2" style="grid-column: 1 / -1;">
+                                ${cardHtml}
+                                <div style="display:flex; align-items:stretch; gap:0.5rem;">
+                                    ${ups.map(renderUpgradeButton).join('<span class="text-[10px] text-card-desc italic self-center">or</span>')}
+                                </div>
+                            </div>`;
+                    }
                 }
             }
 
@@ -1280,7 +1403,16 @@
             }
 
             // Recalculate scrollbar state for the newly active tab
-            setTimeout(updateScrollbarState, 0);
+            setTimeout(() => {
+                updateScrollbarState();
+
+                // auto scroll to bottom of tricks list to see newest one
+                // this assumes the player keeps up with unlocking them and wants to see that
+                if (tabId === 'tricks') {
+                    const wrapper = document.getElementById('tab-content-wrapper');
+                    wrapper.scrollTop = wrapper.scrollHeight;
+                }
+            }, 0);
         }
 
         // --- LOGGING ---
@@ -1495,7 +1627,7 @@
         function mergeDeep(target, source) {
             for (const key in source) {
                 // Skip definition/structural properties so they always update from code at runtime
-                if (['yields', 'cost', 'icon', 'label', 'desc'].includes(key)) {
+                if (['yields', 'cost', 'icon', 'label', 'desc', 'shortDesc', 'req', 'excludes', 'key', 'effectMultiplier'].includes(key)) {
                     continue;
                 }
                 if (source[key] instanceof Object && target[key] instanceof Object) {

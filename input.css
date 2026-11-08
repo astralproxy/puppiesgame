@@ -1,5 +1,18 @@
 @import "tailwindcss";
 
+/* Divider between the top sidebar and the tab content (mobile layout only) */
+@media (max-width: 767px) {
+    #tab-area {
+        border-top: 1px solid var(--bg-divider);
+    }
+}
+
+.gather-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important; /* no press-shrink while disabled */
+}
+
 :root {
     /* --- Background Colors --- */
     --bg-header: #8a5a1f;           /* page header */
@@ -14,6 +27,7 @@
     --bg-menu: #2c2217;             /* settings menu */
     --bg-menu-border: #8a5a1f;      /* settings menu border */
     --bg-setting: #2c2217;          /* setting card */
+    --bg-divider: #d4b88b;          /* divider color */
 
     /* --- Text Colors --- */
     --text-sidebar-title: #543f29;  /* sidebar/top title */
@@ -50,6 +64,7 @@ html.theme-frenchie {
     --bg-menu: #ffffff;
     --bg-menu-border: #000000;
     --bg-setting: #11182780;
+    --bg-divider: #767b81;          /* divider color */
 
     --text-sidebar-title: #374151;
     --text-subtitle: #808183;
@@ -66,7 +81,7 @@ html.theme-frenchie {
     --text-menu: #000000;
     --text-setting-desc: #000000;
     --text-setting-option: #2f2f2f;
-    --text-dog-icon: #f3f4f6;
+    --text-dog-icon: #2f2f2f;
     --text-button-active: #2f2f2f;  /* Affordable "Build" button text */
     --text-button-disabled: #bfafaf;/* Disabled "Build" button text */
     --text-modal: #000000;
@@ -85,6 +100,7 @@ html.theme-husky {
     --bg-menu: #0f172a;          /* Dark Charcoal Menu */
     --bg-menu-border: #38bdf8;   /* Icy Blue Accent Border */
     --bg-setting: rgba(15, 23, 42, 0.5); /* Semi-Transparent Dark Slate */
+    --bg-divider: #38bdf8;          /* divider color */
 
     --text-sidebar-title: #334155;/* Slate Title */
     --text-subtitle: #38bdf8;    /* Bright Icy Blue Subtitle Accent */
@@ -120,6 +136,7 @@ html.theme-shepherd {
     --bg-menu: #2b1b12;          /* Dark Brown Menu */
     --bg-menu-border: #7a5230;   /* Leather Brown Border */
     --bg-setting: #2b1b1280;     /* Semi-transparent Dark Brown */
+    --bg-divider: #8c6747;          /* divider color */
 
     --text-sidebar-title: #3b261b;
     --text-subtitle: #8c6747;
@@ -136,7 +153,7 @@ html.theme-shepherd {
     --text-menu: #f5ebd6;        /* Light cream text for dark menu */
     --text-setting-desc: #f5e9d3;
     --text-setting-option: #2f2f2f;
-    --text-dog-icon: #e6d2b5;
+    --text-dog-icon: #8a5a1f;
     --text-button-active: #2f2f2f;  /* Affordable "Build" button text */
     --text-button-disabled: #bfafaf;/* Disabled "Build" button text */
     --text-modal: #000000;
@@ -156,6 +173,7 @@ html.theme-shepherd {
 .bg-menu { background-color: var(--bg-menu); }
 .bg-menu-border { border-color: var(--bg-menu-border); }
 .bg-setting { background-color: var(--bg-setting); }
+.bg-divider { background-color: var(--bg-divider); }
 
 .text-sidebar-title { color: var(--text-sidebar-title); }
 .text-subtitle { color: var(--text-subtitle); }
