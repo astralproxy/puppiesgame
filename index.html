@@ -214,10 +214,10 @@
     </div>
 
     <!-- Main Content Grid / Container (3-Pane Desktop, Single Tabbed Mobile View) -->
-    <main class="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-12 gap-0 overflow-hidden relative">
+    <main class="flex-1 min-h-0 grid grid-cols-1 grid-rows-[auto_minmax(0,1fr)] md:grid-rows-none md:grid-cols-12 gap-0 overflow-hidden relative">
 
         <!-- Sidebar: Resource Bar (Always visible on Left in Desktop, Top Bar Drawer on Mobile) -->
-        <aside class="md:col-span-4 lg:col-span-3 bg-sidebar border-r bg-button-border p-3.5 flex flex-col overflow-y-auto custom-scroll">
+        <aside id="sidebar-container" class="md:col-span-4 lg:col-span-3 bg-sidebar border-r bg-button-border p-3.5 md:p-3.5 flex flex-col overflow-hidden transition-all duration-200">
             <div onclick="togglePackCollapse()" class="flex items-center justify-between mb-3 border-b bg-button-border pb-2 cursor-pointer select-none">
                 <h2 class="text-xs font-bold uppercase tracking-wider text-sidebar-title flex items-center">
                     <span>Pack & Supplies</span>&nbsp;
@@ -268,13 +268,13 @@
         </aside>
 
         <!-- Main Tab Area -->
-        <section class="md:col-span-8 lg:col-span-9 flex flex-col bg-body h-full overflow-hidden relative">
+        <section class="md:col-span-8 lg:col-span-9 flex flex-col justify-start bg-body h-full overflow-hidden relative">
             
             <!-- Tab Content Screens -->
-            <div id="tab-content-wrapper" class="overflow-y-auto p-2 custom-scroll relative">
+            <div id="tab-content-wrapper" class="overflow-y-auto p-2 custom-scroll relative flex flex-col">
                 
                 <!-- TAB 1: YARD (Manual actions & core setup) -->
-                <div id="tab-yard" class="tab-panel space-y-4">
+                <div id="tab-yard" class="tab-panel space-y-2">
                     <div class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm">
                         <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-1 flex items-center">
                             <i class="fa-solid fa-tree text-emerald-500 mr-2"></i>The Backyard
@@ -316,9 +316,9 @@
                 </div>
 
                 <!-- TAB 2: PACK / JOBS -->
-                <div id="tab-pack" class="tab-panel hidden space-y-4">
-                    <div class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm space-y-4">
-                        <div class="flex items-center justify-between border-b bg-button-border/40 pb-3">
+                <div id="tab-pack" class="tab-panel hidden  flex-1 flex flex-col">
+                    <div class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm space-y-3 flex-1">
+                        <div class="flex items-center justify-between border-b bg-button-border pb-3">
                             <div>
                                 <h2 class="text-sm font-bold text-card-header uppercase tracking-wider flex items-center">
                                     <i class="fa-solid fa-paw text-card-icon mr-2"></i>Pack Roster
@@ -338,9 +338,9 @@
                 </div>
 
                 <!-- TAB 3: STRUCTURES -->
-                <div id="tab-buildings" class="tab-panel hidden space-y-4">
-                    <div class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm space-y-4">
-                        <div class="flex items-center justify-between border-b bg-button-border/40 pb-3">
+                <div id="tab-buildings" class="tab-panel hidden flex-1 flex flex-col">
+                    <div class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm space-y-3 flex-1">
+                        <div class="flex items-center justify-between border-b bg-button-border pb-3">
                             <div>
                                 <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-1 flex items-center">
                                     <i class="fa-solid fa-house text-card-icon mr-2"></i>Structures
@@ -355,9 +355,9 @@
                 </div>
 
                 <!-- TAB 4: TRICKS -->
-                <div id="tab-tricks" class="tab-panel hidden space-y-4">
-                    <div class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm space-y-4">
-                        <div class="flex items-center justify-between border-b bg-button-border/40 pb-3">
+                <div id="tab-tricks" class="tab-panel hidden flex-1 flex flex-col">
+                    <div class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm space-y-3 flex-1">
+                        <div class="flex items-center justify-between border-b bg-button-border pb-3">
                             <div>
                                 <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-1 flex items-center">
                                     <i class="fa-solid fa-arrow-trend-up text-card-icon mr-2"></i>Tricks
@@ -372,9 +372,9 @@
                 </div>
 
                 <!-- TAB 5: LOG -->
-                <div id="tab-log" class="tab-panel hidden h-full flex flex-col">
+                <div id="tab-log" class="tab-panel hidden flex-1 flex flex-col">
                     <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-2">Pack Chronicles</h2>
-                    <div id="game-log" class="flex-1 bg-panel p-2 rounded-xl border bg-button-border text-xs font-mono space-y-1.5 overflow-y-auto custom-scroll max-h-[350px]">
+                    <div id="game-log" class="flex-1 min-h-0 bg-panel p-2 rounded-xl border bg-button-border text-xs font-mono space-y-1.5 overflow-y-auto custom-scroll">
                         <!-- Log messages go here -->
                     </div>
                 </div>
@@ -422,6 +422,7 @@
                 game.packSuppliesCollapsed = false;
                 renderAll();
             }
+            updateLayoutHeights();
         });
 
         // --- CORE INITIALIZATION ---
@@ -437,15 +438,8 @@
                 document.getElementById('btn-cheat-reveal').addEventListener('click', cheatRevealAll);
             }
 
-            // Apply unified tab height from const
-            const wrapper = document.getElementById('tab-content-wrapper');
-            if (wrapper) {
-                wrapper.style.height = TAB_CONTENT_HEIGHT; // Sets the fixed zone height on the outer wrapper
-            }
-            // This isn't ideal because it may extend past the visible panel and enable a scroll bar
-            // document.querySelectorAll('.tab-panel').forEach(panel => {
-            //     panel.style.height = TAB_CONTENT_HEIGHT;
-            // });
+            // Apply sidebar and content height layout based on window width threshold
+            updateLayoutHeights();
 
             renderAll();
             logMessage("Scavenge Kibble and gather Sticks to expand your pack.");
@@ -864,12 +858,14 @@
         // --- COLLAPSE & RESOURCE TICKER MARQUEE ---
         function togglePackCollapse() {
             // Prevent collapsing on wide screens (768px and up)
-            if (window.innerWidth >= 768) return;
+            if (window.innerWidth >= WINDOW_WIDTH_THRESHOLD) return;
 
             if (game.packSuppliesCollapsed === undefined) {
                 game.packSuppliesCollapsed = false;
             }
             game.packSuppliesCollapsed = !game.packSuppliesCollapsed;
+            
+            updateLayoutHeights(); // <-- Updates the sidebar height immediately on toggle
             renderAll();
         }
 
@@ -900,6 +896,54 @@
             let separator = ' &nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp; ';
             let marqueeText = resourceItems.join(separator);
             track.innerHTML = `<span>${marqueeText}</span> ${separator} <span>${marqueeText}</span>`;
+        }
+
+        function updateLayoutHeights() {
+            const aside = document.getElementById('sidebar-container');
+            const section = document.querySelector('section');
+            const wrapper = document.getElementById('tab-content-wrapper');
+
+            if (window.innerWidth < WINDOW_WIDTH_THRESHOLD) {
+                if (aside) {
+                    const main = document.querySelector('main');
+                    if (main) main.style.gridTemplateRows = 'auto minmax(0, 1fr)';
+
+                    if (game.packSuppliesCollapsed) {
+                        aside.style.height = '74px'; 
+                        aside.style.paddingTop = '6px';
+                        aside.style.paddingBottom = '6px';
+                    } else {
+                        aside.style.height = TAB_SIDEBAR_HEIGHT;
+                        aside.style.paddingTop = '';
+                        aside.style.paddingBottom = '';
+                    }
+                }
+                if (section) {
+                    section.style.height = '';
+                    section.style.flex = '1';
+                }
+                if (wrapper) {
+                    wrapper.style.height = '';
+                    wrapper.style.flex = '1'; // Ensures wrapper fills the flex space and anchors to top
+                }
+            } else /* Desktop (wide view) layout */ {
+                const main = document.querySelector('main');
+                if (main) main.style.gridTemplateRows = '';
+
+                if (aside) {
+                    aside.style.height = '';
+                    aside.style.paddingTop = '';
+                    aside.style.paddingBottom = '';
+                }
+                if (section) {
+                    section.style.height = '';
+                    section.style.flex = '';
+                }
+                if (wrapper) {
+                    wrapper.style.height = '';
+                    wrapper.style.flex = '';
+                }
+            }
         }
 
         // --- RENDERING CONTROLLER ---

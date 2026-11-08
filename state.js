@@ -3,7 +3,7 @@ const GATHER_INTERVAL = 1000; // 1 second in milliseconds
 const STRAY_JOIN_CHANCE = 0.1;
 const JOB_UNLOCK_TREATS = 5;
 const BUILDING_UNLOCK_KENNEL = 20;
-const TAB_CONTENT_HEIGHT = '480px';
+const TAB_SIDEBAR_HEIGHT = '300px';
 const WINDOW_WIDTH_THRESHOLD = 768; // 768px and up is considered wide screen
 
 // --- GAME STATE ---

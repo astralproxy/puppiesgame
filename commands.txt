@@ -1,2 +1,3 @@
 #Put tailwind in watch mode to generate css
+Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 npx tailwindcss -i ./input.css -o ./output.css --watch
