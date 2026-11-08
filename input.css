@@ -20,9 +20,9 @@
     --bg-body: #faf5ed;             /* main/bottom section */
     --bg-panel: #fafafa;            /* actions card area */
     --bg-button: #ebd7b5;           /* action card aka button */
-    --bg-button-active: #ffffb6;    /* affordable "Build" button background */
-    --bg-badge: #ededed;            /* level and action badge */
+    --bg-button-active: #ffffb6;    /* affordable button background */
     --bg-button-border: #d4b88b;    /* button border */
+    --bg-badge: #ededed;            /* level and action badge */
     --bg-newpup-indicator: #f59e0b; /* new pup indicator */
     --bg-menu: #2c2217;             /* settings menu */
     --bg-menu-border: #8a5a1f;      /* settings menu border */
@@ -32,6 +32,9 @@
     /* --- Text Colors --- */
     --text-sidebar-title: #543f29;  /* sidebar/top title */
     --text-subtitle: #e09f3e;       /* subtitle */
+    --text-content-header: #3d2b18; /* content header text */
+    --text-tab-current: #f1f5f9;
+    --text-tab-inactive: #0f172a;
     --text-card-header: #3d2b18;    /* action card header */
     --text-card-desc: #6e5842;      /* action card description */
     --text-card-icon: #f59e0b;      /* item icon color */
@@ -52,22 +55,27 @@
     --text-modal-header: #000000;
 }
 
-/* --- Frenchie Theme Overrides (Black & White) --- */
-html.theme-frenchie {
-    --bg-header: #000000;
-    --bg-sidebar: #f3f4f6;
-    --bg-body: #ffffff;
-    --bg-panel: #000000;
-    --bg-button: #e5e7eb;
-    --bg-button-border: #000000;
-    --bg-newpup-indicator: #ff0000; /* new pup indicator */
-    --bg-menu: #ffffff;
-    --bg-menu-border: #000000;
-    --bg-setting: #11182780;
+/* --- Boston Terrier Theme Overrides (Black & White) --- */
+html.theme-boston {
+    --bg-header: #000000;           /* page header */         
+    --bg-sidebar: #f3f4f6;          /* sidebar/top section */         
+    --bg-body: #ffffff;             /* main/bottom section */         
+    --bg-panel: #000000;            /* actions card area */         
+    --bg-button: #e5e7eb;           /* action card aka button */  
+    --bg-button-active: #d1d5db;    /* affordable button background */
+    --bg-button-border: #000000;    /* button border */
+    --bg-badge: #ededed;            /* level and action badge */
+    --bg-newpup-indicator: #ff0000; /* new pup indicator */         
+    --bg-menu: #ffffff;             /* settings menu */         
+    --bg-menu-border: #000000;      /* settings menu border */         
+    --bg-setting: #11182780;        /* setting card */         
     --bg-divider: #767b81;          /* divider color */
-
-    --text-sidebar-title: #374151;
+                  
+    --text-sidebar-title: #374151;  
     --text-subtitle: #808183;
+    --text-content-header: #f1f5f9;
+    --text-tab-current: #f1f5f9;
+    --text-tab-inactive: #767b81;
     --text-card-header: #e5e7eb;
     --text-card-desc: #767b81;
     --text-card-icon: #292929;      /* item icon color */
@@ -88,58 +96,111 @@ html.theme-frenchie {
     --text-modal-header: #000000;
 }
 
-/* --- Husky Theme Overrides (Slate Grey, Snow White, & Icy Blue) --- */
-html.theme-husky {
-    --bg-header: #0f172a;        /* Dark Charcoal Mask */
-    --bg-sidebar: #f1f5f9;       /* Light Slate / Snow White Sidebar */
-    --bg-body: #f8fafc;          /* Pure Crisp Snow Body */
-    --bg-panel: #ffffff;         /* Bright White Cards */
-    --bg-button: #e2e8f0;        /* Cool Grey Button */
-    --bg-button-border: #94a3b8; /* Medium Slate Border */
-    --bg-newpup-indicator: #38bdf8; /* new pup indicator */
-    --bg-menu: #0f172a;          /* Dark Charcoal Menu */
-    --bg-menu-border: #38bdf8;   /* Icy Blue Accent Border */
-    --bg-setting: rgba(15, 23, 42, 0.5); /* Semi-Transparent Dark Slate */
-    --bg-divider: #38bdf8;          /* divider color */
-
-    --text-sidebar-title: #334155;/* Slate Title */
-    --text-subtitle: #38bdf8;    /* Bright Icy Blue Subtitle Accent */
-    --text-card-header: #0f172a; /* Deep Charcoal Header */
-    --text-card-desc: #64748b;   /* Muted Slate Subtext */
-    --text-card-icon: #727272;      /* item icon color */
+/* --- French Bulldog Theme Overrides (Dark brindle)
+    #1F1D1B Deep Charcoal   | Base shadow / main coat undertone	
+    #3B2F2F Espresso Dark   | Primary dark brindle stripe	
+    #8C5A3C Rich Chestnut   | Deep fawn highlight / warm transition	
+    #C49A6C Warm Fawn       | Golden fawn stripe / highlight	
+    #EBE3D5 Cream White     | Chest patch / muzzle accent
+*/
+html.theme-frenchie {
+    --bg-header: #3B2F2F;           /* page header */         
+    --bg-sidebar: #1F1D1B;          /* sidebar/top section */         
+    --bg-body: #3B2F2F;             /* main/bottom section */         
+    --bg-panel: #1F1D1B;            /* actions card area */         
+    --bg-button: #e5e7eb;           /* action card aka button */  
+    --bg-button-active: #C49A6C;    /* affordable button background */
+    --bg-button-border: #3B2F2F;    /* button border */
+    --bg-badge: #ededed;            /* level and action badge */
+    --bg-newpup-indicator: #C49A6C; /* new pup indicator */         
+    --bg-menu: #ffffff;             /* settings menu */         
+    --bg-menu-border: #1F1D1B;      /* settings menu border */         
+    --bg-setting: #11182780;        /* setting card */         
+    --bg-divider: #EBE3D5;          /* divider color */
+                  
+    --text-sidebar-title: #C49A6C;  
+    --text-subtitle: #C49A6C;
+    --text-content-header: #f1f5f9;
+    --text-tab-current: #f1f5f9;
+    --text-tab-inactive: #C49A6C;
+    --text-card-header: #3B2F2F;
+    --text-card-desc: #8C5A3C;
+    --text-card-icon: #292929;      /* item icon color */
     --text-card-level: #000000;     /* upgrade level label */
-    --text-supply: #5a5a5a;         /* morale and supply text */
-    --text-resource-label: #0284c7; /* Deep Blue Resource Label */
-    --text-resource-value: #0f172a; /* Dark Charcoal Value */
-    --text-resource-max: #161c2b; /* Dark Charcoal Max Value */
+    --text-supply: #141414;         /* morale and supply text */
+    --text-resource-label: #3B2F2F;
+    --text-resource-value: #8C5A3C;
+    --text-resource-max: #8C5A3C;
     --text-action-value: #000000;
-    --text-muted: #64748b;       /* Cool Muted Grey */
-    --text-menu: #f1f5f9;        /* Cool White Text for Dark Menu */
-    --text-setting-desc: #f1f5f9;/* Light Text on Dark Settings BG */
-    --text-setting-option: #2f2f2f; /* Muted Text for Setting Options */
-    --text-dog-icon: #38bdf8;    /* Vibrant Husky Eye Blue Icon */
+    --text-muted: #000000;
+    --text-menu: #000000;
+    --text-setting-desc: #000000;
+    --text-setting-option: #2f2f2f;
+    --text-dog-icon: #8C5A3C;
     --text-button-active: #2f2f2f;  /* Affordable "Build" button text */
     --text-button-disabled: #bfafaf;/* Disabled "Build" button text */
     --text-modal: #000000;
     --text-modal-header: #000000;
 }
 
+/* --- Husky Theme Overrides (Slate Grey, Snow White, & Icy Blue) --- */
+html.theme-husky {
+    --bg-header: #0f172a;           /* page header */
+    --bg-sidebar: #f1f5f9;          /* sidebar/top section */
+    --bg-body: #334155;             /* main/bottom section */
+    --bg-panel: #64748b;            /* actions card area */
+    --bg-button: #f8fafc;           /* action card aka button */
+    --bg-button-border: #334155;    /* button border */
+    --bg-newpup-indicator: #38bdf8; /* new pup indicator */
+    --bg-menu: #0f172a;             /* settings menu */
+    --bg-menu-border: #38bdf8;      /* settings menu border */
+    --bg-setting: #0f172a;          /* setting card */
+    --bg-divider: #38bdf8;          /* divider color */
+
+    --text-sidebar-title: #334155;  
+    --text-subtitle: #38bdf8;
+    --text-content-header: #f1f5f9;
+    --text-tab-current: #f1f5f9;
+    --text-tab-inactive: #0f172a;
+    --text-card-header: #0f172a;    
+    --text-card-desc: #0f172a;      
+    --text-card-icon: #727272;      
+    --text-card-level: #000000;     
+    --text-supply: #5a5a5a;         
+    --text-resource-label: #0284c7; 
+    --text-resource-value: #0f172a; 
+    --text-resource-max: #161c2b;   
+    --text-action-value: #000000;
+    --text-muted: #64748b;          
+    --text-menu: #f1f5f9;           
+    --text-setting-desc: #f1f5f9;   
+    --text-setting-option: #2f2f2f;
+    --text-dog-icon: #38bdf8;       
+    --text-button-active: #2f2f2f;
+    --text-button-disabled: #bfafaf;
+    --text-modal: #000000;
+    --text-modal-header: #000000;
+}
+
 /* --- Shepherd Theme Overrides (Black & White) --- */
 html.theme-shepherd {
-    --bg-header: #2b1b12;        /* Dark Shepherd Mask Brown */
-    --bg-sidebar: #f5ebd6;       /* Soft Tan Fur Tone */
-    --bg-body: #fcf8f0;          /* Warm Cream Background */
-    --bg-panel: #f3e6d0;         /* Warm Fawn Panel */
-    --bg-button: #e6d2b5;        /* Tan Button */
-    --bg-button-border: #7a5230; /* Rich Leather Brown Border */
+    --bg-header: #2b1b12;           /* page header */
+    --bg-sidebar: #f5ebd6;          /* sidebar/top section */
+    --bg-body: #fcf8f0;             /* main/bottom section */
+    --bg-panel: #f3e6d0;            /* actions card area */
+    --bg-button: #e6d2b5;           /* action card aka button */
+    --bg-button-border: #7a5230;    /* button border */
     --bg-newpup-indicator: #7a5230; /* new pup indicator */
-    --bg-menu: #2b1b12;          /* Dark Brown Menu */
-    --bg-menu-border: #7a5230;   /* Leather Brown Border */
-    --bg-setting: #2b1b1280;     /* Semi-transparent Dark Brown */
+    --bg-menu: #2b1b12;             /* settings menu */
+    --bg-menu-border: #7a5230;      /* settings menu border */
+    --bg-setting: #2b1b1280;        /* setting card */
     --bg-divider: #8c6747;          /* divider color */
 
     --text-sidebar-title: #3b261b;
     --text-subtitle: #8c6747;
+    --text-content-header: #f1f5f9;
+    --text-tab-current: #f1f5f9;
+    --text-tab-inactive: #6c5731;
     --text-card-header: #2b1b12;
     --text-card-desc: #6b584c;
     --text-card-icon: #6c5731;      /* item icon color */
@@ -177,6 +238,9 @@ html.theme-shepherd {
 
 .text-sidebar-title { color: var(--text-sidebar-title); }
 .text-subtitle { color: var(--text-subtitle); }
+.text-tab-current { color: var(--text-tab-current); }
+.text-tab-inactive { color: var(--text-tab-inactive); }
+.text-content-header { color: var(--text-content-header); }
 .text-card-header { color: var(--text-card-header); }
 .text-card-desc { color: var(--text-card-desc); }
 .text-card-icon { color: var(--text-card-icon); }

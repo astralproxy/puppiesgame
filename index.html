@@ -163,6 +163,7 @@
             <div class="space-y-2 bg-setting p-3 rounded-xl border bg-button-border">
                 <label class="text-[11px] font-semibold text-setting-desc block">Color Theme</label>
                 <select id="theme-selector" onchange="changeTheme(this.value)" class="w-full px-3 py-1.5 bg-badge border border-gray-200 rounded-lg text-xs text-setting-option focus:outline-none focus:border-amber-500">
+                    <option value="boston">Boston</option>
                     <option value="frenchie">Frenchie</option>
                     <option value="husky">Husky</option>
                     <option value="retriever" selected>Retriever (default)</option>
@@ -241,7 +242,7 @@
                     </span>
                     
                     <!-- Pup Capacity -->
-                    <span class="text-xs px-2 py-0.5 rounded-full bg-amber-500/10 text-supply font-semibold border border-amber-500/20" id="pack-capacity-badge">
+                    <span class="text-xs px-2 py-0.5 rounded-full bg-body text-sidebar-title font-semibold" id="pack-capacity-badge">
                         <i class="fa-solid fa-paw text-[10px] mr-1"></i><span id="res-pups">0</span>/<span id="res-max-pups">0</span> Pups
                     </span>
                 </div>
@@ -285,10 +286,10 @@
                 <!-- TAB 1: YARD (Manual actions & core setup) -->
                 <div id="tab-yard" class="tab-panel space-y-2">
                     <div class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm">
-                        <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-1 flex items-center">
-                            <i class="fa-solid fa-tree text-emerald-500 mr-2"></i>The Backyard
+                        <h2 class="text-sm font-bold text-content-header uppercase tracking-wider mb-1 flex items-center">
+                            <i class="fa-solid fa-tree text-sidebar-title mr-2"></i>The Backyard
                         </h2>
-                        <p class="text-xs text-card-desc mb-4">Manual tasks for energetic puppies.</p>
+                        <p class="text-xs text-content-header mb-4">Manual tasks for energetic puppies.</p>
                         
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                             <button id="btn-gather-kibble" onmousedown="startGather('kibble', this)" onmouseup="stopGather()" onmouseleave="stopGather()" ontouchstart="startGather('kibble')" ontouchend="stopGather()" ontouchcancel="stopGather()" class="gather-btn group p-2 bg-button active:scale-[0.98] border bg-button-border rounded-xl text-left transition flex items-center justify-between">
@@ -315,8 +316,8 @@
 
                     <!-- Refinement / Crafting Quick Card -->
                     <div id="crafting-card" class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm">
-                        <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-2 flex items-center">
-                            <i class="fa-solid fa-hammer text-card-icon mr-2"></i>Crafting
+                        <h2 class="text-sm font-bold text-sidebar-title uppercase tracking-wider mb-2 flex items-center">
+                            <i class="fa-solid fa-hammer text-sidebar-title mr-2"></i>Crafting
                         </h2>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="craft-buttons">
                             <!-- Populated dynamically -->
@@ -324,15 +325,32 @@
                     </div>
                 </div>
 
-                <!-- TAB 2: PACK / JOBS -->
+                <!-- TAB 2: STRUCTURES -->
+                <div id="tab-buildings" class="tab-panel hidden flex-1 flex flex-col">
+                    <div class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm space-y-3 flex-1">
+                        <div class="flex items-center justify-between border-b bg-button-border pb-3">
+                            <div>
+                                <h2 class="text-sm font-bold text-content-header uppercase tracking-wider mb-1 flex items-center">
+                                    <i class="fa-solid fa-house text-sidebar-title mr-2"></i>Structures
+                                </h2>
+                                <p class="text-xs text-content-header mt-0.5">Expand capacity and automated income.</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2" id="buildings-container">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: PACK / JOBS -->
                 <div id="tab-pack" class="tab-panel hidden  flex-1 flex flex-col">
                     <div class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm space-y-3 flex-1">
                         <div class="flex items-center justify-between border-b bg-button-border pb-3">
                             <div>
-                                <h2 class="text-sm font-bold text-card-header uppercase tracking-wider flex items-center">
-                                    <i class="fa-solid fa-paw text-card-icon mr-2"></i>Pack Roster
+                                <h2 class="text-sm font-bold text-content-header uppercase tracking-wider flex items-center">
+                                    <i class="fa-solid fa-paw text-sidebar-title mr-2"></i>Pack Roster
                                 </h2>
-                                <p class="text-xs text-card-desc mt-0.5">Give pups jobs to automate gathering.</p>
+                                <p class="text-xs text-content-header mt-0.5">Give pups jobs to automate gathering.</p>
                             </div>
                             <div class="text-right">
                                 <div class="text-[10px] uppercase tracking-wider text-card-desc font-semibold">Idle</div>
@@ -346,32 +364,15 @@
                     </div>
                 </div>
 
-                <!-- TAB 3: STRUCTURES -->
-                <div id="tab-buildings" class="tab-panel hidden flex-1 flex flex-col">
-                    <div class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm space-y-3 flex-1">
-                        <div class="flex items-center justify-between border-b bg-button-border pb-3">
-                            <div>
-                                <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-1 flex items-center">
-                                    <i class="fa-solid fa-house text-card-icon mr-2"></i>Structures
-                                </h2>
-                                <p class="text-xs text-card-desc mt-0.5">Expand capacity and automated income.</p>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2" id="buildings-container">
-                            <!-- Populated dynamically -->
-                        </div>
-                    </div>
-                </div>
-
                 <!-- TAB 4: TRICKS -->
                 <div id="tab-tricks" class="tab-panel hidden flex-1 flex flex-col">
                     <div class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm space-y-3 flex-1">
                         <div class="flex items-center justify-between border-b bg-button-border pb-3">
                             <div>
-                                <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-1 flex items-center">
-                                    <i class="fa-solid fa-arrow-trend-up text-card-icon mr-2"></i>Tricks
+                                <h2 class="text-sm font-bold text-content-header uppercase tracking-wider mb-1 flex items-center">
+                                    <i class="fa-solid fa-arrow-trend-up text-sidebar-title mr-2"></i>Tricks
                                 </h2>
-                                <p class="text-xs text-card-desc mt-0.5">Learn techniques to enhance the pack's abilities.</p>
+                                <p class="text-xs text-content-header mt-0.5">Learn techniques to enhance the pack's abilities.</p>
                             </div>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="tricks-container">
@@ -382,8 +383,8 @@
 
                 <!-- TAB 5: LOG -->
                 <div id="tab-log" class="tab-panel hidden flex-1 flex flex-col">
-                    <h2 class="text-sm font-bold text-card-header uppercase tracking-wider mb-2">Pack Chronicles</h2>
-                    <div id="game-log" class="flex-1 min-h-0 bg-panel p-2 rounded-xl border bg-button-border text-xs font-mono space-y-1.5 overflow-y-auto custom-scroll">
+                    <h2 class="text-sm font-bold text-content-header uppercase tracking-wider mb-2">Pack Chronicles</h2>
+                    <div id="game-log" class="flex-1 min-h-0 bg-sidebar p-2 rounded-xl border bg-button-border text-xs font-mono space-y-1.5 overflow-y-auto custom-scroll">
                         <!-- Log messages go here -->
                     </div>
                 </div>
@@ -393,25 +394,25 @@
     </main>
 
     <!-- Bottom Navigation Bar -->
-    <nav class="bg-nav-mobile border-t bg-button-border flex items-center justify-around shrink-0 z-10 py-1.5">
-        <button onclick="switchTab('yard')" id="nav-yard" class="flex-1 py-1 flex flex-col items-center justify-center text-card-icon font-semibold transition hover:bg-badge border-r bg-button-border">
+    <nav class="bg-panel border-t bg-button-border flex items-center justify-around shrink-0 z-10 py-1.5">
+        <button onclick="switchTab('yard')" id="nav-yard" class="flex-1 py-1 flex flex-col items-center justify-center text-tab-active font-semibold transition hover:bg-badge border-r bg-button-border">
             <i class="fa-solid fa-bone text-base mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Yard</span>
         </button>
-        <button onclick="switchTab('buildings')" id="nav-buildings" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge border-r bg-button-border">
+        <button onclick="switchTab('buildings')" id="nav-buildings" class="flex-1 py-1 flex flex-col items-center justify-center text-tab-inactive hover:text-card-title font-semibold transition hover:bg-badge border-r bg-button-border">
             <i class="fa-solid fa-house text-base mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Structures</span>
         </button>
-        <button onclick="switchTab('pack')" id="nav-pack" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge relative border-r bg-button-border">
+        <button onclick="switchTab('pack')" id="nav-pack" class="flex-1 py-1 flex flex-col items-center justify-center text-tab-inactive hover:text-card-title font-semibold transition hover:bg-badge relative border-r bg-button-border">
             <i class="fa-solid fa-paw text-base mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Pack</span>
             <span id="nav-pup-indicator" class="hidden absolute top-1.5 right-2.5 w-2 h-2 bg-newpup-indicator rounded-full animate-pulse"></span>
         </button>
-        <button onclick="switchTab('tricks')" id="nav-tricks" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge border-r bg-button-border">
+        <button onclick="switchTab('tricks')" id="nav-tricks" class="flex-1 py-1 flex flex-col items-center justify-center text-tab-inactive hover:text-card-title font-semibold transition hover:bg-badge border-r bg-button-border">
             <i id="nav-tricks-icon" class="fa-solid fa-arrow-trend-up text-base mb-0.5"></i>
             <span id="nav-tricks-label" class="text-[10px] tracking-tight"></span>
         </button>
-        <button onclick="switchTab('log')" id="nav-log" class="flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge">
+        <button onclick="switchTab('log')" id="nav-log" class="flex-1 py-1 flex flex-col items-center justify-center text-tab-inactive hover:text-card-title font-semibold transition hover:bg-badge">
             <i class="fa-solid fa-scroll text-base mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Log</span>
         </button>
@@ -1208,7 +1209,7 @@
 
                 craftContainer.innerHTML += `
                     <button id="btn-craft-${cKey}" onclick="craftItem('${cKey}')" ${!canAfford ? 'disabled' : ''} class="p-2.5 rounded-lg border text-left flex items-center justify-between
-                    ${canAfford ? 'bg-button border bg-button-border text-card-desc' : 'bg-button border bg-button-border text-card-desc opacity-50'}">
+                    ${canAfford ? 'bg-button border bg-button-border text-card-header' : 'bg-button border bg-button-border text-card-desc opacity-50'}">
                         <div>
                             <div class="font-semibold text-xs flex items-center"><i class="fa-solid ${c.icon} mr-1.5"></i>${c.label}</div>
                             <div class="text-[10px] text-card-desc">Req: ${costText.join(', ')}</div>
@@ -1392,9 +1393,9 @@
                 let relativeClass = id === 'pack' ? 'relative' : '';
                 
                 if (id === tabId) {
-                    btn.className = `flex-1 py-1 flex flex-col items-center justify-center text-card-icon font-semibold transition hover:bg-badge ${relativeClass} ${borderClass}`;
+                    btn.className = `flex-1 py-1 flex flex-col items-center justify-center text-tab-current font-semibold transition hover:bg-badge ${relativeClass} ${borderClass}`;
                 } else {
-                    btn.className = `flex-1 py-1 flex flex-col items-center justify-center text-card-desc hover:text-card-title font-semibold transition hover:bg-badge ${relativeClass} ${borderClass}`;
+                    btn.className = `flex-1 py-1 flex flex-col items-center justify-center text-tab-inactive hover:text-card-title font-semibold transition hover:bg-badge ${relativeClass} ${borderClass}`;
                 }
             });
 
@@ -1644,10 +1645,10 @@
 
             const root = document.documentElement;
             // Remove all theme classes
-            root.classList.remove('theme-frenchie', 'theme-husky', 'theme-shepherd');
+            root.classList.remove('theme-boston', 'theme-frenchie', 'theme-husky', 'theme-shepherd');
             
             // Add selected theme class if not default (retriever)
-            if (themeName === 'frenchie' || themeName === 'husky' || themeName === 'shepherd') {
+            if (themeName === 'boston' || themeName === 'frenchie' || themeName === 'husky' || themeName === 'shepherd') {
                 root.classList.add(`theme-${themeName}`);
             }
             
