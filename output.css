@@ -1008,8 +1008,8 @@
   --text-sidebar-title: #543f29;
   --text-subtitle: #e09f3e;
   --text-content-header: #3d2b18;
-  --text-tab-current: #f1f5f9;
-  --text-tab-inactive: #0f172a;
+  --text-tab-current: #8a5a1f;
+  --text-tab-inactive: #3e280e;
   --text-card-header: #3d2b18;
   --text-card-desc: #6e5842;
   --text-card-icon: #f59e0b;
@@ -1023,7 +1023,7 @@
   --text-menu: #f5e9d3;
   --text-setting-desc: #f5e9d3;
   --text-setting-option: #2f2f2f;
-  --text-dog-icon: #f3ab3b;
+  --text-dog-icon: #d4b88b;
   --text-button-active: #2f2f2f;
   --text-button-disabled: #bfafaf;
   --text-modal: #333333;
@@ -1031,10 +1031,10 @@
 }
 html.theme-boston {
   --bg-header: #000000;
-  --bg-sidebar: #f3f4f6;
+  --bg-sidebar: #000000;
   --bg-body: #ffffff;
   --bg-panel: #000000;
-  --bg-button: #e5e7eb;
+  --bg-button: #ebe5e5;
   --bg-button-active: #d1d5db;
   --bg-button-border: #000000;
   --bg-badge: #ededed;
@@ -1043,13 +1043,13 @@ html.theme-boston {
   --bg-menu-border: #000000;
   --bg-setting: #11182780;
   --bg-divider: #767b81;
-  --text-sidebar-title: #374151;
+  --text-sidebar-title: #f1f5f9;
   --text-subtitle: #808183;
   --text-content-header: #f1f5f9;
   --text-tab-current: #f1f5f9;
   --text-tab-inactive: #767b81;
-  --text-card-header: #e5e7eb;
-  --text-card-desc: #767b81;
+  --text-card-header: #f1f5f9;
+  --text-card-desc: #292929;
   --text-card-icon: #292929;
   --text-card-level: #000000;
   --text-supply: #141414;
