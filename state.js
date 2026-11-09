@@ -107,7 +107,9 @@ let game = {
     - append new entries at the END only
     */
     trickUpgrades: [
-        { key: 'getBall',   req: ['zoomies'], label: 'Get the Ball',    desc: 'Zoomies turn into fetch drills.', shortDesc: 'sticks +10%',    cost: { treats: 60 }, teached: false, excludes: ['takeBreak'], effectMultiplier: 1.1, effect: 'sticks' },
-        { key: 'takeBreak', req: ['zoomies'], label: 'Flop Down',       desc: 'Rest between sprints.',           shortDesc: 'consume -5%', cost: { treats: 60 }, teached: false, excludes: ['getBall'],   effectMultiplier: 0.95, effect: 'kibbleUse' },
+        { key: 'getBall',   req: ['zoomies'], label: 'Get the Ball',    desc: 'Run fetch drills.',      shortDesc: 'sticks +10%',       cost: { treats: 60 }, teached: false, excludes: ['takeBreak'], effectMultiplier: 1.1, effect: 'sticks' },
+        { key: 'takeBreak', req: ['zoomies'], label: 'Flop Down',       desc: 'Rest between sprints.',  shortDesc: 'consume -5%',       cost: { treats: 60 }, teached: false, excludes: ['getBall'],   effectMultiplier: 0.95, effect: 'kibbleUse' },
+        { key: 'parkour',   req: ['zoomies2'], label: 'Parkour!',       desc: 'Bounce off walls.',      shortDesc: 'efficiency +5%',    cost: { treats: 80 }, teached: false, excludes: ['chaseTail'], effectMultiplier: 1.01, effect: 'efficiency' },
+        { key: 'chaseTail', req: ['zoomies2'], label: 'Chase Tail',     desc: 'Rest between sprints.',  shortDesc: 'no effect, but fun', cost: { treats: 20 }, teached: false, excludes: ['parkour'],  effectMultiplier: 1.0, effect: 'efficiency' },
     ],
 };

@@ -105,7 +105,7 @@
             background: rgba(0,0,0,0.1);
         }
         .custom-scroll::-webkit-scrollbar-thumb {
-            background: rgba(217, 119, 6, 0.4);
+            background: var(--bg-scrollbar);
             border-radius: 4px;
         }
     </style>
@@ -114,8 +114,8 @@
 
     <!-- INFO MODAL DIALOG -->
     <div id="info-modal" onclick="if(event.target === this) closeInfoModal()" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-3">
-        <div class="bg-button border bg-button-border rounded-2xl w-full max-w-xs p-5 shadow-2xl relative space-y-4 flex flex-col">
-            <div class="flex items-center justify-between border-b bg-button-border pb-3">
+        <div class="bg-button border border-button-border rounded-2xl w-full max-w-xs p-5 shadow-2xl relative space-y-4 flex flex-col">
+            <div class="flex items-center justify-between border-b border-button-border pb-3">
                 <h3 id="info-modal-title" class="text-sm font-bold text-modal-header flex items-center">
                     <i class="fa-solid fa-circle-info text-card-icon mr-2"></i>Info
                 </h3>
@@ -131,11 +131,11 @@
     </div>
 
     <!-- Top Header Bar -->
-    <header class="bg-header border-b bg-button-border px-4 py-2.5 flex items-center justify-between shrink-0 shadow-md">
+    <header class="bg-header border-b border-button-border px-2 py-2 flex items-center justify-between shrink-0 shadow-md">
         <div class="flex items-center space-x-2">
             <i class="fa-solid font-bold text-dog-icon text-xl fa-dog"></i>
             <div>
-                <h1 class="text-base font-bold text-gray-100 leading-tight">Puppies Game</h1>
+                <h1 class="text-base font-bold text-header leading-tight">Puppies Game</h1>
                 <p class="text-xs text-subtitle font-medium leading-none" id="subtitle-text">You are a puppy playing in the backyard.</p>
             </div>
         </div>
@@ -149,8 +149,8 @@
 
     <!-- SETTINGS / Menu Modal Dialog -->
     <div id="menu-modal" class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-3">
-        <div class="bg-menu border bg-menu-border rounded-2xl w-full max-w-xs p-5 shadow-2xl relative space-y-4 max-h-[90vh] flex flex-col">
-            <div class="flex items-center justify-between border-b bg-menu-border pb-3 shrink-0">
+        <div class="bg-menu border border-menu-border rounded-2xl w-full max-w-xs p-5 shadow-2xl relative space-y-4 max-h-[90vh] flex flex-col">
+            <div class="flex items-center justify-between border-b border-menu-border pb-3 shrink-0">
                 <h3 class="text-sm font-bold text-menu flex items-center">
                     <i class="fa-solid fa-sliders text-menu mr-2"></i>SETTINGS
                 </h3>
@@ -160,7 +160,7 @@
             </div>
 
             <!-- Theme Selector Section -->
-            <div class="space-y-2 bg-setting p-3 rounded-xl border bg-button-border">
+            <div class="space-y-2 bg-setting p-3 rounded-xl border border-button-border">
                 <label class="text-[11px] font-semibold text-setting-desc block">Color Theme</label>
                 <select id="theme-selector" onchange="changeTheme(this.value)" class="w-full px-3 py-1.5 bg-badge border border-gray-200 rounded-lg text-xs text-setting-option focus:outline-none focus:border-amber-500">
                     <option value="boston">Boston</option>
@@ -173,7 +173,7 @@
             
             <div class="space-y-4 overflow-y-auto custom-scroll pr-1">
                 <!-- Manual Save Section -->
-                <div class="space-y-2 bg-setting p-3 rounded-xl border bg-button-border">
+                <div class="space-y-2 bg-setting p-3 rounded-xl border border-button-border">
                     <label class="text-[11px] font-semibold text-setting-desc block">Save Name</label>
                     <input type="text" id="save-name-input" value="My Save" class="w-full px-3 py-1.5 bg-badge border border-gray-200 rounded-lg text-xs text-setting-option focus:outline-none focus:border-amber-500">
                     <button onclick="manualSave();" class="w-full p-2.5 bg-button-active hover:bg-amber-500 active:bg-amber-700 text-button-active rounded-lg font-semibold text-xs transition flex items-center justify-center space-x-2">
@@ -183,7 +183,7 @@
                 </div>
 
                 <!-- Load Save Section -->
-                <div class="space-y-2 bg-setting p-3 rounded-xl border bg-button-border">
+                <div class="space-y-2 bg-setting p-3 rounded-xl border border-button-border">
                     <label class="text-[11px] font-semibold text-setting-desc block">Load Saved Game</label>
                     <div id="save-slots-list" class="space-y-1.5 max-h-36 overflow-y-auto custom-scroll pr-1">
                         <!-- Dynamically populated save slots -->
@@ -217,7 +217,7 @@
                 </button>
             </div>
 
-            <div class="pt-2 border-t bg-button-border text-center shrink-0">
+            <div class="pt-2 border-t border-button-border text-center shrink-0">
                 <p class="text-[10px] text-button-disabled">Puppies Game v1.0 • Backyard Edition</p>
             </div>
         </div>
@@ -227,8 +227,8 @@
     <main class="flex-1 min-h-0 grid grid-cols-1 grid-rows-[auto_minmax(0,1fr)] md:grid-rows-none md:grid-cols-12 gap-0 overflow-hidden relative">
 
         <!-- Sidebar: Resource Bar (Always visible on Left in Desktop, Top Bar Drawer on Mobile) -->
-        <aside id="sidebar-container" class="md:col-span-4 lg:col-span-3 bg-sidebar border-r bg-button-border p-3.5 md:p-3.5 flex flex-col overflow-hidden transition-all duration-200">
-            <div onclick="togglePackCollapse()" class="flex items-center justify-between mb-3 border-b bg-button-border pb-2 cursor-pointer select-none">
+        <aside id="sidebar-container" class="md:col-span-4 lg:col-span-3 bg-sidebar border-r border-button-border p-2 md:p-2 flex flex-col overflow-hidden transition-all duration-200">
+            <div onclick="togglePackCollapse()" class="flex items-center justify-between mb-3 border-b border-button-border pb-2 cursor-pointer select-none">
                 <h2 class="text-xs font-bold uppercase tracking-wider text-sidebar-title flex items-center">
                     <span>Pack & Supplies</span>&nbsp;
                     <i id="pack-collapse-icon" class="fa-solid fa-chevron-down ml-4 text-[10px] transition-transform duration-200"></i>
@@ -242,25 +242,25 @@
                     </span>
                     
                     <!-- Pup Capacity -->
-                    <span class="text-xs px-2 py-0.5 rounded-full bg-body text-sidebar-title font-semibold" id="pack-capacity-badge">
+                    <span class="text-xs px-2 py-0.5 rounded-full border border-button-border text-sidebar-title font-semibold" id="pack-capacity-badge">
                         <i class="fa-solid fa-paw text-[10px] mr-1"></i><span id="res-pups">0</span>/<span id="res-max-pups">0</span> Pups
                     </span>
                 </div>
             </div>
 
             <!-- Expandable Container -->
-            <div id="pack-expandable-content" class="space-y-3">
+            <div id="pack-expandable-content" class="space-y-2">
                 <!-- Animated Puppy Line Marquee -->
-                <div id="pup-marquee-wrapper" class="overflow-hidden relative h-7 bg-button rounded-lg border border-button-border flex items-center hidden">
+                <div id="pup-marquee-wrapper" class="overflow-hidden relative h-7 bg-badge rounded-lg border border-button-border flex items-center hidden">
                     <div id="pup-marquee-track" class="absolute whitespace-nowrap flex items-center space-x-3 animate-marquee-ltr">
                         <!-- Dynamically Populated by JS -->
                     </div>
                 </div>
 
                 <!-- Morale / Alert Indicator -->
-                <div id="morale-bar" class="p-2 mb-2 bg-button border bg-button-border rounded-lg flex items-center justify-between text-xs">
-                    <span class="text-supply font-medium"><i class="fa-solid fa-heart mr-1.5"></i>Pack Morale</span>
-                    <span id="morale-val" class="font-bold text-supply">100%</span>
+                <div id="morale-bar" class="p-2 mb-2 bg-body border border border-button-border rounded-lg flex items-center justify-between text-xs">
+                    <span class="text-morale font-medium"><i class="fa-solid fa-heart mr-1.5"></i>Pack Morale</span>
+                    <span id="morale-val" class="font-bold text-morale">100%</span>
                 </div>
 
                 <!-- Resource List -->
@@ -270,8 +270,8 @@
             </div>
 
             <!-- Resource Ticker Marquee (Shown when collapsed) -->
-            <div id="resource-marquee-wrapper" class="overflow-hidden relative h-7 bg-button rounded-lg border border-button-border items-center hidden flex">
-                <div id="resource-marquee-track" class="absolute whitespace-nowrap flex items-center space-x-6 animate-marquee-rtl text-xs text-supply font-medium">				   
+            <div id="resource-marquee-wrapper" class="overflow-hidden relative h-7 bg-badge rounded-lg border border-button-border items-center hidden flex">
+                <div id="resource-marquee-track" class="absolute whitespace-nowrap flex items-center space-x-6 animate-marquee-rtl text-sm text-res-marquee font-medium">				   
                     <!-- Dynamically Populated by JS -->
                 </div>
             </div>
@@ -285,14 +285,14 @@
                 
                 <!-- TAB 1: YARD (Manual actions & core setup) -->
                 <div id="tab-yard" class="tab-panel space-y-2">
-                    <div class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm">
+                    <div class="bg-panel p-2 rounded-xl border border-button-border shadow-sm">
                         <h2 class="text-sm font-bold text-content-header uppercase tracking-wider mb-1 flex items-center">
                             <i class="fa-solid fa-tree text-sidebar-title mr-2"></i>The Backyard
                         </h2>
-                        <p class="text-xs text-subtitle mb-4">Manual tasks for energetic puppies.</p>
+                        <p class="text-xs text-content-header opacity-80 mb-4">Manual tasks for energetic puppies.</p>
                         
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            <button id="btn-gather-kibble" onmousedown="startGather('kibble', this)" onmouseup="stopGather()" onmouseleave="stopGather()" ontouchstart="startGather('kibble')" ontouchend="stopGather()" ontouchcancel="stopGather()" class="gather-btn group p-2 bg-button active:scale-[0.98] border bg-button-border rounded-xl text-left transition flex items-center justify-between">
+                            <button id="btn-gather-kibble" onmousedown="startGather('kibble', this)" onmouseup="stopGather()" onmouseleave="stopGather()" ontouchstart="startGather('kibble')" ontouchend="stopGather()" ontouchcancel="stopGather()" class="gather-btn group p-2 bg-button active:scale-[0.98] border border-button-border rounded-xl text-left transition flex items-center justify-between">
                                 <div>
                                     <div class="text-card-header flex items-center">
                                         <i class="fa-solid fa-bowl-rice text-card-title mr-2"></i>Scavenge Kibble
@@ -302,7 +302,7 @@
                                 <span class="text-[14px] text-action-value">+1.0</span>
                             </button>
 
-                            <button id="btn-gather-sticks" onmousedown="startGather('sticks', this)" onmouseup="stopGather()" onmouseleave="stopGather()" ontouchstart="startGather('sticks')" ontouchend="stopGather()" ontouchcancel="stopGather()" class="gather-btn group p-2 bg-button active:scale-[0.98] border bg-button-border rounded-xl text-left transition flex items-center justify-between">
+                            <button id="btn-gather-sticks" onmousedown="startGather('sticks', this)" onmouseup="stopGather()" onmouseleave="stopGather()" ontouchstart="startGather('sticks')" ontouchend="stopGather()" ontouchcancel="stopGather()" class="gather-btn group p-2 bg-button active:scale-[0.98] border border-button-border rounded-xl text-left transition flex items-center justify-between">
                                 <div>
                                     <div class="text-card-header flex items-center">
                                         <i class="fa-solid fa-cubes text-card-title mr-2"></i>Gather Sticks
@@ -315,7 +315,7 @@
                     </div>
 
                     <!-- Refinement / Crafting Quick Card -->
-                    <div id="crafting-card" class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm">
+                    <div id="crafting-card" class="bg-panel p-2 rounded-xl border border-button-border shadow-sm">
                         <h2 class="text-sm font-bold text-sidebar-title uppercase tracking-wider mb-2 flex items-center">
                             <i class="fa-solid fa-hammer text-sidebar-title mr-2"></i>Crafting
                         </h2>
@@ -327,13 +327,13 @@
 
                 <!-- TAB 2: STRUCTURES -->
                 <div id="tab-buildings" class="tab-panel hidden flex-1 flex flex-col">
-                    <div class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm space-y-3 flex-1">
-                        <div class="flex items-center justify-between border-b bg-button-border pb-3">
+                    <div class="bg-panel p-2 rounded-xl border border-button-border shadow-sm space-y-3 flex-1">
+                        <div class="flex items-center justify-between border-b border-button-border pb-3">
                             <div>
                                 <h2 class="text-sm font-bold text-content-header uppercase tracking-wider mb-1 flex items-center">
                                     <i class="fa-solid fa-house text-sidebar-title mr-2"></i>Structures
                                 </h2>
-                                <p class="text-xs text-content-header mt-0.5">Expand capacity and automated income.</p>
+                                <p class="text-xs text-content-header opacity-80 mt-0.5">Expand capacity and automated income.</p>
                             </div>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2" id="buildings-container">
@@ -344,16 +344,16 @@
 
                 <!-- TAB 3: PACK / JOBS -->
                 <div id="tab-pack" class="tab-panel hidden  flex-1 flex flex-col">
-                    <div class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm space-y-3 flex-1">
-                        <div class="flex items-center justify-between border-b bg-button-border pb-3">
+                    <div class="bg-panel p-2 rounded-xl border border-button-border shadow-sm space-y-3 flex-1">
+                        <div class="flex items-center justify-between border-b border-button-border pb-3">
                             <div>
                                 <h2 class="text-sm font-bold text-content-header uppercase tracking-wider flex items-center">
                                     <i class="fa-solid fa-paw text-sidebar-title mr-2"></i>Pack Roster
                                 </h2>
-                                <p class="text-xs text-content-header mt-0.5">Give pups jobs to automate gathering.</p>
+                                <p class="text-xs text-content-header opacity-80 mt-0.5">Give pups jobs to automate gathering.</p>
                             </div>
                             <div class="text-right">
-                                <div class="text-[10px] uppercase tracking-wider text-card-desc font-semibold">Idle</div>
+                                <div class="text-[10px] uppercase tracking-wider text-resource-value font-semibold">Idle</div>
                                 <div class="text-base font-bold text-resource-value" id="unassigned-pups">0</div>
                             </div>
                         </div>
@@ -366,16 +366,16 @@
 
                 <!-- TAB 4: TRICKS -->
                 <div id="tab-tricks" class="tab-panel hidden flex-1 flex flex-col">
-                    <div class="bg-panel p-2 rounded-xl border bg-button-border shadow-sm space-y-3 flex-1">
-                        <div class="flex items-center justify-between border-b bg-button-border pb-3">
+                    <div class="bg-panel p-2 rounded-xl border border-button-border shadow-sm space-y-3 flex-1">
+                        <div class="flex items-center justify-between border-b border-button-border pb-3">
                             <div>
                                 <h2 class="text-sm font-bold text-content-header uppercase tracking-wider mb-1 flex items-center">
                                     <i class="fa-solid fa-arrow-trend-up text-sidebar-title mr-2"></i>Tricks
                                 </h2>
-                                <p class="text-xs text-content-header mt-0.5">Learn techniques to enhance the pack's abilities.</p>
+                                <p class="text-xs text-content-header opacity-80 mt-0.5">Learn techniques to enhance the pack's abilities.</p>
                             </div>
                         </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="tricks-container">
+                        <div id="tricks-container" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                             <!-- Populated dynamically -->
                         </div>
                     </div>
@@ -383,9 +383,17 @@
 
                 <!-- TAB 5: LOG -->
                 <div id="tab-log" class="tab-panel hidden flex-1 flex flex-col">
-                    <h2 class="text-sm font-bold text-content-header uppercase tracking-wider mb-2">Pack Chronicles</h2>
-                    <div id="game-log" class="flex-1 min-h-0 bg-sidebar p-2 rounded-xl border bg-button-border text-xs font-mono space-y-1.5 overflow-y-auto custom-scroll">
-                        <!-- Log messages go here -->
+                    <div class="bg-panel p-2 rounded-xl border border-button-border shadow-sm space-y-3 flex-1">
+                        <div class="flex items-center justify-between border-b border-button-border pb-3">
+                            <div>
+                                <h2 class="text-sm font-bold text-content-header uppercase tracking-wider mb-1 flex items-center">
+                                    <i class="fa-solid fa-scroll text-sidebar-title mr-2"></i>Pack Chronicles
+                                </h2>
+                            </div>
+                        </div>
+                        <div id="game-log" class="flex-1 min-h-0 bg-sidebar p-2 rounded-xl border border-button-border text-xs font-mono space-y-1.5 overflow-y-auto custom-scroll">
+                            <!-- Log messages go here -->
+                        </div>
                     </div>
                 </div>
 
@@ -394,21 +402,21 @@
     </main>
 
     <!-- Bottom Navigation Bar -->
-    <nav class="bg-tab-panel border-t bg-button-border flex items-center justify-around shrink-0 z-10 py-1.5">
-        <button onclick="switchTab('yard')" id="nav-yard" class="flex-1 py-1 flex flex-col items-center justify-center text-tab-current font-semibold transition hover:bg-badge border-r bg-button-border">
+    <nav class="bg-tab-panel border-t border-button-border flex items-center justify-around shrink-0 z-10 py-1.5">
+        <button onclick="switchTab('yard')" id="nav-yard" class="flex-1 py-1 flex flex-col items-center justify-center text-tab-current font-semibold transition hover:bg-badge border-r border-button-border">
             <i class="fa-solid fa-bone text-tab-current mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Yard</span>
         </button>
-        <button onclick="switchTab('buildings')" id="nav-buildings" class="flex-1 py-1 flex flex-col items-center justify-center text-tab-inactive hover:text-card-title font-semibold transition hover:bg-badge border-r bg-button-border">
+        <button onclick="switchTab('buildings')" id="nav-buildings" class="flex-1 py-1 flex flex-col items-center justify-center text-tab-inactive hover:text-card-title font-semibold transition hover:bg-badge border-r border-button-border">
             <i class="fa-solid fa-house text-tab-inactive mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Structures</span>
         </button>
-        <button onclick="switchTab('pack')" id="nav-pack" class="flex-1 py-1 flex flex-col items-center justify-center text-tab-inactive hover:text-card-title font-semibold transition hover:bg-badge relative border-r bg-button-border">
+        <button onclick="switchTab('pack')" id="nav-pack" class="flex-1 py-1 flex flex-col items-center justify-center text-tab-inactive hover:text-card-title font-semibold transition hover:bg-badge relative border-r border-button-border">
             <i class="fa-solid fa-paw text-tab-inactive mb-0.5"></i>
             <span class="text-[10px] tracking-tight">Pack</span>
             <span id="nav-pup-indicator" class="hidden absolute top-1.5 right-2.5 w-2 h-2 bg-newpup-indicator rounded-full animate-pulse"></span>
         </button>
-        <button onclick="switchTab('tricks')" id="nav-tricks" class="flex-1 py-1 flex flex-col items-center justify-center text-tab-inactive hover:text-card-title font-semibold transition hover:bg-badge border-r bg-button-border">
+        <button onclick="switchTab('tricks')" id="nav-tricks" class="flex-1 py-1 flex flex-col items-center justify-center text-tab-inactive hover:text-card-title font-semibold transition hover:bg-badge border-r border-button-border">
             <i id="nav-tricks-icon" class="fa-solid fa-arrow-trend-up text-tab-inactive mb-0.5"></i>
             <span id="nav-tricks-label" class="text-[10px] tracking-tight"></span>
         </button>
@@ -826,8 +834,8 @@
 
         function renderUpgradeButton(u) {
             if (u.teached) {
-                return `<div style="flex:1 1 0; min-width:0;" class="bg-badge p-2 rounded-lg border border-amber-500 text-xs font-bold text-card-header opacity-80">
-                    <i class="fa-solid fa-check text-emerald-400 mr-1"></i>${u.label}
+                return `<div style="flex:1 1 0; min-width:0;" class="bg-badge p-2 rounded-lg border border-button-border text-xs font-bold text-card-level opacity-80">
+                    <i class="fa-solid fa-check text-card-level mr-1"></i>${u.label}
                     <span class="font-normal text-[10px] text-card-desc">(${u.shortDesc})</span>
                 </div>`;
             }
@@ -839,8 +847,8 @@
             }
             const disabled = blocked || !canAfford;
             return `<button style="flex:1 1 0; min-width:0;" onclick="teachUpgrade('${u.key}')" ${disabled ? 'disabled' : ''}
-                class="bg-button-active p-2 rounded-lg border bg-button-border text-left transition transform active:scale-[0.95] ${blocked ? 'opacity-40' : (!canAfford ? 'opacity-60' : '')} ${disabled ? 'cursor-not-allowed' : ''}">
-                <div class="text-xs font-bold text-card-header" ${blocked ? 'style="text-decoration:line-through;"' : ''}>${u.label} <span class="font-normal text-[10px] text-card-desc">(${u.shortDesc})</span></div>
+                class="bg-badge p-2 rounded-lg border border-button-border text-left transition transform active:scale-[0.95] ${blocked ? 'opacity-60' : (!canAfford ? 'opacity-80' : '')} ${disabled ? 'cursor-not-allowed' : ''}">
+                <div class="text-xs font-bold text-card-level" ${blocked ? 'style="text-decoration:line-through;"' : ''}>${u.label} <span class="font-normal text-[10px] text-card-desc">(${u.shortDesc})</span></div>
                 ${blocked ? '' : `<div class="text-[10px] text-card-desc">${u.desc}</div>`}
                 ${blocked ? '' : `<div class="text-[10px] text-card-desc mt-0.5">${costStr.join(', ')}</div>`}
             </button>`;
@@ -872,13 +880,13 @@
                 let consumptionTotal = game.pups.total * game.pups.consumptionRate * getEffectMult('kibbleUse');
                 
                 rows.push(`
-                    <div class="flex justify-between py-1 border-b border-button-border/50 text-xs">
+                    <div class="flex justify-between py-1 border-b border-button-border text-xs">
                         <span class="text-modal font-medium">Pups Consumption</span>
                         <span class="text-modal font-bold">-${consumptionTotal.toFixed(2)}/s (${game.pups.total} pups)</span>
                     </div>
                 `);
                 rows.push(`
-                    <div class="flex justify-between py-1 border-b border-button-border/50 text-xs">
+                    <div class="flex justify-between py-1 border-b border-button-border text-xs">
                         <span class="text-modal font-medium">Pack Morale</span>
                         <span class="text-modal font-bold">${Math.round(game.pups.morale * 100)}%</span>
                     </div>
@@ -999,7 +1007,7 @@
 
                 // Color by the displayed (rounded) value so "+0.00" / "-0.00" stay neutral
                 const roundedRate = Number(netRate.toFixed(2));
-                const rateColor = roundedRate > 0 ? 'text-emerald-400' : (roundedRate < 0 ? 'text-red-400' : '');
+                const rateColor = roundedRate > 0 ? 'text-emerald-600' : (roundedRate < 0 ? 'text-red-600' : '');
 
                 resourceItems.push(`${r.label}: <span style="font-weight:300">${Math.floor(r.amount)}/${r.max} <span class="${rateColor}">${rateDisplay}</span></span>`);
             }
@@ -1177,7 +1185,7 @@
                 let rateColor = (netRate == 0) ? 'text-gray-400' : (netRate > 0 ? 'text-emerald-400' : 'text-red-400');
 
                 let itemHtml = `
-                    <div onclick="showResourceInfo('${key}')" class="bg-badge p-2 rounded-lg border bg-button-border flex items-center justify-between cursor-pointer hover:brightness-95 transition">
+                    <div onclick="showResourceInfo('${key}')" class="bg-badge p-2 rounded-lg border border-button-border flex items-center justify-between cursor-pointer hover:brightness-95 transition">
                         <div class="flex items-center space-x-2">
                             <i class="fa-solid ${r.icon} ${r.color} w-4 text-center"></i>
                             <span class="font-medium text-supply">${r.label}</span>
@@ -1209,7 +1217,7 @@
 
                 craftContainer.innerHTML += `
                     <button id="btn-craft-${cKey}" onclick="craftItem('${cKey}')" ${!canAfford ? 'disabled' : ''} class="p-2.5 rounded-lg border text-left flex items-center justify-between
-                    ${canAfford ? 'bg-button border bg-button-border text-card-header' : 'bg-button border bg-button-border text-card-desc opacity-50'}">
+                    ${canAfford ? 'bg-button border border-button-border text-card-header' : 'bg-button border border-button-border text-card-desc opacity-50'}">
                         <div>
                             <div class="font-semibold text-xs flex items-center"><i class="fa-solid ${c.icon} mr-1.5"></i>${c.label}</div>
                             <div class="text-[10px] text-card-desc">Req: ${costText.join(', ')}</div>
@@ -1239,7 +1247,7 @@
                 }
 
                 bContainer.innerHTML += `
-                    <div class="bg-button p-3 rounded-xl border bg-button-border flex items-center justify-between">
+                    <div class="bg-button p-2 rounded-xl border border-button-border flex items-center justify-between">
                         <div class="flex-1 pr-4 space-y-1">
                             <div class="flex items-center justify-between">
                                 <span class="text-xs font-bold text-card-header flex items-center">
@@ -1250,7 +1258,7 @@
                             <p class="text-[11px] text-card-desc">${b.desc}</p>
                         </div>
                         <div class="pl-3 border-l border-button-border flex flex-col items-center justify-center w-20 shrink-0 space-y-1">
-                            <button onclick="buyBuilding('${bKey}')" ${!canAfford ? 'disabled' : ''} class="w-full px-3 py-1.5 rounded-lg text-xs font-semibold transition transform active:scale-[0.95] text-center ${canAfford ? 'bg-button-active hover:bg-amber-500 active:bg-amber-700 text-button-active shadow' : 'bg-badge text-button-disabled cursor-not-allowed'}">
+                            <button onclick="buyBuilding('${bKey}')" ${!canAfford ? 'disabled' : ''} class="w-full px-3 py-1.5 rounded-lg text-xs font-semibold transition transform active:scale-[0.95] text-center ${canAfford ? 'bg-button-active hover:bg-amber-500 text-button-active shadow' : 'bg-badge text-button-disabled cursor-not-allowed'}">
 				                Build
                             </button>
                             <span class="text-[10px] text-card-desc text-center truncate w-full">${costStr.join(', ')}</span>
@@ -1281,9 +1289,9 @@
                 }
 
                 jContainer.innerHTML += `
-                    <div class="bg-button p-3 rounded-xl border bg-button-border flex items-center justify-between">
+                    <div class="bg-button p-2 rounded-xl border border-button-border flex items-center justify-between">
                         <div class="flex items-center space-x-3">
-                            <div class="w-9 h-9 rounded-lg bg-badge flex items-center justify-center text-card-icon relative">
+                            <div class="w-9 h-9 rounded-lg flex items-center justify-center text-card-icon relative">
                                 <i class="fa-solid ${j.icon} text-base ${animClass}"></i>
                             </div>
                             <div>
@@ -1292,9 +1300,9 @@
                             </div>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <button onclick="assignJob('${jKey}', -1)" class="w-7 h-7 rounded-lg bg-badge text-button-active font-bold text-s flex items-center justify-center transition transform active:scale-[0.95] border bg-button-border">-</button>
+                            <button onclick="assignJob('${jKey}', -1)" class="w-7 h-7 rounded-lg bg-badge text-button-active font-bold text-s flex items-center justify-center transition transform active:scale-[0.95] border border-button-border">-</button>
                             <span class="text-xs font-bold text-action-value w-6 text-center">${j.count}</span>
-                            <button onclick="assignJob('${jKey}', 1)" class="w-7 h-7 rounded-lg bg-badge text-button-active font-bold text-s flex items-center justify-center transition transform active:scale-[0.95] border bg-button-border">+</button>
+                            <button onclick="assignJob('${jKey}', 1)" class="w-7 h-7 rounded-lg bg-badge text-button-active font-bold text-s flex items-center justify-center transition transform active:scale-[0.95] border border-button-border">+</button>
                         </div>
                     </div>
                 `;
@@ -1321,7 +1329,7 @@
                     }
 
                     tContainer.innerHTML += `
-                        <div class="bg-button p-3 rounded-xl border bg-button-border flex items-center justify-between">
+                        <div class="bg-button p-2 rounded-xl border border-button-border flex items-center justify-between">
                             <div class="flex-1 pr-3 space-y-1">
                                 <span class="text-xs font-bold text-card-header flex items-center">
                                     <i class="fa-solid fa-microscope text-card-icon mr-2"></i>${t.label}
@@ -1339,23 +1347,24 @@
                 } else {
                     // --- TEACHED / COMPLETED TRICK (Smaller, no button) ---
                     const cardHtml = `
-                        <div class="bg-badge/50 p-2.5 rounded-xl border border-amber-500/20 flex items-center justify-between opacity-80">
+                        <div class="bg-header p-2 rounded-xl flex items-center justify-between opacity-80">
                             <div class="flex items-center space-x-2">
-                                <i class="fa-solid fa-check text-emerald-400 text-xs"></i>
-                                <span class="text-xs font-bold text-card-header">${t.label}${t.shortDesc ? ` <span class="font-normal text-[10px] text-card-desc">(${t.shortDesc})</span>` : ''}</span>
+                                <i class="fa-solid fa-check text-trick-label-learned text-xs"></i>
+                                <span class="text-xs font-bold text-trick-card-header-learned">${t.label}${t.shortDesc ? ` <span class="font-normal text-[10px] text-trick-card-desc-learned">(${t.shortDesc})</span>` : ''}</span>
                             </div>
-                            <span class="text-[10px] text-button-active font-medium bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-800/40">Learned</span>
+                            <span class="text-[10px] font-medium italic text-trick-label-learned px-2 py-0.5 rounded">Learned</span>
                         </div>`;
 
+                    // UPGRADES
                     const ups = game.trickUpgrades.filter(u => u.req[0] === tKey && trickUpgradeVisible(u));
                     if (ups.length === 0) {
                         tContainer.innerHTML += cardHtml;
                     } else {
                         // Card + upgrade row become one full-width cell in the tricks grid
                         tContainer.innerHTML += `
-                            <div class="space-y-2" style="grid-column: 1 / -1;">
+                            <div class="space-y-1" style="grid-column: 1 / -1;">
                                 ${cardHtml}
-                                <div style="display:flex; align-items:stretch; gap:0.5rem;">
+                                <div style="display:flex; align-items:stretch; gap:0.2rem;">
                                     ${ups.map(renderUpgradeButton).join('<span class="text-[10px] text-card-desc italic self-center">or</span>')}
                                 </div>
                             </div>`;
@@ -1390,7 +1399,7 @@
                 let btn = document.getElementById(`nav-${id}`);
                 let icon = btn.querySelector('i');
                 let hasBorder = id !== 'log';
-                let borderClass = hasBorder ? 'border-r bg-button-border' : '';
+                let borderClass = hasBorder ? 'border-r border-button-border' : '';
                 let relativeClass = id === 'pack' ? 'relative' : '';
 
                 const isActive = id === tabId;
@@ -1428,7 +1437,7 @@
             let log = document.getElementById('game-log');
             let time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
             let entry = document.createElement('div');
-            entry.className = "text-modal border-b bg-button-border pb-1";
+            entry.className = "text-modal border-b border-button-border pb-1";
             entry.innerHTML = `<span class="text-modal-header text-[10px]">[${time}]</span> ${msg}`;
             log.prepend(entry);
         }
