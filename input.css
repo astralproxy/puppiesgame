@@ -13,7 +13,7 @@
     transform: none !important; /* no press-shrink while disabled */
 }
 
-/* --- Guided tour --- */
+/*#region GUIDED TOUR */
 #tour-root { position: fixed; inset: 0; z-index: 100; } /* above the menu modal (z-50) */
 #tour-blocker { position: absolute; inset: 0; }          /* swallows taps on the game underneath */
 
@@ -48,7 +48,9 @@
 #tour-tip button { font-size: 12px; font-weight: 600; border-radius: 8px; padding: 6px 12px; }
 #tour-next { background: var(--col-base); color: var(--col-accent); }
 #tour-skip { background: transparent; color: var(--text-menu); opacity: 0.7; }
+/*#endregion GUIDED TOUR*/
 
+/*#region COLOR THEMES */
 /* --- DEFAULT: Golden Retriever Theme
     #DAA520 Honey Gold      | Base shadow / main coat undertone	
     #C88A04 Deep Goldenrod  | Primary dark brindle stripe	
@@ -60,24 +62,24 @@
     /* --- Theme Colors --- */
     --col-base: #DAA520;
     --col-primary: #C88A04;
-    --col-secondary: #eee8ce;
-    --col-highlight: #F3E5DC;
+    --col-secondary: #fffcf0;
+    --col-highlight: #ffefc7;
     --col-accent: #3A2A1A;
 
     /* --- Background Colors --- */
-    --bg-header: var(--col-accent);           /* page header */
-    --bg-sidebar: var(--col-highlight);          /* sidebar/top section */
-    --bg-body: var(--col-secondary);             /* main/bottom section */
-    --bg-panel: var(--bg-sidebar);    /* actions card area */
-    --bg-tab-panel: var(--bg-sidebar);/* tab panel background */
-    --bg-button: var(--bg-body);      /* action card aka button */
-    --bg-button-active: var(--col-highlight);    /* affordable button background */
-    --bg-badge: var(--col-highlight);            /* level and action badge */
-    --bg-newpup-indicator: var(--col-primary); /* new pup indicator */
-    --bg-menu: var(--col-accent);             /* settings menu */
-    --bg-setting: var(--col-accent);          /* setting card */
-    --bg-divider: var(--col-accent);          /* divider color */
-    --bg-scrollbar: var(--bg-header); /* scrollbar */
+    --bg-header: var(--col-accent);             /* page header */
+    --bg-sidebar: var(--col-highlight);         /* sidebar/top section */
+    --bg-body: var(--col-secondary);            /* main/bottom section */
+    --bg-panel: var(--bg-sidebar);              /* actions card area */
+    --bg-tab-panel: var(--bg-header);           /* tab panel background */
+    --bg-button: var(--col-base);               /* action card aka button */
+    --bg-button-active: var(--col-highlight);   /* affordable button background */
+    --bg-badge: var(--col-secondary);           /* resource, level and action badge */
+    --bg-newpup-indicator: var(--col-primary);  /* new pup indicator */
+    --bg-menu: var(--col-accent);               /* settings menu */
+    --bg-setting: var(--col-accent);            /* setting card */
+    --bg-divider: var(--col-accent);            /* divider color */
+    --bg-scrollbar: var(--bg-header);           /* scrollbar */
 
     --border-button-border: var(--bg-header);
 
@@ -90,17 +92,17 @@
     --text-morale: var(--col-accent);        /* Pack Morale banner text */
     --text-content-header: var(--bg-header); /* content header text */
     --text-content-subtitle: #8a5a1f;
-    --text-tab-current: #8a5a1f;    /* current tab text */
-    --text-tab-inactive: var(--bg-header);   /* inactive tab text */
+    --text-tab-current: var(--col-highlight);    /* current tab text */
+    --text-tab-inactive: var(--col-base);   /* inactive tab text */
     --text-card-header: var(--bg-header);    /* action card header */
     --text-card-header-inv: var(--bg-header);
     --text-card-desc: #6e5842;      /* action card description */
-    --text-card-icon: #f59e0b;      /* item icon color */
+    --text-card-icon: var(--col-accent);      /* item icon color */
     --text-card-level: #7e7e7e;     /* upgrade level label */
-    --text-supply: #543f29;         /* morale and supply text */
+    --text-supply: var(--col-accent);         /* morale and supply text */
     --text-resource-label: #8a5a1f; /* resource label */
-    --text-resource-value: #443220; /* resource value */
-    --text-resource-max: #3e280e;   /* resoruce value max */
+    --text-resource-value: var(--col-accent); /* resource value */
+    --text-resource-max: var(--col-accent);   /* resoruce value max */
     --text-action-value: #000000;   /* action value */
     --text-trick-label-learned: var(--col-secondary);
     --text-trick-card-header-learned: var(--col-highlight);
@@ -316,43 +318,41 @@ html.theme-shepherd {
 
     --border-button-border: var(--col-secondary); /* button border color */
 
-    --text-dog-icon: var(--col-accent);           /* header icon and marquee dogs */
-    --text-header: var(--col-highlight);          /* header text */
-    --text-subtitle: var(--col-secondary);        /* subtitle text */
-    --text-sidebar-title: var(--col-secondary);   /* sidebar title text */
-    --text-res-marquee: var(--col-primary);       /* resource marquee text */
-    --text-morale: var(--col-highlight);        /* Pack Morale banner text */
-    --text-content-header: var(--col-contrast);  /* content header text */
-    --text-content-subtitle: var(--col-highlight); /* content subtitle text */
-    --text-tab-current: var(--col-highlight);     /* current tab text */
-    --text-tab-inactive: var(--col-accent);       /* inactive tab text */
-    --text-card-header: var(--col-primary);       /* card header text */
-    --text-card-header-inv: var(--col-highlight); /* inverted card header text */
-    --text-card-desc: var(--col-base);            /* card description text */
-    --text-card-icon: var(--col-base);                  /* item icon color */
-    --text-card-level: var(--col-base);                 /* upgrade level label */
-    --text-supply: var(--col-primary);                     /* morale and supply text */
-    --text-resource-label: #4a2e1c;             /* resource label text */
-    --text-resource-value: var(--col-primary);   /* resource value text */
-    --text-resource-max: var(--col-base);                /* resource max text */
-    --text-action-value: #000000;                /* action value text */
+    --text-dog-icon: var(--col-accent);             /* header icon and marquee dogs */
+    --text-header: var(--col-highlight);            /* header text */
+    --text-subtitle: var(--col-secondary);          /* subtitle text */
+    --text-sidebar-title: var(--col-secondary);     /* sidebar title text */
+    --text-res-marquee: var(--col-primary);         /* resource marquee text */
+    --text-morale: var(--col-primary);              /* Pack Morale banner text */
+    --text-content-header: var(--col-contrast);     /* content header text */
+    --text-content-subtitle: var(--col-highlight);  /* content subtitle text */
+    --text-button-active: var(--col-primary);       /* Affordable "Build" button text */
+    --text-button-disabled: var(--col-highlight);   /* Disabled "Build" button text */
+    --text-tab-current: var(--col-highlight);       /* current tab text */
+    --text-tab-inactive: var(--col-accent);         /* inactive tab text */
+    --text-card-header: var(--col-primary);         /* card header text */
+    --text-card-header-inv: var(--col-highlight);   /* inverted card header text */
+    --text-card-desc: var(--col-base);              /* card description text */
+    --text-card-icon: var(--col-base);              /* item icon color */
+    --text-card-level: var(--col-base);             /* upgrade level label */
+    --text-supply: var(--col-primary);              /* morale and supply text */
+    --text-resource-label: var(--col-base);         /* resource label text */
+    --text-resource-value: var(--col-primary);      /* resource value text */
+    --text-resource-max: var(--col-base);           /* resource max text */
+    --text-action-value: var(--col-base);           /* action value text */
     --text-trick-label-learned: var(--col-highlight);
     --text-trick-card-header-learned: var(--col-highlight);
     --text-trick-card-desc-learned: var(--col-highlight);
-    --text-muted: #6b584c;                       /* muted text */
-    --text-menu: #f5ebd6;                       /* Light cream text for dark menu */
-    --text-hamburger: var(--text-subtitle);     /* hamburger menu symbol */
-    --text-setting-desc: #f5e9d3;               /* setting description text */
-    --text-setting-option: #2f2f2f;             /* setting option text */
-    --text-button-active: var(--col-primary);   /* Affordable "Build" button text */
-    --text-button-disabled: var(--col-highlight); /* Disabled "Build" button text */
-    --text-modal-header: var(--col-highlight);   /* modal header text */
-    --text-modal: var(--col-highlight);          /* modal text */
+    --text-muted: var(--col-accent);                /* muted text */
+    --text-hamburger: var(--text-subtitle);         /* hamburger menu symbol */
+    --text-menu: var(--col-contrast);               /* Light cream text for dark menu */
+    --text-setting-desc: var(--col-contrast);       /* setting description text */
+    --text-setting-option: var(--col-primary);      /* setting option text */
+    --text-modal-header: var(--col-highlight);      /* modal header text */
+    --text-modal: var(--col-highlight);             /* modal text */
 }
 
-/* --- Mapped Custom Classes --- */
-
-/* --- Theme Colors --- */
+/* --- Mapped Custom Color Classes --- */
 .col-base { background-color: var(--col-base); }
 .col-primary { background-color: var(--col-primary); }
 .col-secondary { background-color: var(--col-secondary); }
@@ -381,6 +381,8 @@ html.theme-shepherd {
 .text-sidebar-title { color: var(--text-sidebar-title); }
 .text-res-marquee { color: var(--text-res-marquee); }
 .text-morale { color: var(--text-morale); }
+.text-button-active { color: var(--text-button-active); }
+.text-button-disabled { color: var(--text-button-disabled); }
 .text-tab-current { color: var(--text-tab-current); }
 .text-tab-inactive { color: var(--text-tab-inactive); }
 .text-content-header { color: var(--text-content-header); }
@@ -403,7 +405,6 @@ html.theme-shepherd {
 .text-hamburger { color: var(--text-hamburger); }
 .text-setting-desc { color: var(--text-setting-desc); }
 .text-setting-option { color: var(--text-setting-option); }
-.text-button-active { color: var(--text-button-active); }
-.text-button-disabled { color: var(--text-button-disabled); }
 .text-modal { color: var(--text-modal); }
 .text-modal-header { color: var(--text-modal-header); }
+/*#endregion COLOR THEMES */
