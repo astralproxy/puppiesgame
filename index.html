@@ -141,7 +141,7 @@
         </div>
         <div class="flex items-center space-x-2">
             <!-- Hamburger Menu Trigger Button -->
-            <button onclick="toggleMenu()" class="p-2 text-xs bg-sidebar text-hamburger rounded-lg transition" title="Menu">
+            <button onclick="toggleMenu()" id="menu-button" class="p-2 text-xs bg-sidebar text-hamburger rounded-lg transition" title="Menu">
                 <i class="fa-solid fa-bars text-base"></i>
             </button>
         </div>
@@ -426,6 +426,21 @@
         </button>
     </nav>
 
+    <!-- GUIDED TOUR OVERLAY -->
+    <div id="tour-root" class="hidden">
+        <div id="tour-blocker"></div>
+        <div id="tour-spotlight"></div>
+        <div id="tour-tip" role="dialog" aria-live="polite">
+            <div id="tour-title"></div>
+            <p id="tour-text"></p>
+            <div id="tour-footer">
+                <button id="tour-skip" type="button" onclick="endTour()">Skip</button>
+                <span id="tour-step-count"></span>
+                <button id="tour-next" type="button" onclick="nextTourStep()">Next</button>
+            </div>
+        </div>
+    </div>
+
     <!-- ITEMS, ABILITIES, ETC. -->
     <script src="state.js"></script>
 
@@ -468,6 +483,11 @@
 
             renderAll();
             logMessage("Scavenge Kibble and gather Sticks to expand your pack.");
+
+            // First-time players get the guided tour (anyone with an existing save skips it)
+            if (!localStorage.getItem(TOUR_DONE_KEY) && !localStorage.getItem('puppiesGame_autoSave')) {
+                setTimeout(startTour, 400);
+            }
             
             // Main Game Loop (1 Tick = 1 second)
             setInterval(gameLoop, 1000);
@@ -1452,6 +1472,153 @@
             entry.className = "text-modal border-b border-button-border pb-1";
             entry.innerHTML = `<span class="text-modal-header text-[10px]">[${time}]</span> ${msg}`;
             log.prepend(entry);
+        }
+
+        // --- GUIDED TOUR ---
+        const TOUR_DONE_KEY = 'puppiesGame_tourDone';
+
+        const TOUR_STEPS = [
+            {
+                tab: 'yard',
+                target: '#btn-gather-kibble',
+                title: 'Scavenge Kibble',
+                text: 'Tap (or hold) to scrounge up kibble. The puppy pack is hungry, so don\'t let the bowl go empty!'
+            },
+            {
+                target: '#resource-container',
+                before: expandSidebarForTour,
+                title: 'Your Supplies',
+                text: 'Each resource shows: how many you have, the storage limit, and its gain/loss rate per second. Tap them for a full breakdown.'
+            },
+            {
+                target: '#nav-buildings',
+                title: 'Structures',
+                text: 'This tab is where you use sticks and more to build things.'
+            },
+            {
+                tab: 'buildings',
+                target: '#buildings-container button',
+                title: 'Build',
+                text: 'Build structures to house more pups or expand item storage. Buttons light up when you can afford them.'
+            },
+            {
+                tab: 'pack',
+                target: '#tab-pack .text-right',
+                title: 'Idle Pups',
+                text: 'New strays join the pack over time. Idle pups still eat kibble but produce nothing.'
+            },
+            {
+                tab: 'pack',
+                target: '#jobs-container button[onclick="assignJob(\'forager\', 1)"]',
+                title: 'Assign Jobs',
+                text: 'Use + to put an idle pup to work. For example: Foragers gather kibble for you automatically.'
+            },
+            {
+                target: '#menu-button',
+                after: () => setMenuOpen(true),
+                title: 'Menu',
+                text: 'Themes, save games, and the Reset option live here. Your progress also auto-saves every 10 seconds.'
+            }
+        ];
+
+        let tourIndex = -1;
+        let tourRaf = null;
+
+        function expandSidebarForTour() {
+            // On mobile the supplies panel can be collapsed; make sure the counters are visible
+            if (game.packSuppliesCollapsed) {
+                game.packSuppliesCollapsed = false;
+                renderAll();
+            }
+        }
+
+        function setMenuOpen(open) {
+            const isOpen = !document.getElementById('menu-modal').classList.contains('hidden');
+            if (isOpen !== open) toggleMenu();
+        }
+
+        function startTour() {
+            tourIndex = -1;
+            document.getElementById('tour-root').classList.remove('hidden');
+            nextTourStep();
+            if (!tourRaf) tourRaf = requestAnimationFrame(trackTourTarget);
+        }
+
+        function nextTourStep() {
+            const prev = TOUR_STEPS[tourIndex];
+            if (prev && prev.after) prev.after();
+
+            tourIndex++;
+            if (tourIndex >= TOUR_STEPS.length) {
+                endTour();
+                return;
+            }
+            showTourStep(TOUR_STEPS[tourIndex]);
+        }
+
+        function showTourStep(step) {
+            if (step.tab) switchTab(step.tab);
+            if (step.before) step.before();
+
+            // Skip a step whose target doesn't exist (e.g. nothing rendered yet)
+            if (!document.querySelector(step.target)) {
+                nextTourStep();
+                return;
+            }
+
+            document.getElementById('tour-title').textContent = step.title;
+            document.getElementById('tour-text').textContent = step.text;
+            document.getElementById('tour-step-count').textContent = `${tourIndex + 1} / ${TOUR_STEPS.length}`;
+            document.getElementById('tour-next').textContent = (tourIndex === TOUR_STEPS.length - 1) ? 'Got it!' : 'Next';
+
+            // Tab content scrolls inside its wrapper; bring the target into view
+            if (step.tab) {
+                setTimeout(() => {
+                    const el = document.querySelector(step.target);
+                    if (el) el.scrollIntoView({ block: 'nearest' });
+                }, 0);
+            }
+        }
+
+        // Runs every frame: re-query the target because renderAll() replaces these elements each tick
+        function trackTourTarget() {
+            const step = TOUR_STEPS[tourIndex];
+            const el = step && document.querySelector(step.target);
+            if (el) positionTour(el.getBoundingClientRect());
+            tourRaf = requestAnimationFrame(trackTourTarget);
+        }
+
+        function positionTour(r) {
+            const pad = 6, gap = 12;
+            const spot = document.getElementById('tour-spotlight');
+            spot.style.top = `${r.top - pad}px`;
+            spot.style.left = `${r.left - pad}px`;
+            spot.style.width = `${r.width + pad * 2}px`;
+            spot.style.height = `${r.height + pad * 2}px`;
+
+            const tip = document.getElementById('tour-tip');
+            const tipH = tip.offsetHeight, tipW = tip.offsetWidth;
+            const vw = window.innerWidth, vh = window.innerHeight;
+
+            let top = r.bottom + pad + gap;                          // prefer below the target
+            if (top + tipH > vh - 8) top = r.top - pad - gap - tipH; // otherwise above
+            if (top < 8) top = vh - tipH - 8;                        // otherwise pinned to the bottom
+
+            const left = Math.min(Math.max(8, r.left + r.width / 2 - tipW / 2), vw - tipW - 8);
+            tip.style.top = `${top}px`;
+            tip.style.left = `${left}px`;
+        }
+
+        function endTour() {
+            const cur = TOUR_STEPS[tourIndex];
+            if (cur && cur.after) cur.after();   // e.g. close the menu if skipped mid-step
+
+            cancelAnimationFrame(tourRaf);
+            tourRaf = null;
+            tourIndex = -1;
+            document.getElementById('tour-root').classList.add('hidden');
+            localStorage.setItem(TOUR_DONE_KEY, '1');
+            switchTab('yard');
         }
 
         // --- MENU MODAL TOGGLE ---

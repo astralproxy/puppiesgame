@@ -13,6 +13,42 @@
     transform: none !important; /* no press-shrink while disabled */
 }
 
+/* --- Guided tour --- */
+#tour-root { position: fixed; inset: 0; z-index: 100; } /* above the menu modal (z-50) */
+#tour-blocker { position: absolute; inset: 0; }          /* swallows taps on the game underneath */
+
+#tour-spotlight {
+    position: absolute;
+    border-radius: 12px;
+    border: 2px solid var(--col-base);
+    box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.65);        /* dims everything outside the box */
+    pointer-events: none;
+    transition: top 0.25s, left 0.25s, width 0.25s, height 0.25s;
+    animation: tourPulse 1.6s ease-in-out infinite;
+}
+@keyframes tourPulse {
+    0%, 100% { border-color: var(--col-base); }
+    50%      { border-color: var(--col-highlight); }
+}
+
+#tour-tip {
+    position: absolute;
+    width: min(300px, calc(100vw - 16px));
+    background: var(--bg-menu);
+    color: var(--text-menu);
+    border: 1px solid var(--col-base);
+    border-radius: 14px;
+    padding: 12px 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+#tour-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+#tour-text  { font-size: 12px; line-height: 1.45; opacity: 0.9; }
+#tour-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 10px; }
+#tour-step-count { font-size: 10px; opacity: 0.6; }
+#tour-tip button { font-size: 12px; font-weight: 600; border-radius: 8px; padding: 6px 12px; }
+#tour-next { background: var(--col-base); color: var(--col-accent); }
+#tour-skip { background: transparent; color: var(--text-menu); opacity: 0.7; }
+
 /* --- DEFAULT: Golden Retriever Theme
     #DAA520 Honey Gold      | Base shadow / main coat undertone	
     #C88A04 Deep Goldenrod  | Primary dark brindle stripe	
