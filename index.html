@@ -434,6 +434,13 @@
         // Rates calculation cache
         let rates = {};
 
+        // Only touch the DOM when the generated markup actually changed
+        function setHTML(el, html) {
+            if (el._lastHtml === html) return;
+            el._lastHtml = html;
+            el.innerHTML = html;
+        }
+
         // Auto-expand sidebar if window is resized to wide screen
         window.addEventListener('resize', () => {
             if (window.innerWidth >= WINDOW_WIDTH_THRESHOLD && game.packSuppliesCollapsed) {
@@ -1201,7 +1208,7 @@
 
             // Render Crafting Buttons
             let craftContainer = document.getElementById('craft-buttons');
-            craftContainer.innerHTML = '';
+            cHtml= '';
             let hasCrafts = false;
             for (let cKey in game.crafts) {
                 let c = game.crafts[cKey];
@@ -1215,7 +1222,7 @@
                     if (game.resources[r].amount < c.cost[r]) canAfford = false;
                 }
 
-                craftContainer.innerHTML += `
+                cHtml += `
                     <button id="btn-craft-${cKey}" onclick="craftItem('${cKey}')" ${!canAfford ? 'disabled' : ''} class="p-2.5 rounded-lg border text-left flex items-center justify-between
                     ${canAfford ? 'bg-button border border-button-border text-card-header' : 'bg-button border border-button-border text-card-desc opacity-50'}">
                         <div>
@@ -1226,11 +1233,12 @@
                     </button>
                 `;
             }
+            setHTML(craftContainer, cHtml);
             document.getElementById('crafting-card').style.display = hasCrafts ? 'block' : 'none';
 
             // Render Buildings Tab
             let bContainer = document.getElementById('buildings-container');
-            bContainer.innerHTML = '';
+            let bHtml = '';
             for (let bKey in game.buildings) {
                 let b = game.buildings[bKey];
                 if (!b.unlocked) continue;
@@ -1246,7 +1254,7 @@
                     if (game.resources[r].amount < costVal) canAfford = false;
                 }
 
-                bContainer.innerHTML += `
+                bHtml += `
                     <div class="bg-button p-2 rounded-xl border border-button-border flex items-center justify-between">
                         <div class="flex-1 pr-4 space-y-1">
                             <div class="flex items-center justify-between">
@@ -1266,10 +1274,11 @@
                     </div>
                 `;
             }
+            setHTML(bContainer, bHtml);
 
             // Render Pack / Jobs Tab
             let jContainer = document.getElementById('jobs-container');
-            jContainer.innerHTML = '';
+            let jHtml = '';
             for (let jKey in game.jobs) {
                 let j = game.jobs[jKey];
                 if (!j.unlocked) continue;
@@ -1288,7 +1297,7 @@
                     }
                 }
 
-                jContainer.innerHTML += `
+                jHtml += `
                     <div class="bg-button p-2 rounded-xl border border-button-border flex items-center justify-between">
                         <div class="flex items-center space-x-3">
                             <div class="w-9 h-9 rounded-lg flex items-center justify-center text-card-icon relative">
@@ -1307,10 +1316,11 @@
                     </div>
                 `;
             }
+            setHTML(jContainer, jHtml);
 
             // Render Tricks Tab
             let tContainer = document.getElementById('tricks-container');
-            tContainer.innerHTML = '';
+            let tHtml = '';
 
             let availableTricksCount = 0;
             for (let tKey in game.tricks) {
@@ -1328,7 +1338,7 @@
                         if (game.resources[r].amount < t.cost[r]) canAfford = false;
                     }
 
-                    tContainer.innerHTML += `
+                    tHtml += `
                         <div class="bg-button p-2 rounded-xl border border-button-border flex items-center justify-between">
                             <div class="flex-1 pr-3 space-y-1">
                                 <span class="text-xs font-bold text-card-header flex items-center">
@@ -1358,10 +1368,10 @@
                     // UPGRADES
                     const ups = game.trickUpgrades.filter(u => u.req[0] === tKey && trickUpgradeVisible(u));
                     if (ups.length === 0) {
-                        tContainer.innerHTML += cardHtml;
+                        tHtml += cardHtml;
                     } else {
                         // Card + upgrade row become one full-width cell in the tricks grid
-                        tContainer.innerHTML += `
+                        tHtml += `
                             <div class="space-y-1" style="grid-column: 1 / -1;">
                                 ${cardHtml}
                                 <div style="display:flex; align-items:stretch; gap:0.2rem;">
@@ -1373,12 +1383,14 @@
             }
 
             if (availableTricksCount === 0 && Object.values(game.tricks).every(t => !t.unlocked)) {
-                tContainer.innerHTML = `
+                tHtml = `
                     <div class="text-center py-6 text-xs text-card-desc italic">
                         Improve the pack to unlock Tricks.
                     </div>
                 `;
             }
+            
+            setHTML(tContainer, tHtml);
 
             // Update dynamic scrollbar visibility
             updateScrollbarState();

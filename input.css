@@ -24,19 +24,19 @@
     /* --- Theme Colors --- */
     --col-base: #DAA520;
     --col-primary: #C88A04;
-    --col-secondary: #E2CAAC;
+    --col-secondary: #eee8ce;
     --col-highlight: #F3E5DC;
     --col-accent: #3A2A1A;
 
     /* --- Background Colors --- */
-    --bg-header: #443220;           /* page header */
-    --bg-sidebar: #F3E5DC;          /* sidebar/top section */
-    --bg-body: #eee8ce;             /* main/bottom section */
+    --bg-header: var(--col-accent);           /* page header */
+    --bg-sidebar: var(--col-highlight);          /* sidebar/top section */
+    --bg-body: var(--col-secondary);             /* main/bottom section */
     --bg-panel: var(--bg-sidebar);    /* actions card area */
     --bg-tab-panel: var(--bg-sidebar);/* tab panel background */
     --bg-button: var(--bg-body);      /* action card aka button */
-    --bg-button-active: #ffffc2;    /* affordable button background */
-    --bg-badge: #ededed;            /* level and action badge */
+    --bg-button-active: var(--col-highlight);    /* affordable button background */
+    --bg-badge: var(--col-highlight);            /* level and action badge */
     --bg-newpup-indicator: var(--col-primary); /* new pup indicator */
     --bg-menu: var(--col-accent);             /* settings menu */
     --bg-setting: var(--col-accent);          /* setting card */
@@ -51,7 +51,7 @@
     --text-subtitle: var(--bg-panel);       /* subtitle */
     --text-sidebar-title: var(--col-accent);  /* sidebar/top title */
     --text-res-marquee: var(--col-primary);       /* resource marquee text */
-    --text-morale: var(--col-highlight);        /* Pack Morale banner text */
+    --text-morale: var(--col-accent);        /* Pack Morale banner text */
     --text-content-header: var(--bg-header); /* content header text */
     --text-content-subtitle: #8a5a1f;
     --text-tab-current: #8a5a1f;    /* current tab text */

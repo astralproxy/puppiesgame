@@ -967,17 +967,17 @@
 :root {
   --col-base: #DAA520;
   --col-primary: #C88A04;
-  --col-secondary: #E2CAAC;
+  --col-secondary: #eee8ce;
   --col-highlight: #F3E5DC;
   --col-accent: #3A2A1A;
-  --bg-header: #443220;
-  --bg-sidebar: #F3E5DC;
-  --bg-body: #eee8ce;
+  --bg-header: var(--col-accent);
+  --bg-sidebar: var(--col-highlight);
+  --bg-body: var(--col-secondary);
   --bg-panel: var(--bg-sidebar);
   --bg-tab-panel: var(--bg-sidebar);
   --bg-button: var(--bg-body);
-  --bg-button-active: #ffffc2;
-  --bg-badge: #ededed;
+  --bg-button-active: var(--col-highlight);
+  --bg-badge: var(--col-highlight);
   --bg-newpup-indicator: var(--col-primary);
   --bg-menu: var(--col-accent);
   --bg-setting: var(--col-accent);
@@ -989,7 +989,7 @@
   --text-subtitle: var(--bg-panel);
   --text-sidebar-title: var(--col-accent);
   --text-res-marquee: var(--col-primary);
-  --text-morale: var(--col-highlight);
+  --text-morale: var(--col-accent);
   --text-content-header: var(--bg-header);
   --text-content-subtitle: #8a5a1f;
   --text-tab-current: #8a5a1f;
